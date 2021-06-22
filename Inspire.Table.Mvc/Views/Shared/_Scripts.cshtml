@@ -1,0 +1,21 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Utilities.Extensions
+@{
+    var controller = ViewContext.Controller;
+    var controllerName = controller.GetControllerName();
+    var area = CustomHelpers.GetControllerArea(ViewContext.Controller.GetType());
+
+    var jsFile = new List<string>
+     {
+         "~/Scripts/Controllers/" + controllerName + ".js",
+         "~/Scripts/Controllers/" + controllerName + "/" + controllerName + ".js"
+     };
+
+    if (area.IsNotNullOrEmpty())
+    {
+        jsFile.Add($"~/Areas/{area}/Scripts/Controllers/{controllerName}.js");
+        jsFile.Add(string.Format("~/Areas/{0}/Scripts/Controllers/{1}/{1}.js", area, controllerName));
+    }
+}
+
+@Html.DynamicBundle(jsFile.ToArray())

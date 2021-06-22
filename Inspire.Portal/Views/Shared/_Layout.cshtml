@@ -1,0 +1,174 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@using Inspire.Portal.Utilities
+@using Inspire.Utilities.Extensions
+@{
+    var version = this.GetApplicationVersion();
+    var breadcrumbs = RenderSection("Breadcrumbs", false);
+    var title = ViewBag.Title as string;
+    var showTitle = ViewBag.ShowTitle is bool && (bool)ViewBag.ShowTitle;
+    var disabled = Request.Cookies["blind"]?.Value != null ? "disable" : string.Empty;
+    var bodyClass = $"{(Request.Cookies["blind"]?.Value != null ? "blind" : string.Empty)} {(Request.Cookies["color"]?.Value)} {(Request.Cookies["text"]?.Value)}".Trim();
+    var isHomePage = ViewBag.IsHomePage is bool && (bool)ViewBag.IsHomePage;
+}
+
+<!DOCTYPE HTML>
+<html lang="@Culture">
+<head>
+    <title>
+        @(title ?? Resource.SystemName)
+    </title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="@version.CompanyName" />
+    <meta name="application-name" content="@Resource.SystemName" />
+    <meta name="description" content="@(ViewBag.MetaDescription as string ?? Resource.SystemName)" />
+    <meta name="keywords" value="@(ViewBag.MetaKeywords as string)" />
+    <meta property="og:image" content="@Url.Content("~/Images/logoshare.jpg")" />
+    <meta itemprop="image" content="@Url.Content("~/Images/logoshare.jpg")" />
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="@Url.Content("~/Images/favicon.png")" />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=cyrillic,latin" rel='stylesheet' type='text/css'>
+
+    <!-- Styles -->
+    @if (disabled.IsNullOrEmpty())
+    {
+        @Styles.Render("~/Bundles/Styles/styles")
+        @RenderSection("Styles", false)
+    }
+
+    <style>
+        body.blind {
+            padding-top: 30px;
+        }
+
+        .blind .icon {
+            max-width: 30px;
+            max-height: 30px;
+        }
+
+        .reset-blind {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            background: #000;
+            color: #fff;
+            font-size: 20px;
+            line-height: 30px
+        }
+
+            .reset-blind:after {
+                content: "(изключване на режим  безстилове)";
+                font-size: 19px;
+                color: red;
+            }
+    </style>
+
+    <!-- Scripts -->
+    <script>
+        @if (disabled.IsNotNullOrEmpty())
+        {
+            @: var b = true;
+        }
+
+        var globalVariables = {
+            SiteBase: '@VirtualPathUtility.ToAbsolute("~/")', 
+            ControllerArea: '@CustomHelpers.GetControllerArea(ViewContext.Controller)'
+        };
+    </script>
+
+    @Scripts.Render("~/Bundles/Scripts/common")
+    @Scripts.Render($"~/Bundles/Scripts/culture_{Culture}")
+</head>
+<body class="@bodyClass">
+    @* Used for ajax requests - always present *@
+    <form id="__AjaxAntiForgeryForm" action="#" method="post">@Html.AntiForgeryToken()</form>
+
+    <div id="fixed-bgr"></div>
+    <div class="reset-blind"></div>
+
+    <div id="wrap">
+        <div id="main">
+            @{
+                Html.RenderDynamicAction("Header", typeof(HomeController));
+            }
+
+            <div class="clear"></div>
+            <div class="content">
+                @{
+                    if (breadcrumbs != null)
+                    {
+                        <div class="page-top">
+                            <div class="center">
+                                @if (breadcrumbs != null)
+                                {
+                                    @breadcrumbs
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+
+                @if (isHomePage)
+                {
+                    @RenderBody()
+                }
+                else
+                {
+                    <div class="content-pre-wrap">
+                        <div class="center">
+                            <div class="white-wrap">
+                                @if (title.IsNotNullOrEmpty() && showTitle)
+                                {
+                                    <h1 class="pagetitle caps">
+                                        @title
+                                    </h1>
+                                }
+
+                                <div class="content-wrap">
+                                    @RenderBody()
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @{
+        Html.RenderAction("Footer", "Home", new { Area = string.Empty });
+        Html.RenderPartial("_Notifications");
+    }
+
+    @Scripts.Render("~/Bundles/Scripts/layout")
+    @RenderSection("Scripts", false)
+    @Html.RenderPartialViewScripts()
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        
+        s1.src= '@ConfigurationReader.TawtToSource'
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+</html>

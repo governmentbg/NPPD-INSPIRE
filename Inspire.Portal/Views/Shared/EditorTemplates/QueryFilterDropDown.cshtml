@@ -1,0 +1,18 @@
+﻿@using Kendo.Mvc.UI
+@using Inspire.Portal.App_GlobalResources
+@model object
+
+@{
+    var action = ViewData["ActionName"] as string;
+    var controller = ViewData["ControllerName"] as string;
+}
+
+@(Html.Kendo().DropDownListFor(m => m)
+      .OptionLabel(Resource.All)
+          .DataValueField("Id")
+          .DataTextField("Name")
+          .HtmlAttributes(ViewData["htmlAttributes"])
+          .Filter(FilterType.Contains)
+          .MinLength(3)
+          .DataSource(d => d.Read(r => r.Action(action, controller).Data("core.filterData"))
+              .ServerFiltering(true)))

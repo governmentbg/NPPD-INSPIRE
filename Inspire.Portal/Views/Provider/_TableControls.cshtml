@@ -1,0 +1,12 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@if (typeof(ProviderController).HasRightsToAction("Upsert"))
+{
+    <a href="@Url.DynamicAction("Upsert", typeof(ProviderController))" title="@Resource.CreateProvider">
+        <svg class='icon'>
+            <use xlink:href='#icon-plus'></use>
+        </svg>
+        @Resource.CreateProvider
+    </a>
+}

@@ -1,0 +1,37 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc.Extensions
+@using Kendo.Mvc.UI
+@model Inspire.Model.Attachment.Attachment
+<input type="hidden" name="oldImagePath" value="@(Model != null && Model.Url.HasValue() ? Model.Url : "")"/>
+
+<h3> @Resource.ImageSizeMessage </h3>
+
+@(Html.Kendo().ImageEditor().Name("imageEditor")
+      .Events(e => e.ImageLoaded("backgroundImages.onEditorUpload"))
+      .ImageUrl(Model != null && Model.Url.HasValue() ? Model.Url : "")
+    .Toolbar(s => s.Items(items =>
+    {
+        items.Add()
+             .Name("open");
+        items.Add()
+             .Name("save");
+        items.Add()
+             .Name("crop");
+        items.Add()
+             .Name("resize");
+        items.Add()
+             .Name("undo");
+        items.Add()
+             .Name("redo");
+        items.Add()
+             .Name("zoomIn");
+        items.Add()
+             .Name("zoomOut");
+        items.Add()
+             .Name("zoomDropdown");
+        items.Add()
+             .Type("button")
+             .Name("saveButton")
+             .Text(Resource.Save)
+             .Click("backgroundImages.onEditorSaveButtonClick");
+    })))

@@ -1,0 +1,126 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Core.Infrastructure.Configuration
+@using Inspire.Model.Poll
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models.Poll
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@model Inspire.Portal.Models.Poll.QuestionViewModel
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "~/Scripts/Controllers/Poll/Poll.js")
+}
+
+@{
+    var languages = GetLanguages().Select(item => item.Id.ToString()).ToArray();
+}
+
+<script type="text/x-kendo-tmpl" id="optionTemplate">
+    <li>
+        # var index = kendo.guid(); #
+
+        # var languages = JSON.parse('@Html.Raw(Json.Encode(languages))');#
+
+        <input type='hidden' name='Options.Index' value='#= index #' />
+        <input type='hidden' id="optionUniqueId" name='Options[#= index #].UniqueId' value='#= UniqueId #' />
+        <input type='hidden' id="optionId" value='#= Id #' />
+        # if (languages.length > 0) { #
+        # for(var i=0;i < languages.length; i++) { #
+        <input type='hidden' name='Options[#= index #].Values[#= languages[i]#]' value='#: data.Values[languages[i]] #' />
+        #}#
+        # } #
+
+        #: data.Value #
+        <span class="edit-buttons">
+            <a class="k-button editOption-js" href="\\#"><span class="k-icon k-i-edit"></span></a>
+            <a class="k-button deleteOption-js" href="\\#"><span class="k-icon k-i-delete"></span></a>
+        </span>
+    </li>
+</script>
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Ajax.BeginForm(
+                "UpsertQuestion",
+                "Poll", new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "poll.addQuestionToPoll"
+                }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.UniqueId)
+                @Html.HiddenFor(m => m.PollId)
+
+                @Html.Hidden("upsertQuestionId", Model?.Id)
+                <div class="form-input fullwidth">
+                    @Html.EditorFor(model => model.Titles, "InternationalizationTextBox")
+                    @Html.ValidationMessageFor(m => m.Titles)
+                </div>
+
+                <div class="form-input fullwidth">
+                    @Html.EditorFor(model => model.QuestionDescriptions, "InternationalizationEditor")
+                    @Html.ValidationMessageFor(m => m.QuestionDescriptions)
+                </div>
+                <div class="form-input fullwidth">
+                    @(Html.Kendo().CheckBoxFor(x => x.Mandatory).Name("Mandatory"))
+                </div>
+                <div class="form-input fullwidth">
+                    @Html.LabelFor(x => x.Type)
+                    @(Html.Kendo().DropDownListFor(x => x.Type.Id)
+                                                                  .DataValueField("Id")
+                                                                  .DataTextField("Name")
+                                                                  .Events(e => e.Change("poll.onQuestionTypeChange").DataBound("poll.hideOptions"))
+                                                                  .DataSource(s => s.Read("Nomenclature", "Home", new { name = "nquestiontype" }).ServerFiltering(false)))
+                    @Html.ValidationMessageFor(m => m.Type.Id)
+                </div>
+
+
+                <div class="optionsWrapper">
+                    <div class="form-input tenth">
+                        @Html.LabelFor(x => x.Options, new { @class = "required" })
+                    </div>
+                    <div class="form-input fullwidth">
+
+                        @(Html.Kendo().ListView(Model?.Options ?? new List<OptionViewModel>())
+                              .Name("optionsList")
+                              .TagName("div")
+                              .ClientTemplateId("optionTemplate")
+                              .DataSource(
+                                  dataSource =>
+                                      dataSource.ServerOperation(false)
+                                                .Model(m => m.Id(f => f.UniqueId))
+                                                .Model(m => m.Field(f => f.Value))))
+                        @Html.ValidationMessageFor(x => x.Options)
+                    </div>
+                    <div class="button-wrap">
+                        <button class="bttn caps addOption-js">@Resource.AddOption</button>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="button-wrap fullwidth">
+                    <input type="submit" class="bttn main caps right" value="@Resource.Save" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@functions
+{
+    List<LanguageElement> GetLanguages()
+    {
+        var languagesList = ViewData?.ContainsKey("groupLanguages") == true ? ViewData["groupLanguages"] as List<string> : null;
+
+        return languagesList.IsNotNullOrEmpty() ? Global.Languages.Where(x => languagesList.Contains(x.Id.ToString())).ToList() : Global.Languages;
+    }
+}

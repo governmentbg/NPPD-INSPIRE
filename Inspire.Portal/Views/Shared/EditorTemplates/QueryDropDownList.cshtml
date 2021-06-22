@@ -1,0 +1,11 @@
+@using Kendo.Mvc.UI
+@model object
+@{
+    var data = ViewData["Collection"] as IEnumerable<KeyValuePair<string, string>>;
+}
+
+@(Html.Kendo().DropDownListFor(m => m)
+      .DataValueField("Key")
+      .DataTextField("Value")
+      .HtmlAttributes(ViewData["htmlAttributes"])
+      .BindTo(data))

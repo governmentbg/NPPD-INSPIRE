@@ -1,0 +1,27 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc
+@using Kendo.Mvc.UI
+@model List<Inspire.Model.TableModels.FaqTableModel>
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+<script src="~/Scripts/Controllers/Faq/Faq.js"></script>
+
+<div class="searchbar">
+    <div class="form-input">
+        @Html.Label(Resource.SearchWord)
+        @Html.Kendo().TextBox().Name("SearchWord")
+    </div>
+    <div class="form-input tenth">
+        <button class="bttn secondary searchByWord-js search-faq" type="button" title="@Resource.Search">@Resource.Search</button>
+    </div>
+</div>
+<div id="faq-result">
+    @{
+        Html.RenderPartial("_FaqResult", Model);
+    }
+</div>

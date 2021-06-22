@@ -1,0 +1,172 @@
+{
+  "inspire-ac": {
+    "name-en": "Atmospheric conditions",
+    "name-bg": "Атмосферни условия",
+    "annex": 3
+  },
+  "inspire-ad": {
+    "name-en": "Addresses",
+    "name-bg": "Адреси",
+    "annex": 1
+  },
+  "inspire-af": {
+    "name-en": "Agricultural and aquaculture facilities",
+    "name-bg": "Селскостопански и водностопански съоръжения",
+    "annex": 3
+  },
+  "inspire-am": {
+    "name-en": "Area management / restriction / regulation zones & reporting units",
+    "name-bg": "Управление на територията/ограничени/регулирани зони и отчетни единици",
+    "annex": 3
+  },
+  "inspire-au": {
+    "name-en": "Administrative units",
+    "name-bg": "Административни единици",
+    "annex": 1
+  },
+  "inspire-br": {
+    "name-en": "Bio-geographical regions",
+    "name-bg": "Биогеографски региони",
+    "annex": 3
+  },
+  "inspire-bu": {
+    "name-en": "Buildings",
+    "name-bg": "Сгради",
+    "annex": 3
+  },
+  "inspire-cp": {
+    "name-en": "Cadastral parcels",
+    "name-bg": "Кадастрални парцели",
+    "annex": 1
+  },
+  "inspire-ef": {
+    "name-en": "Environmental monitoring facilities",
+    "name-bg": "Съоръжения за управление на околната среда",
+    "annex": 3
+  },
+  "inspire-el": {
+    "name-en": "Elevation",
+    "name-bg": "Релеф",
+    "annex": 2
+  },
+  "inspire-er": {
+    "name-en": "Energy resources",
+    "name-bg": "Енергийни източници",
+    "annex": 3
+  },
+  "inspire-ge": {
+    "name-en": "Geology",
+    "name-bg": "Геология",
+    "annex": 2
+  },
+  "inspire-gg": {
+    "name-en": "Geographical grid systems",
+    "name-bg": "Географски координатни системи",
+    "annex": 1
+  },
+  "inspire-gn": {
+    "name-en": "Geographical names",
+    "name-bg": "Географски наименования",
+    "annex": 1
+  },
+  "inspire-hb": {
+    "name-en": "Habitats and biotopes",
+    "name-bg": "Местообитания и биотопи",
+    "annex": 3
+  },
+  "inspire-hh": {
+    "name-en": "Human health and safety",
+    "name-bg": "Здраве и безопасност на човека",
+    "annex": 3
+  },
+  "inspire-hy": {
+    "name-en": "Hydrography",
+    "name-bg": "Хидрография",
+    "annex": 1
+  },
+  "inspire-lc": {
+    "name-en": "Land cover",
+    "name-bg": "Земна покривка",
+    "annex": 2
+  },
+  "inspire-lu": {
+    "name-en": "Land use",
+    "name-bg": "Ползване на земята",
+    "annex": 3
+  },
+  "inspire-mf": {
+    "name-en": "Meteorological geographical features",
+    "name-bg": "Метеорологични географски характеристики",
+    "annex": 3
+  },
+  "inspire-mr": {
+    "name-en": "Mineral resources",
+    "name-bg": "Минерални ресурси",
+    "annex": 3
+  },
+  "inspire-nz": {
+    "name-en": "Natural risk zones",
+    "name-bg": "Природни рискови зони",
+    "annex": 3
+  },
+  "inspire-of": {
+    "name-en": "Oceanographic geographical features",
+    "name-bg": "Океанографски географски характеристики",
+    "annex": 3
+  },
+  "inspire-oi": {
+    "name-en": "Orthoimagery",
+    "name-bg": "Ортоизображение",
+    "annex": 2
+  },
+  "inspire-pd": {
+    "name-en": "Population distribution and demography",
+    "name-bg": "Разпределение на населението — демография",
+    "annex": 3
+  },
+  "inspire-pf": {
+    "name-en": "Production and industrial facilities",
+    "name-bg": "Производствени и промишлени съоръжения",
+    "annex": 3
+  },
+  "inspire-ps": {
+    "name-en": "Protected sites",
+    "name-bg": "Защитени обекти",
+    "annex": 1
+  },
+  "inspire-rs": {
+    "name-en": "Coordinate reference systems",
+    "name-bg": "Координатни справочни системи",
+    "annex": 1
+  },
+  "inspire-sd": {
+    "name-en": "Species distribution",
+    "name-bg": "Разпределение на видовете",
+    "annex": 3
+  },
+  "inspire-so": {
+    "name-en": "Soil",
+    "name-bg": "Почва",
+    "annex": 3
+  },
+  "inspire-sr": {
+    "name-en": "Sea regions",
+    "name-bg": "Морски региони",
+    "annex": 3
+  },
+  "inspire-su": {
+    "name-en": "Statistical units",
+    "name-bg": "Статистически единици",
+    "annex": 3
+  },
+  "inspire-tn": {
+    "name-en": "Transport networks",
+    "name-bg": "Транспортни мрежи",
+    "annex": 1
+  },
+  "inspire-us": {
+    "name-en": "Utility and governmental services",
+    "name-bg": "Комунално-битови и обществени услуги",
+    "annex": 3
+  }
+}

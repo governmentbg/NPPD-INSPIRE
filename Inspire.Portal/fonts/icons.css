@@ -1,0 +1,182 @@
+@font-face {
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    src: url('icomoon-swajjf.eot');
+    src: url('icomoon-swajjf.eot#iefix') format('embedded-opentype'), url('icomoon-swajjf.ttf') format('truetype'), url('icomoon-swajjf.woff') format('woff'), url('icomoon-swajjf.svg#icomoon') format('svg');
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'icomoon' !important;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    speak: none;
+    text-transform: none;
+    vertical-align: middle;
+}
+
+.icon-i-bgmaps:before {
+    position: relative;
+    top: -2px;
+}
+
+.icon-i-sofa:before,
+.icon-i-bed:before,
+.icon-i-furnishing:before {
+    font-size: 110%;
+}
+
+.icon-i-brick:before,
+.icon-i-parking:before {
+    font-size: 90%;
+}
+
+.icon-i-calendar:before {
+    content: "\e923";
+}
+
+.icon-i-pointer2:before {
+    content: "\e922";
+}
+
+.icon-i-user:before {
+    content: "\e900";
+}
+
+.icon-i-refresh:before {
+    content: "\e901";
+}
+
+.icon-i-house:before {
+    content: "\e902";
+}
+
+.icon-i-newsletter:before {
+    content: "\e903";
+}
+
+.icon-i-bathroom:before {
+    content: "\e904";
+}
+
+.icon-i-bed:before {
+    content: "\e905";
+}
+
+.icon-i-pointer:before {
+    content: "\e906";
+}
+
+.icon-i-mail:before {
+    content: "\e907";
+}
+
+.icon-i-plus:before {
+    content: "\e908";
+}
+
+.icon-i-arrow:before {
+    content: "\e909";
+}
+
+.icon-i-building:before {
+    content: "\e90a";
+}
+
+.icon-i-elevator:before {
+    content: "\e90b";
+}
+
+.icon-i-parking:before {
+    content: "\e90c";
+}
+
+.icon-i-document:before {
+    content: "\e90d";
+}
+
+.icon-i-facebook:before {
+    content: "\e90e";
+}
+
+.icon-i-twitter:before {
+    content: "\e90f";
+}
+
+.icon-i-googleplus:before {
+    content: "\e910";
+}
+
+.icon-i-pdf:before {
+    content: "\e911";
+}
+
+.icon-i-search:before {
+    content: "\e912";
+}
+
+.icon-i-area:before {
+    content: "\e913";
+}
+
+.icon-i-bell:before {
+    content: "\e914";
+}
+
+.icon-i-bgmaps:before {
+    content: "\e915";
+}
+
+.icon-i-check:before {
+    content: "\e916";
+}
+
+.icon-i-list1:before {
+    content: "\e917";
+}
+
+.icon-i-list2:before {
+    content: "\e918";
+}
+
+.icon-i-list3:before {
+    content: "\e919";
+}
+
+.icon-i-opendoors:before {
+    content: "\e91a";
+}
+
+.icon-i-brick:before {
+    content: "\e91b";
+}
+
+.icon-i-wc:before {
+    content: "\e91c";
+}
+
+.icon-i-import:before {
+    content: "\e91d";
+}
+
+.icon-i-sofa:before {
+    content: "\e91e";
+}
+
+.icon-i-linkedin:before {
+    content: "\e91f";
+}
+
+.icon-i-furnishing:before {
+    content: "\e920";
+}
+
+.icon-i-print:before {
+    content: "\e921";
+}
+
+/* Localized */

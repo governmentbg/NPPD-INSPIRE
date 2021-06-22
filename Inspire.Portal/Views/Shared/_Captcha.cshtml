@@ -1,0 +1,7 @@
+﻿@using Inspire.Portal.Utilities
+@if (ConfigurationReader.UseCaptcha)
+{
+    <div class="g-recaptcha" data-sitekey="@ConfigurationReader.CaptchaSiteKey"></div>
+    @Html.ValidationMessage("captcha")
+    <script src='https://www.google.com/recaptcha/api.js' type="text/javascript"></script>
+}

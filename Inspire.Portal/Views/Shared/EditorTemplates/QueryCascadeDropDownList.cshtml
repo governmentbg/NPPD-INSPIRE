@@ -1,0 +1,19 @@
+@using Kendo.Mvc.UI
+@model object
+@{
+    var cascadeFrom = ViewData["CascadeFromField"] as string;
+    var action = ViewData["ActionName"] as string;
+    var controller = ViewData["ControllerName"] as string;
+}
+
+
+@(Html.Kendo().DropDownListFor(m => m)
+      .DataValueField("Id")
+      .DataTextField("Name")
+      .HtmlAttributes(ViewData["htmlAttributes"])
+      .CascadeFrom(cascadeFrom)
+      .CascadeFromField("Id")
+      .Filter(FilterType.Contains)
+      .MinLength(3)
+      .DataSource(d => d.Read(r => r.Action(action, controller).Data("core.filterData"))
+                        .ServerFiltering(true)))

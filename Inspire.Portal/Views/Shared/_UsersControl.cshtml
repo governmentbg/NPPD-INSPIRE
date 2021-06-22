@@ -1,0 +1,117 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Model.User
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin
+@using Kendo.Mvc.UI
+@model Inspire.Model.User.UsersControl
+@{
+    var controller = ViewContext.Controller.GetControllerName();
+    var isAjax = Request.IsAjaxRequest();
+}
+
+@if (!isAjax)
+{
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}}
+
+<div class="content-pre-wrap">
+    <div class="center">
+        @using (Html.BeginForm(
+            "UpsertUsersControl",
+            controller,
+            FormMethod.Post))
+        {
+            <div class="t-tab">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ItemId)
+                @Html.HiddenFor(m => m.ItemType)
+
+                <div class="form-input column">
+                    @Html.Label(Resource.Roles)
+                    @(Html.Kendo().DropDownList()
+                          .Name("rolesDropDown")
+                          .DataValueField("Id")
+                          .DataTextField("Name")
+                          .Filter(FilterType.Contains)
+                          .DataSource(d => d.Read(r => r.Action("GetAllRoles", "Role", new { Area = AdminAreaRegistration.Location }))))
+                </div>
+
+                <div class="form-input third">
+                    @Html.Label(Resource.Users)
+                    @(Html.Kendo().DropDownList()
+                          .Name("usersDropDown")
+                          .DataValueField("Id")
+                          .DataTextField("Name")
+                          .CascadeFrom("rolesDropDown")
+                          .CascadeFromField("Id")
+                          .Filter(FilterType.Contains)
+                          .DataSource(d => d.Read(r => r.Action("GetUsersByRole", "User").Data("core.filterData"))
+                                            .ServerFiltering(true)))
+                </div>
+
+                <div class="third">
+                    <label>&nbsp;</label>
+                    <button id="addUserOrRole" class="bttn secondary caps" type="button">@Resource.Add</button>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+
+            <div class="t-tab">
+                <h2>@Resource.ListOfRolesAndUsers</h2>
+                <label>&nbsp;</label>
+
+                <div class="form-control fullwidth">
+                    @(Html.Kendo().ListView(Model.Items ?? new List<UserControlItem>())
+                          .TagName("ul")
+                          .Name("controlItems")
+                          .ClientTemplateId("controlItemsClientTemplateId"))
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="form-control fullwidth">
+                    <input type="submit" class="bttn main caps right" value="@Resource.Save"/>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@if (isAjax)
+{
+    @RenderScripts()
+}
+else
+{
+@section Scripts
+{
+    @RenderScripts()
+}}
+
+@helper RenderScripts()
+{
+    @Html.DynamicBundle("~/Scripts/Utilities/usersControl.js")
+    <script id="controlItemsClientTemplateId" type="text/x-kendo-template">
+        <li>
+            # var guid = kendo.guid();#
+            <input type="hidden" name="Items.Index" value="#: guid #" />
+            <input type="hidden" name="Items[#: guid #].Id" value="#: Id #" />
+            <input type="hidden" name="Items[#: guid #].Role.Id" value="#: Role.Id #" />
+            <input type="hidden" name="Items[#: guid #].User.Id" value="#: User.Id #" />
+            <span>
+                #: Role != null && Role.Name != null && Role.Name != '' ? Role.Name : '' #
+                #: User != null && User.Name != null && User.Name != '' ? '- ' + User.Name : '' #
+            </span>
+            <i class="k-icon k-i-close remove-item-js">
+            </i>
+        </li>
+    </script>
+}

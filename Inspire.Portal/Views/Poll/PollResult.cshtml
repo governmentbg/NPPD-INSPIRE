@@ -1,0 +1,89 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@model List<Inspire.Portal.Models.Poll.PollResultViewModel>
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "~/Scripts/Controllers/Poll/Poll.js")
+}
+@{
+    var columns = Model.Count > 0 ? Model[0].QuestionTitles : new List<string>();
+    var pollName = ViewBag.PollName as string;
+}
+
+<script>
+    // Use custom export for xlsx, because columns with client template by default are not exportable, because the column may contains html
+    function customXlsxExport(e) {
+        var data = e.data;
+        var gridColumns = e.sender.columns;
+        var sheet = e.workbook.sheets[0];
+        var columnTemplates = [];
+        var dataItem;
+
+        // get columns templates
+        for (var i = 0; i < gridColumns.length; i++) {
+            if (gridColumns[i].template) {
+                columnTemplates.push({ cellIndex: i, template: kendo.template(gridColumns[i].template) });
+            }
+        }
+
+        for (var i = 1; i < sheet.rows.length; i++) {
+            var row = sheet.rows[i];
+            var dataItem = data[i - 1];
+            for (var j = 0; j < columnTemplates.length; j++) {
+                var columnTemplate = columnTemplates[j];
+
+                var value = columnTemplate.template(dataItem);
+
+                if (row.cells[columnTemplate.cellIndex] != undefined)
+                    row.cells[columnTemplate.cellIndex].value = value;
+            }
+        }
+    }
+</script>
+
+<div class="center">
+    <div class="t-tab">
+       @if (columns.IsNotNullOrEmpty())
+       {
+           @(Html.Kendo().Grid(Model)
+                 .Name("pollResult")
+                 .ToolBar(x =>
+                 {
+                     x.Excel();
+                 })
+                 .Events(x => x.ExcelExport("customXlsxExport"))
+                 .Excel(x => x.AllPages(true)
+                              .Filterable(true)
+                              .FileName($"{pollName}.xlsx"))
+                 .Columns(c =>
+                 {
+                     c.Bound(x => x.Ip).Title("IP").Width(50);
+                     c.Bound(x => x.RegDate).Title(Resource.FillInDate).Width(150);
+                     for (int i = 0; i < columns.Count; i++)
+                     {
+                         c.Bound(x => x.QuestionAnswers).ClientTemplate($"#: QuestionAnswers[{i}] ?? '' #").Title(columns[i]).Width(350);
+                     }
+                 })
+                 .Scrollable()
+                 .Resizable(r => r.Columns(true))
+                 .DataSource(dataSource => dataSource
+                                 .Ajax()
+                                 .PageSize(20)
+                                 .ServerOperation(false))
+                                 .Pageable(p => p.Enabled(true).PageSizes(new List<object> { 10, 20, 50, 100, "all" }).PreviousNext(true).ButtonCount(5)))
+       }
+       else
+       {
+           <h1>@Resource.NoDataFound</h1>
+       }
+    </div>
+</div>

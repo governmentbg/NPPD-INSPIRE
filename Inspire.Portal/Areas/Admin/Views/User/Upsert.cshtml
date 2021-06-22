@@ -1,0 +1,153 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Model.Role
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@model Inspire.Portal.Areas.Admin.Models.User.UserUpsertViewModel
+@{
+    var roles = ViewBag.Roles as List<Role>;
+}
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Html.BeginForm("Upsert", "User", FormMethod.Post, new { id = "userForm", Area = AdminAreaRegistration.Location }))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.GeoNetworkId)
+                <div class="form-control fullwidth">
+                    <div class="form-input column">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.EditorFor(m => m.Name)
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+                    <div class="form-input column">
+                        @Html.LabelFor(m => m.Surname)
+                        @Html.EditorFor(m => m.Surname)
+                        @Html.ValidationMessageFor(m => m.Surname)
+                    </div>
+                </div>
+                <div class="form-control fullwidth">
+                    <div class="form-input quad">
+                        @Html.LabelFor(m => m.UserName, new { @class = "required" })
+                        @Html.EditorFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                    <div class="form-input quad">
+                        @Html.LabelFor(m => m.Email, new { @class = "required" })
+                        @Html.EditorFor(m => m.Email)
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                    <div class="form-input quad">
+                        @Html.LabelFor(m => m.Phone)
+                        @Html.EditorFor(m => m.Phone)
+                        @Html.ValidationMessageFor(m => m.Phone)
+                    </div>
+                    <div class="form-input quad">
+                        @Html.LabelFor(m => m.Fax)
+                        @Html.EditorFor(m => m.Fax)
+                        @Html.ValidationMessageFor(m => m.Fax)
+                    </div>
+                </div>
+                <div class="form-control fullwidth">
+                    @Html.HiddenFor(m => m.GeoNetworkAddress.Id)
+                    <div class="form-input quad">
+                        @Html.Label(Resource.State)
+                        @Html.EditorFor(m => m.GeoNetworkAddress.State)
+                        @Html.ValidationMessageFor(m => m.GeoNetworkAddress.State)
+                    </div>
+                    <div class="form-input quad">
+                        @Html.Label(Resource.City)
+                        @Html.EditorFor(m => m.GeoNetworkAddress.City)
+                        @Html.ValidationMessageFor(m => m.GeoNetworkAddress.City)
+                    </div>
+                    <div class="form-input quad">
+                        @Html.Label(Resource.Zip)
+                        @Html.EditorFor(m => m.GeoNetworkAddress.Zip)
+                        @Html.ValidationMessageFor(m => m.GeoNetworkAddress.Zip)
+                    </div>
+                    <div class="form-input quad">
+                        @Html.Label(Resource.Address)
+                        @Html.EditorFor(m => m.GeoNetworkAddress.Address)
+                        @Html.ValidationMessageFor(m => m.GeoNetworkAddress.Address)
+                    </div>
+                </div>
+                <fieldset class="panel">
+                    <legend> @Html.Label(Resource.RigthsInGeonetwork)</legend>
+                    <div class="form-control fullwidth">
+                        <div class="form-input quad">
+                            <label>&nbsp;</label>
+                            @Html.Kendo().CheckBoxFor(m => m.IsAdministrator).Label(Resource.Administrator).HtmlAttributes(new { @class = "isAdmin-js" })
+                        </div>
+                        <div class="gntwrk-groups">
+                            <div class="form-input quad">
+                                @Html.Label(Resource.Organization)
+                                @(Html.Kendo().DropDownListFor(m => m.Group.Id)
+                                              .DataValueField("Id")
+                                              .DataTextField("Name")
+                                              .ValueTemplate("<input type='hidden' name='Group.Id' value='#:data.Id#'/>" +
+                                                             "<input type='hidden' name='Group.Name' value='#:data.Name#'/>" +
+                                                             "<span> #: data.Name # </span>")
+                                              .DataSource(d => d.Read(r => r.Action("GetGroups", "User"))))
+                            </div>
+                            <div class="form-input quad">
+                                @Html.Label(Resource.Profile)
+                                @(Html.Kendo().DropDownListFor(m => m.Profile.Id)
+                                              .DataValueField("Id")
+                                              .DataTextField("Name")
+                                              .DataSource(d => d.Read(r => r.Action("GetProfiles", "User"))))
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="panel">
+                    <legend> @Html.Label(Resource.RightInPortal)</legend>
+                    <div class="form-control fullwidth">
+                        <div class="form-input fullwidth">
+                            @if (roles.IsNotNullOrEmpty())
+                            {
+                                foreach (var role in roles)
+                                {
+                                    <label class="info">
+                                        @{
+                                            var name = $"Roles[{roles.IndexOf(role)}]";
+                                        }
+
+                                        <input type="hidden" name="Roles.Index" value="@roles.IndexOf(role)" />
+                                        <input type="checkbox" name="@name" class="k-checkbox" value="@role.Id" @(Model?.Roles != null && Model.Roles.Where(item => item == role.Id).IsNotNullOrEmpty() ? "checked" : string.Empty) />
+                                        @role.Name
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="clear"></div>
+                <div class="form-control button-wrap fullwidth">
+                    <input type="submit" class="bttn main caps right" value="@Resource.Save" />
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Html.DynamicBundle("~/Areas/Admin/Scripts/Controllers/User/User.js")
+    <script>
+        $("#userForm").dirtyForms();
+
+        $(document).ready(function () {
+            $(".isAdmin-js").trigger("change");
+        });
+    </script>
+}

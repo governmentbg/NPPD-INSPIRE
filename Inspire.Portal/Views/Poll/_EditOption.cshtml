@@ -1,0 +1,26 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@model Inspire.Portal.Models.Poll.OptionViewModel
+@using (Ajax.BeginForm(
+    "EditOption",
+    "Poll",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "core.onKendoWindowSuccessCallback"
+    }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.UniqueId)
+
+    <div class="form-input fullwidth noright">
+        @Html.EditorFor(m => m.Values, "InternationalizationTextBox")
+        @Html.ValidationMessageFor(m => m.Values)
+    </div>
+    <div class="clear"></div>
+    <div class="form-input  center noright">
+        <button type="submit" class="bttn main caps">
+            @Resource.Save
+        </button>
+    </div>
+}

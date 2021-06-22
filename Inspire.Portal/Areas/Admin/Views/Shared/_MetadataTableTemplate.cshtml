@@ -1,0 +1,23 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Utilities
+<script id="metadataTitleTemplate" type="text/x-kendo-template">
+    #if(MetadataGuid) {#
+    # var status = -1; if (IsMetadataValid === true) { status = 1; } else if (IsMetadataValid === false) { status = 0; } #
+    <div class="md-validate-status md-validate-status#: status #">
+        <i class="fa fa-file-text"></i>
+    </div>
+    # var euStatus = -1; if (IsMetadataEUValid === true) { euStatus = 1; } else if (IsMetadataEUValid === false) { euStatus = 0; } #
+    <div class="md-validate-status md-validate-status#: euStatus #">
+        <i class="fa fa-inspire"></i>
+    </div>
+    <a href="@ConfigurationReader.GeoNetworkAddress.TrimEnd('/')/\\#/metadata/#: MetadataGuid #">#: MetadataTitle ? MetadataTitle : MetadataGuid #</a>
+    #}#
+</script>
+<script id="isMetadataValidTemplate" type="text/x-kendo-template">
+    # var statusName = '@Resource.Missing'; if (IsMetadataValid === true) { statusName = '@Resource.Yes'; } else if (IsMetadataValid === false) { statusName = '@Resource.No'; } #
+    #: statusName #
+</script>
+<script id="isMetadataEUValidTemplate" type="text/x-kendo-template">
+    # var statusName = '@Resource.Missing'; if (IsMetadataEUValid === true) { statusName = '@Resource.Yes'; } else if (IsMetadataEUValid === false) { statusName = '@Resource.No'; } #
+    #: statusName #
+</script>

@@ -1,0 +1,60 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin.Controllers
+@using Inspire.Portal.Models
+@using Inspire.Utilities.Enums
+@{
+    var userControllerType = typeof(UserController);
+}
+
+<script id="userActionTemplate" type="text/x-kendo-template">
+    @if (userControllerType.HasRightsToAction("Upsert")
+         || userControllerType.HasRightsToAction("ChangeStatus")
+         || userControllerType.HasRightsToAction("SetRole")
+         || User?.IsInRole(ApplicationRights.HistoryUser) == true)
+    {
+        <div class="btn-with-content inline">
+            <ul>
+                @if (userControllerType.HasRightsToAction("Upsert"))
+                {
+                    <li>
+                        <a href="@Url.Action("Upsert", "User")?id=#: Id #">@Resource.Edit</a>
+                    </li>
+                }
+
+                @if (userControllerType.HasRightsToAction("ChangeStatus"))
+                {
+                    <li>
+                        <a href="\\#" data-userid="#: Id #" class="change-status-js">@Resource.ChangeStatus</a>
+                    </li>
+                }
+                @if (userControllerType.HasRightsToAction("SetRole"))
+                {
+                    <li>
+                        <a href="\\#" data-userid="#: Id #" class="set-role-js">@Resource.RolesManagement</a>
+                    </li>
+                }
+
+                @if (User.IsInRole(ApplicationRights.SendChangePasswordMail))
+                {
+                    <li>
+                        <a href="@Url.Action("SendForgottenPasswordMail")?id=#: Id#" data-ajax="true" data-ajax-method="POST">@Resource.ForgottenPassword</a>
+                    </li>
+                }
+
+                @if (User?.IsInRole(ApplicationRights.HistoryUser) == true)
+                {
+                    <li>
+                        <a href="\\#" class="view-history-js" data-objectType="@ObjectType.User" data-objectId="#: Id #">@Resource.History</a>
+                    </li>
+                }
+
+            </ul>
+        </div>}
+</script>
+
+<script id="userInfoTemplate" type="text/x-kendo-template">
+    <a href="\\#" class="user-info-js">
+        #: UserName #
+    </a>
+</script>

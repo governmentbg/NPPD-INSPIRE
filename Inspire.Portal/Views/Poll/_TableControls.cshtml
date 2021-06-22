@@ -1,0 +1,15 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@{
+    var controllerType = typeof(PollController);
+    if (controllerType.HasRightsToAction("Upsert"))
+    {
+        <a href="@Url.DynamicAction("Upsert", controllerType)" title="@Resource.AddPoll">
+            <svg class='icon'>
+                <use xlink:href='#icon-plus'></use>
+            </svg>
+            @Resource.AddPoll
+        </a>
+    }
+}

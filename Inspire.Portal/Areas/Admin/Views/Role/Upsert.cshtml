@@ -1,0 +1,76 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin
+@using Inspire.Portal.Areas.Admin.Models.Role
+@using Kendo.Mvc.UI
+@model Inspire.Portal.Areas.Admin.Models.Role.RoleUpsertViewModel
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Html.BeginForm("Upsert", "Role", FormMethod.Post, new { id = "roleForm", Area = AdminAreaRegistration.Location }))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-input fullwidth">
+                    @Html.LabelFor(m => m.Name, new { @class = "required" })
+                    @Html.EditorFor(m => m.Name)
+                    @Html.ValidationMessageFor(m => m.Name)
+                </div>
+
+                <div class="fullwidth">
+                    @Html.LabelFor(m => m.Activities, new { @class = "required" })
+                    @(Html.Kendo().Grid<Activity>().Name("ActivitiesList").HtmlAttributes(new { @class = "overwrite-table" })
+                                  .Filterable(f => f.Enabled(true).Mode(GridFilterMode.Menu))
+                                  .AutoBind(true)
+                                  .Columns(columns =>
+                                  {
+                                      columns.Bound(c => c.IsChecked)
+                                             .Filterable(false)
+                                             .HeaderTemplate("<input type='checkbox' class='selectAllActivities-js'/>")
+                                             .ClientTemplate(
+                                                 "# var templateIndex = kendo.guid(); #" +
+                                                 "<input type='hidden' name='Activities.Index' value='#= templateIndex #' />" +
+                                                 "#if (IsChecked === true) {#" +
+                                                 "<input type='checkbox' checked='checked' name='Activities[#= templateIndex #].Id' value='#: Id #' />" +
+                                                 "#} else {#" +
+                                                 "<input type='checkbox' name='Activities[#= templateIndex #].Id' value='#: Id #' />" +
+                                                 "#} #").Width(20);
+                                      columns.Bound(c => c.Name)
+                                             .Title(Resource.Name);
+                                  })
+                                  .Scrollable(g => g.Enabled(true).Height(400))
+                                  .DataSource(dataSource => dataSource
+                                                  .Ajax()
+                                                  .Read(r => r.Action("ReadActivities", "Role",
+                                                                      new { roleId = Model?.Id }))
+                                                  .ServerOperation(true)))
+                    @Html.ValidationMessageFor(m => m.Activities)
+                </div>
+
+                <div class="clear"></div>
+                <div class="form-control button-wrap fullwidth">
+                    <input type="submit" class="bttn main caps right" value="@Resource.Save" />
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Html.DynamicBundle("~/Areas/Admin/Scripts/Controllers/Role/Role.js")
+    <script>
+        $("#roleForm").dirtyForms();
+    </script>
+}

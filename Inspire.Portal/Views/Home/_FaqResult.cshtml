@@ -1,0 +1,22 @@
+﻿@using Inspire.Model.TableModels
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@model List<Inspire.Model.TableModels.FaqTableModel>
+
+@Html.Hidden("CategoryId", ViewBag.Category as string)
+<section class="content-pre-wrap">
+    <div class="center">
+        @if (Model.IsNotNullOrEmpty())
+        {
+            @PanelBar(Model)
+        }
+    </div>
+</section>
+
+@helper PanelBar(List<FaqTableModel> items)
+{
+    @( Html.Kendo().PanelBar()
+                                   .Name(Guid.NewGuid().ToString())
+                                   .HtmlAttributes(new { @class = "accordeon" })
+                                   .Items(panelbar => items.ForEach(a => panelbar.Add().Text(a.Question).Expanded(items.IndexOf(a) < 1).Content(@<article>@Html.Raw(WebUtility.HtmlDecode(a.Answer))</article>))))
+}

@@ -1,0 +1,43 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Utilities.Extensions
+@model List<Inspire.Portal.Models.Provider.ProviderPublicViewModel>
+@{
+    if (Model.IsNotNullOrEmpty())
+    {
+        <section id="supliers">
+            <div class="center">
+                <div class="white-wrap">
+                    <div class="sectitle">
+                        <h2>@Resource.Providers</h2>
+                    </div>
+                    <div class="itemlist ">
+                        <ul class="providers-carousel owl-carousel">
+                            @foreach (var provider in Model)
+                            {
+                                <li>
+                                    <a href="@(provider.Link ?? "#")" target="_blank">
+                                        <span class="img-wrap">
+                                            @if (provider.MainPicture?.Url.IsNotNullOrEmpty() == true)
+                                            {
+                                                <img src="@(provider.MainPicture?.Url)?width=286" alt="No Image" />
+                                            }
+                                        </span>
+                                        <span class="right-side">
+                                            <strong>@provider.Name</strong>
+                                            <span class="text">
+                                                @Html.Raw(provider.Content)
+                                            </span>
+                                            <span class="flink">
+                                                @Resource.LearnMore
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

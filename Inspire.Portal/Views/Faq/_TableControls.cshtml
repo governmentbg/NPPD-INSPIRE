@@ -1,0 +1,15 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@{
+    var controllerType = typeof(FaqController);
+    if (controllerType.HasRightsToAction("Upsert"))
+    {
+        <a href="@Url.DynamicAction("Upsert", controllerType)" title="@Resource.Create">
+            <svg class='icon'>
+                <use xlink:href='#icon-plus'></use>
+            </svg>
+            @Resource.Create
+        </a>
+    }
+}

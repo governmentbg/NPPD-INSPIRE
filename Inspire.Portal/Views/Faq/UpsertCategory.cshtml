@@ -1,0 +1,47 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@model Inspire.Portal.Models.Faq.FaqCategoryViewModel
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "Faq",
+        "~/Scripts/Controllers/Faq/Faq.js")
+}
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Ajax.BeginForm(
+                "UpsertCategory",
+                "Faq",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "faq.onFaqCategoryUpsertSuccessfully"
+                }))
+            {
+                @Html.ValidationSummary(true)
+
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-input fullwidth nest">
+                    @Html.EditorFor(model => model.Names, "InternationalizationTextBox")
+                    @Html.ValidationMessageFor(m => m.Names)
+                </div>
+
+                <div class="clear"></div>
+                <div class="button-wrap fullwidth nest">
+                    <button type="submit" class="bttn main caps right">@Resource.Save</button>
+                    <button class="bttn secondary caps right closeKendoWindow-js" name="preview" value="true">@Resource.Cancel</button>
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+    </div>
+</div>

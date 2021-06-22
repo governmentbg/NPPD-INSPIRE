@@ -1,0 +1,82 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@using Kendo.Mvc.UI
+@model Inspire.Portal.Models.Faq.FaqUpsertViewModel
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "~/Scripts/Controllers/Faq/Faq.js")
+}
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Html.BeginForm(
+                "Upsert",
+                "Faq", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+                @Html.Hidden("searchQueryId", ViewBag.SearchQueryId as string)
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-input quad">
+                    @Html.LabelFor(m => m.Category)
+                    @(Html.Kendo().DropDownListFor(m => m.Category.Id)
+                                                                  .DataValueField("Key")
+                                                                  .DataTextField("Value")
+                                                                  .OptionLabel(Resource.Choose)
+                                                                  .DataSource(dataSource => dataSource.Read("GetFaqCategories", "Faq").ServerFiltering(false)))
+                    @Html.ValidationMessageFor(m => m.Category)
+                    @Html.ValidationMessageFor(m => m.Category.Id)
+                </div>
+
+                <div class="form-input quad">
+                    @Html.LabelFor(m => m.Status)
+                    @(Html.Kendo().DropDownListFor(m => m.Status.Id)
+                                          .DataValueField("Id")
+                                          .DataTextField("Name")
+                                          .OptionLabel(Resource.Choose)
+                                          .DataSource(dataSource => dataSource.Read("Nomenclature", "Home", new {name = "nfaqstatus", Area = "" }).ServerFiltering(false)))
+                    @Html.ValidationMessageFor(m => m.Status)
+                </div>
+
+                <div class="form-input quad">
+                    @Html.LabelFor(m => m.ScheduledArchiveDate)
+                    @(Html.Kendo().DatePickerFor(m => m.ScheduledArchiveDate))
+                </div>
+                var controllerType = typeof(FaqController);
+                if (controllerType.HasRightsToAction("Upsert"))
+                {
+                    <div class="form-input quad">
+                        <label>&nbsp;</label>
+                        <button class="bttn secondary manageFAQCategory-js">
+                            @Resource.ManageCategory
+                        </button>
+                    </div>
+                }
+
+                <div class="form-input fullwidth">
+                    @Html.EditorFor(model => model.Questions, "InternationalizationTextBox")
+                    @Html.ValidationMessageFor(m => m.Questions)
+                </div>
+
+                <div class="form-input fullwidth">
+                    @Html.EditorFor(model => model.Answers, "InternationalizationEditor")
+                    @Html.ValidationMessageFor(m => m.Answers)
+                </div>
+                <div class="clear"></div>
+                <div class="button-wrap fullwidth">
+                    <button type="submit" class="bttn main caps right">@Resource.Save</button>
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+    </div>
+</div>

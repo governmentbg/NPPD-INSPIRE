@@ -1,0 +1,33 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@model List<Inspire.Portal.Models.Poll.PollTableViewModel>
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "~/Scripts/Controllers/Poll/Poll.js")
+}
+<div class="center">
+    <div class="t-tab">
+        <ul>
+            @foreach (var poll in Model)
+            {
+                <li class="poll">
+                    <div class="pollstitle">
+                        @poll.Title
+                    </div>
+                    <div class="pollsDescr">
+                        @Html.Raw(HttpUtility.HtmlDecode(poll.Description))
+                    </div>
+
+                    <a class="ctrl bttn " href="@Url.Action("Poll", "Poll", new { pollId = poll.Id })">@Resource.FillIn</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

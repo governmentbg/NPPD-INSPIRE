@@ -1,0 +1,36 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc.UI
+@model IEnumerable<Inspire.Model.Publication.Publication>
+@{
+    var selectedDates = Model?.Where(item => item.StartDate.HasValue).Select(item => item.StartDate.Value.Date).ToArray() ?? new DateTime[0];
+}
+<div class="sectitle">
+    <h2>
+        @Resource.Events
+    </h2>
+    <a href="@Url.Action("Events", "Publication")" class="small right">
+        @Resource.ViewAll
+    </a>
+</div>
+
+<article>
+    @(Html.Kendo().Calendar()
+          .Name("calendar")
+          .Footer(true)
+          .WeekNumber(false)
+          .Selection(s => s.Dates(selectedDates))
+          .MonthTemplateId("monthTemplate"))
+</article>
+
+<script id="monthTemplate" type="text/x-kendo-template">
+    #if(data.dates.map(Number).indexOf(+data.date) != -1){#
+    <div class="_event _day">#: data.value #</div>
+    #}else{#
+    <div class="_day">#: data.value #</div>
+    #}#
+</script>
+
+<div class="legend ctrl">
+    <span class="legend-1"></span> @Resource.EventsDay
+    <span class="legend-2"></span> @Resource.TodaysDate
+</div>

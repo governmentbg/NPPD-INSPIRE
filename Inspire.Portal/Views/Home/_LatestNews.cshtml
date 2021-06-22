@@ -1,0 +1,39 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Utilities.Extensions
+@using Inspire.Portal.Models.Publication 
+@model IEnumerable<PublicationPublicViewModel>
+<div class="sectitle">
+    <h2>
+        @Resource.News
+    </h2>
+    <a href="@Url.Action("News", "Publication")" class="small right">
+        @Resource.ViewAll
+    </a>
+</div>
+<div class="itemlist columns">
+    <ul>
+        @if (Model.IsNotNullOrEmpty())
+        {
+            foreach (var item in Model)
+            {
+                <li>
+                    <a href="@Url.Action("Info", "Publication", new { id = item.Id })">
+                        <span class="n-date">@(item.StartDate.HasValue ? item.StartDate.Value.ToShortDateString() : string.Empty)</span>
+                        <span class="right-side">
+                            <strong>
+                                @(item.Title)
+                            </strong>
+                            <span class="text">
+                                @(Html.Raw(item.Content))
+                            </span>
+                            <span class="flink">
+                                @Resource.LearnMore
+                            </span>
+                        </span>
+                    </a>
+                </li>
+            }
+        }
+
+    </ul>
+</div>

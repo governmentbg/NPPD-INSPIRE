@@ -1,0 +1,11 @@
+@using Kendo.Mvc.UI
+@model long?
+@{
+    var format = ViewData["format"]?.ToString() ?? string.Empty;
+}
+
+@(Html.Kendo().IntegerTextBoxFor(m => m)
+      .HtmlAttributes(ViewData["htmlAttributes"])
+      .Min(0)
+      .Format(format)
+      .Max(long.MaxValue))

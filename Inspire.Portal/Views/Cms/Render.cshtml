@@ -1,0 +1,23 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Utilities.Extensions
+@model Inspire.Portal.Models.Cms.PageViewModel
+@{
+    var sessionId = ViewBag.SessionId as string;
+}
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+<div class="center">
+    @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+    @if (sessionId.IsNotNullOrEmpty())
+    {
+        <div class="clear"></div>
+        <div class="button-wrap fullwidth">
+            @Ajax.ActionLink(Resource.Save, "Upsert", new { sessionId = sessionId }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "bttn main caps right" })
+            @Html.ActionLink(Resource.Edit, "Upsert", new { sessionId = sessionId }, new { @class = "bttn secondary caps right" })
+        </div>
+    }
+</div>

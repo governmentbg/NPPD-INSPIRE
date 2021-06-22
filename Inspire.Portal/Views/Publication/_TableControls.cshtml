@@ -1,0 +1,22 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Model.Publication
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@{
+    var controllerType = typeof(PublicationController);
+    if (controllerType.HasRightsToAction("Upsert"))
+    {
+        <a href="@Url.DynamicAction("Upsert", controllerType, new {type = PublicationType.News })" title="@Resource.CreateNews">
+            <svg class='icon'>
+                <use xlink:href='#icon-plus'></use>
+            </svg>
+            @Resource.CreateNews
+        </a>
+        <a href="@Url.DynamicAction("Upsert", controllerType, new {type = PublicationType.Event })" title="@Resource.CreateEvent">
+            <svg class='icon'>
+                <use xlink:href='#icon-plus'></use>
+            </svg>
+            @Resource.CreateEvent
+        </a>
+    }
+}

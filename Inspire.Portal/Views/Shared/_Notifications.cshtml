@@ -1,0 +1,70 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc.UI
+<script id="infoTemplate" type="text/x-kendo-template">
+    <div class="notification notification-color6">
+        <div class="strap">
+            <i class="fa fa-info-circle"></i>
+        </div>
+        <div>
+            <h6>@Resource.Message</h6>
+            <p>#= message #</p>
+            <button class="_close close-js">x</button>
+        </div>
+    </div>
+</script>
+
+<script id="successTemplate" type="text/x-kendo-template">
+    <div class="notification notification-color4">
+        <div class="strap">
+            <i class="fa fa-check-circle"></i>
+        </div>
+        <div>
+            <h6>@Resource.Success</h6>
+            <p>#= message #</p>
+            <button class="_close close-js">x</button>
+        </div>
+    </div>
+</script>
+
+<script id="warningTemplate" type="text/x-kendo-template">
+    <div class="notification notification-color1">
+        <div class="strap">
+            <i class="fa fa-exclamation-triangle"></i>
+        </div>
+        <div>
+            <h6>@Resource.Warning</h6>
+            <p>#= message #</p>
+            <button class="_close close-js">x</button>
+        </div>
+    </div>
+</script>
+
+<script id="errorTemplate" type="text/x-kendo-template">
+    <div class="notification notification-color7">
+        <div class="strap">
+            <i class="fa fa-exclamation-triangle"></i>
+        </div>
+        <div>
+            <h6>@Resource.Error</h6>
+            <p>#= message #</p>
+            <button class="_close close-js">x</button>
+        </div>
+    </div>
+</script>
+
+@(Html.Kendo().Notification()
+      .Name("notification")
+      .Stacking(NotificationStackingSettings.Down)
+      .Events(e => e.Show("notification.onShowNotification"))
+      .HideOnClick(false)
+      .AutoHideAfter(0)
+      .Templates(t =>
+      {
+          t.Add().Type("info").ClientTemplateID("infoTemplate");
+          t.Add().Type("success").ClientTemplateID("successTemplate");
+          t.Add().Type("warning").ClientTemplateID("warningTemplate");
+          t.Add().Type("error").ClientTemplateID("errorTemplate");
+      }))
+
+@Html.RenderNotification()

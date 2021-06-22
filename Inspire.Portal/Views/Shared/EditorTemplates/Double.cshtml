@@ -1,0 +1,7 @@
+@using Kendo.Mvc.UI
+@model double?
+
+@(Html.Kendo().NumericTextBoxFor(m => m)
+      .HtmlAttributes(new { style = "width:100%" })
+      .Format(ViewData["format"]?.ToString() ?? string.Empty)
+      .Min(0))

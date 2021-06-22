@@ -1,0 +1,29 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@{
+    var faqControllerType = typeof(FaqController);
+}
+<script id="faqActionTemplate" type="text/x-kendo-template">
+    @if (faqControllerType.HasRightsToAction("Upsert")
+         || faqControllerType.HasRightsToAction("Delete"))
+    {
+        <div class="btn-with-content inline">
+            <ul>
+                @if (faqControllerType.HasRightsToAction("Upsert"))
+                {
+                    <li>
+                        <a href="@Url.Action("Upsert", "Faq")?id=#: Id #">@Resource.Edit</a>
+                    </li>
+                }
+                @if (faqControllerType.HasRightsToAction("Delete"))
+                {
+                    <li>
+                        <a href="\\#" class="faqDelete-js">@Resource.Remove</a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    }
+</script>

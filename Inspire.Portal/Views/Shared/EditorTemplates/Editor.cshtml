@@ -1,0 +1,21 @@
+﻿@using Kendo.Mvc.UI
+@using Inspire.Portal.Controllers
+@model string
+
+@(Html.Kendo().EditorFor(model => model)
+      .Value(HttpUtility.HtmlDecode(Model ?? string.Empty))
+      .HtmlAttributes(ViewData?.ContainsKey("htmlAttributes") == true ? ViewData["htmlAttributes"] : null)
+      .Tools(tools => tools.InsertFile())
+      .ImageBrowser(imageBrowser => imageBrowser
+                        .Image($"{ImageBrowserController.VirtualPath}/{{0}}")
+                        .Read("Read", "ImageBrowser", new { Area = string.Empty })
+                        .Create("Create", "ImageBrowser", new { Area = string.Empty })
+                        .Destroy("Destroy", "ImageBrowser", new { Area = string.Empty })
+                        .Upload("Upload", "ImageBrowser", new { Area = string.Empty })
+                        .Thumbnail("Thumbnail", "ImageBrowser", new { Area = string.Empty }))
+      .FileBrowser(fileBrowser => fileBrowser
+                       .File($"{Inspire.Portal.Controllers.FileBrowserController.VirtualPath}/{{0}}")
+                       .Read("Read", "FileBrowser", new { Area = string.Empty })
+                       .Create("Create", "FileBrowser", new { Area = string.Empty })
+                       .Destroy("Destroy", "FileBrowser", new { Area = string.Empty })
+                       .Upload("Upload", "FileBrowser", new { Area = string.Empty })))

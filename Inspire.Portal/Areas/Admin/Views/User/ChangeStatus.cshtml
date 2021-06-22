@@ -1,0 +1,41 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin
+@using Kendo.Mvc.UI
+@model Inspire.Portal.Areas.Admin.Models.User.ChangeStatus
+
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Ajax.BeginForm(
+                "ChangeStatus",
+                "User",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "core.onKendoWindowSuccessCallback"
+                }, new { Area = AdminAreaRegistration.Location }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.UserId)
+                @Html.Hidden("searchQueryId", ViewBag.SearchQueryId as string)
+
+                <div class=" form-input fullwidth">
+                    @Html.LabelFor(m => m.StatusId, new { @class = "required" })
+                    @(Html.Kendo().DropDownListFor(m => m.StatusId)
+                          .Name("StatusId")
+                          .DataValueField("Id")
+                          .DataTextField("Name")
+                          .DataSource(d => d.Read(r => r.Action("GetUserStatuses", "User"))))
+                    @Html.ValidationMessageFor(m => m.StatusId)
+                </div>
+
+                <div class="clear"></div>
+                <div class="form-control fullwidth">
+                    <input type="submit" class="bttn main caps right" value="@Resource.Save"/>
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+    </div>
+</div>

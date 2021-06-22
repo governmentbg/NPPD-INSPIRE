@@ -1,0 +1,31 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@{
+    var pollControllerType = typeof(PollController);
+}
+<script id="pollActionTemplate" type="text/x-kendo-template">
+        <div class="btn-with-content inline">
+            <a href="\\#" class="dropdown-trigger">
+                <svg class="icon currentColor">
+                    <use xlink: href="\\#dots"></use>
+                </svg>
+            </a>
+            <ul>
+                # if(!EnableEdit) {#
+                <li>
+                    <a href="@Url.Action("Upsert", "Poll")?id=#: Id #">@Resource.Edit</a>
+                </li>
+                #}else{#
+                <li>
+                    <a href="\\#" class="pollChangeDates-js">@Resource.ChangeDates</a>
+                </li>
+                #}#
+                <li>
+                    <a href="@Url.Action("PollResult", "Poll")?pollId=#:Id#">@Resource.Results</a>
+                </li>
+                <li>
+                    <a href="\\#" class="pollDelete-js">@Resource.Delete</a>
+                </li>
+            </ul>
+        </div>
+</script>

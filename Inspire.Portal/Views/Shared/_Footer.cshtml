@@ -1,0 +1,94 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models
+@using Inspire.Utilities.Extensions
+@{
+    var menuItems = ViewBag.FooterMenuItems as IEnumerable<MenuItem>;
+    var uiSettings = ViewBag.UISettings as UISettingsViewModel;
+}
+<footer>
+    <div class="footer-top">
+        <div class="center">
+            <div class="bgr-white">
+                @if (menuItems.IsNotNullOrEmpty())
+                {
+                    <ul>
+                        <li>
+                            <a href="@Url.RouteUrl("Default", new { controller = string.Empty, action = string.Empty, culture = CurrentCulture.TwoLetterISOLanguageName })" title="@Resource.Home" class="ctrl">
+                                @Resource.Home
+                            </a>
+                        </li>
+                        @foreach (var item in menuItems.Where(item => item.Url.IsNotNullOrEmpty() && item.Url != "#" && item.Items.IsNullOrEmpty()))
+                        {
+                            <li>
+                                <a href="@(item.Url.IsNotNullOrEmpty() ? item.Url : "#")" title="@item.Title" class="ctrl">
+                                    @item.Title
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+                <a href="#wrap" class="gotothis">
+                    <svg class="icon r180">
+                        <use xlink:href="#icon-arrowdown"></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-center">
+        <div class="center">
+            <div class="flex">
+                <div class="fbox1 fbox">
+                    <a href="@Url.RouteUrl("Default", new { controller = string.Empty, action = string.Empty, culture = CurrentCulture.TwoLetterISOLanguageName })" class="flogo">
+                        <img src="@Url.Content("~/Images/logo_END.png")" alt="nppd" width="61" />
+                    </a>
+                    <adresses class="ctrl">
+                        <span class=" logotext1">@(uiSettings?.PortalNameByCulture)</span>
+                        <span class=" logotext2">@(uiSettings?.PortalSubNameByCulture)</span>
+                    </adresses>
+                </div>
+                <div class="fbox2 fbox">
+                    <svg class="icon">
+                        <use xlink:href="#icon-house"></use>
+                    </svg>
+                    <address class="ctrl">
+                        <div>
+                            @($"{Resource.Address}: {uiSettings?.AddressByCulture}")
+                        </div>
+                        <div>
+                            @Html.Raw($"{Resource.Phone}: <a href=\"tel:{uiSettings?.Phone}\">{uiSettings?.Phone}</a>")<br>
+                            @Html.Raw($"{Resource.Email}: <a href=\"mailto:{uiSettings?.Email}\">{uiSettings?.Email}</a>")<br>
+                            @($"{Resource.WorkingTime}: {uiSettings?.WorkingTimeByCulture}")
+                        </div>
+                        <div class="expl">
+                            @(uiSettings?.ExplanationByCulture)
+                        </div>
+                    </address>
+                </div>
+                <div class="fbox3 fbox">
+                    <a href="@(uiSettings?.FbLink)" title="Facebook" target="_blank" rel="noopener noreferrer">
+                        <svg class="icon">
+                            <use xlink:href="#icon-fb"></use>
+                        </svg>
+                    </a>
+                    <a href="@(uiSettings?.LinkedInLink)" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <svg class="icon">
+                            <use xlink:href="#icon-in"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="footer-bottom">
+        <div class="center">
+            <div class="text-center copyleft ctrl">
+                @($"{ApplicationVersion.ProductName} v.{ApplicationVersion.FileVersion}")
+                &nbsp;|&nbsp;
+                @($"© {uiSettings?.PortalRightsByCulture}")
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</footer>

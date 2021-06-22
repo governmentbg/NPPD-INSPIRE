@@ -1,0 +1,16 @@
+<svg width="14px" height="12px" viewBox="0 0 14 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="contacts" transform="translate(-704.000000, -893.000000)">
+            <rect fill="#FFFFFF" x="0" y="0" width="2000" height="1920"></rect>
+            <g id="content" transform="translate(300.000000, 144.000000)" fill="#141618">
+                <g id="form" transform="translate(30.000000, 296.000000)">
+                    <g id="check" transform="translate(370.000000, 448.000000)">
+                        <g id="check-icon-red" transform="translate(4.000000, 5.000000)">
+                            <polygon id="Fill-1" points="12.0859375 0.416444444 11.1829375 1.38888889 4.8943125 8.16666667 3.007375 6.25022222 2.0776875 5.30577778 0.2183125 7.19422222 1.148 8.13866667 3.99175 11.0275556 4.949 12 5.8786875 11 13.097 3.22222222 14 2.25022222"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

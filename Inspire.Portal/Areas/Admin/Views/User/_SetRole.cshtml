@@ -1,0 +1,58 @@
+﻿@using Inspire.Model.Role
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin
+@using Inspire.Utilities.Extensions
+@model Inspire.Portal.Areas.Admin.Models.User.SetRoleUpsertModel
+@{
+    var roles = ViewBag.Roles as List<Role>;
+}
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Ajax.BeginForm(
+                "SetRole",
+                "User",
+                new { Area = AdminAreaRegistration.Location },
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "core.onKendoWindowSuccessCallback"
+                }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.UserId)
+                @Html.Hidden("searchQueryId", ViewBag.SearchQueryId as string)
+
+                <div class="form-control fullwidth">
+                    <div class="form-input fullwidth">
+                        @Html.Label(Resource.Roles, new { @class = "required" })
+                        @if (roles.IsNotNullOrEmpty())
+                        {
+                            foreach (var role in roles)
+                            {
+                                <label class="info">
+                                    @{
+                                        var name = $"Roles[{roles.IndexOf(role)}]";
+                                    }
+
+                                    <input type="hidden" name="Roles.Index" value="@roles.IndexOf(role)"/>
+                                    <input type="checkbox" name="@name" value="@role.Id" @(Model?.Roles != null && Model.Roles.Where(item => item == role.Id).IsNotNullOrEmpty() ? "checked" : string.Empty)/>
+                                    @role.Name
+
+                                </label>
+                            }
+                        }
+
+                        @Html.ValidationMessageFor(m => m.Roles)
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+                <div class="fullwidth form-input">
+                    <input type="submit" class="bttn main caps right" value="@Resource.Save"/>
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+    </div>
+</div>

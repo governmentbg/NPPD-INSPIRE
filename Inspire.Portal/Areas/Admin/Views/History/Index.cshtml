@@ -1,0 +1,27 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@model IEnumerable<Inspire.Model.History.Action>
+
+<div class="center">
+    @if (Model.IsNotNullOrEmpty())
+    {
+        @(Html.Kendo().Grid(Model)
+              .Name("actionHistory")
+              .HtmlAttributes(new { @class = "overwrite-table" })
+              .Columns(c =>
+              {
+                  c.Bound(m => m.UserName).Title(Resource.User);
+                  c.Bound(m => m.Name).Title(Resource.Action);
+                  c.Bound(m => m.Date).Title(Resource.Date).ClientTemplate("#: Date ? kendo.toString(kendo.parseDate(Date), 'G') : '' #");
+                  c.Bound(m => m.Reason).Title(Resource.Reason);
+              })
+              .Sortable()
+              .Filterable()
+              .DataSource(d => d.Ajax().ServerOperation(false).Sort(s => s.Add(m => m.Date).Ascending())))
+    }
+    else
+    {
+        @Resource.NoDataFound
+    }
+</div>

@@ -1,0 +1,13 @@
+﻿{
+  "size": 0,
+  "track_total_hits": true,
+  "query": { "query_string": { "query": "+isTemplate:n" } },
+  "aggs": {
+    "inspireThemeUri": {
+      "terms": {
+        "field": "inspireThemeUri",
+        "size": 34
+      }
+    }
+  }
+}

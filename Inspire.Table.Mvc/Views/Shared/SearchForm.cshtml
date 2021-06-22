@@ -1,0 +1,186 @@
+﻿@using System.Collections
+@using System.ComponentModel.DataAnnotations
+@using System.Reflection
+@using System.Web.Mvc
+@using System.Web.Mvc.Ajax
+@using System.Web.Mvc.Html
+@using System.Web.Routing
+@using Inspire.Common.Mvc.Helpers
+@using Inspire.Core.Infrastructure.Attribute
+@using Inspire.Utilities.Extensions
+@{
+    var layout = ViewBag.Layout as string;
+    if (layout.IsNotNullOrEmpty())
+    {
+        Layout = layout;
+    }
+
+    var controller = ViewContext.Controller;
+    var controllerName = controller.GetControllerName();
+    var area = CustomHelpers.GetControllerArea(ViewContext.Controller.GetType());
+
+    var resultsDivId = Guid.NewGuid().ToString();
+
+    var propsList = Model.GetType().GetProperties() as IEnumerable<PropertyInfo>;
+
+    var searchQueryId = ViewBag.SearchQueryId as string ?? Guid.NewGuid().ToString();
+    var searchButtonText = ViewBag.SearchButtonText as string;
+    var isRequestAjax = ViewBag.IsAjaxRequest is bool && (bool)ViewBag.IsAjaxRequest;
+}
+<div class="center">
+    @if (propsList.IsNotNullOrEmpty())
+    {
+        <div class="searchbar">
+            @if (!isRequestAjax)
+            {
+                using (Html.BeginForm("Search",
+                                       controllerName,
+                                       new { Area = area, searchQueryId },
+                                       FormMethod.Get,
+                                       new { @class = "search" }))
+                {
+                    @Html.Hidden("searchQueryId", searchQueryId);
+                    <div class="relative">
+                        <div class="@ViewBag.TableClass">
+                            @GenerateSearchFields(Model, controllerName)
+                            <div class="form-input tenth">
+                                @{
+                                    var disableSearchButton = ViewBag.DisableSearchButton is bool && (bool)ViewBag.DisableSearchButton;
+                                    if (!disableSearchButton)
+                                    {
+                                        <label class="">&nbsp;</label>
+                                        <button class="bttn secondary" type="submit" title="@searchButtonText">@searchButtonText</button>
+                                    }
+                                }
+                            </div>
+                            @Html.DynamicAction("AdditionalSearchButtons", ViewContext.Controller.GetType())
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                using (Ajax.BeginForm(
+                     "Search",
+                     controllerName,
+                     new { Area = area, searchQueryId },
+                     new AjaxOptions
+                     {
+                         InsertionMode = InsertionMode.Replace,
+                         HttpMethod = "GET",
+                         UpdateTargetId = resultsDivId,
+                         OnBegin = "kendo.ui.progress($('body'), true);",
+                         OnComplete = "kendo.ui.progress($('body'), false);"
+                     }, new { @class = "search" }))
+                {
+                    <div class="relative">
+                        <div class="@ViewBag.TableClass">
+                            @GenerateSearchFields(Model, controllerName)
+                            <div class="form-input tenth">
+                                @{
+                                    var disableSearchButton = ViewBag.DisableSearchButton is bool && (bool)ViewBag.DisableSearchButton;
+                                    if (!disableSearchButton)
+                                    {
+                                        <label class="">&nbsp;</label>
+                                        <button class="bttn secondary" type="submit" title="@searchButtonText">@searchButtonText</button>
+                                    }
+                                }
+                            </div>
+                            @Html.DynamicAction("AdditionalSearchButtons", ViewContext.Controller.GetType())
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    }
+    <div id="@resultsDivId">
+        @{
+            var isSearch = ViewBag.Search is bool && (bool)ViewBag.Search;
+            var isAutoSearch = ViewBag.AutoSearch is bool && (bool)ViewBag.AutoSearch;
+            if (isSearch || isAutoSearch)
+            {
+                var routeValueDictionary = Model != null ? new RouteValueDictionary(Model) : new RouteValueDictionary();
+                routeValueDictionary.Add("searchQueryId", searchQueryId);
+                Html.RenderDynamicAction(isRequestAjax ? "Search" : "SearchNoAjax", controller.GetType(), routeValueDictionary);
+            }
+        }
+    </div>
+</div>
+
+@section Breadcrumbs{
+    @{
+        Html.RenderDynamicAction("Breadcrumbs", controller.GetType());
+    }
+}
+
+@section Scripts{
+    @{
+        Html.RenderDynamicAction("Scripts", controller.GetType());
+    }
+}
+
+@helper GenerateSearchFields(object model, string controllerName)
+{
+    var propsList = model.GetType().GetProperties() as IEnumerable<PropertyInfo>;
+    foreach (var propertyInfo in propsList)
+    {
+        var displayAttribute = propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+        var queryOptionsAttribute = propertyInfo.GetCustomAttributes(typeof(QueryOptionsAttribute), false).FirstOrDefault() as QueryOptionsAttribute;
+
+        var editorTemplateName = queryOptionsAttribute != null
+            ? queryOptionsAttribute.Type == QueryOptionsAttribute.VisualType.Custom
+                ? queryOptionsAttribute.EditorName
+                : queryOptionsAttribute.Type != QueryOptionsAttribute.VisualType.None
+                    ? string.Format("Query{0}", queryOptionsAttribute.Type)
+                    : null
+            : null;
+
+        IEnumerable collection = null;
+        if (editorTemplateName != null)
+        {
+            var dataSourceProperty = model.GetType().GetProperty(string.Format("{0}DataSource", propertyInfo.Name));
+            if (dataSourceProperty != null)
+            {
+                collection = dataSourceProperty.GetValue(model) as IEnumerable;
+            }
+        }
+
+        if (queryOptionsAttribute?.Type == QueryOptionsAttribute.VisualType.Hidden)
+        {
+            @Html.Hidden(propertyInfo.Name)
+        }
+        else if (displayAttribute != null)
+        {
+            if (queryOptionsAttribute?.CascadeFromField != null && queryOptionsAttribute?.ActionName != null)
+            {
+                ViewData["CascadeFromField"] = queryOptionsAttribute.CascadeFromField;
+                ViewData["ActionName"] = queryOptionsAttribute.ActionName;
+                ViewData["ControllerName"] = queryOptionsAttribute.ControllerName ?? controllerName;
+            }
+
+            if (queryOptionsAttribute?.ActionName != null && queryOptionsAttribute?.ControllerName != null)
+            {
+                ViewData["ActionName"] = queryOptionsAttribute.ActionName;
+                ViewData["ControllerName"] = queryOptionsAttribute.ControllerName ?? controllerName;
+            }
+
+            if (User != null || queryOptionsAttribute != null && !queryOptionsAttribute.IsOnlyForSignedUsers)
+            {
+                <div class="form-input @( queryOptionsAttribute?.CssClass)">
+                    @Html.Label(propertyInfo.Name)
+                    @Html.Editor(
+                        propertyInfo.Name,
+                        editorTemplateName,
+                        collection != null
+                            ? new { Collection = collection, htmlAttributes = new { @class = "" } }
+                            : new { htmlAttributes = new { @class = "" } } as object)
+                </div>
+            }
+            else
+            {
+                @Html.Hidden(propertyInfo.Name)
+            }
+        }
+    }
+}

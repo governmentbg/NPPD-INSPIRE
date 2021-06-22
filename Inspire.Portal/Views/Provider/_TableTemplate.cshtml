@@ -1,0 +1,29 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@using Inspire.Portal.Models
+@{
+    var providerControllerType = typeof(ProviderController);
+}
+<script id="providerActionButtonClientTemplate" type="text/x-kendo-template">
+    @if (providerControllerType.HasRightsToAction("Upsert")
+             || providerControllerType.HasRightsToAction("Delete"))
+        {
+        <div class="btn-with-content inline">
+            <ul>
+                @if (providerControllerType.HasRightsToAction("Upsert"))
+                {
+                    <li>
+                        <a href="@Url.Action("Upsert", "Provider")?id=#: Id #">@Resource.Edit</a>
+                    </li>
+                }
+                @if (providerControllerType.HasRightsToAction("Delete"))
+                {
+                    <li>
+                        <a href="\\#" class="provider-remove-js">@Resource.Remove</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        }
+</script>

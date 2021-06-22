@@ -1,0 +1,133 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Model.Attachment
+@using Inspire.Model.Publication
+@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc.UI
+@using EnumHelper = Inspire.Model.Helpers.EnumHelper
+@model Inspire.Portal.Models.Publication.PublicationUpsertViewModel
+@{
+    var isEvent = Model.Type.Id == EnumHelper.GetPublicationType(PublicationType.Event);
+}
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+@section Styles
+{
+    <link href="~/Content/cropper.css" rel="stylesheet" />
+}
+
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "~/Scripts/cropper.min.js",
+        "~/Scripts/jquery-cropper.min.js",
+        "~/Scripts/Controllers/Publication/Publication.js")
+    <script id="picturesTemplateId" type="text/x-kendo-tmpl">
+        <div class="imageDiv" style="display: inline-block">
+            # var guid = kendo.guid() #
+            <label>
+                @Resource.MainImage
+                <input type="hidden" name="Pictures.Index" value="#: guid #" />
+                <input type="hidden" name="Pictures[#: guid #].Url" value="#: data.Url #" />
+                #if(data.IsMain)
+                {#
+                <input type="checkbox" data-uid="#: data.UniqueId #" name="Pictures[#: guid #].IsMain" value="#: data.IsMain #" checked="checked" />
+                #} else {#
+                <input type="checkbox" data-uid="#: data.UniqueId #" name="Pictures[#: guid #].IsMain" value="#: data.IsMain #" />
+                #}#
+            </label>
+            <img style="width:200px" src="#: data.Url #" />
+            <span class="k-icon k-i-close file-remove-js" data-element="div"></span>
+        </div>
+    </script>
+    <script>
+        $("#publicationForm").dirtyForms();
+    </script>
+}
+
+<div class="content-pre-wrap">
+    <div class="center">
+        @using (Html.BeginForm("Upsert", "Publication", FormMethod.Post, new { id = "publicationForm" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Type.Id)
+            <div class="form-input fullwidth">
+                @Html.EditorFor(model => model.Titles, "InternationalizationTextBox")
+                @Html.ValidationMessageFor(m => m.Titles)
+            </div>
+            <div class="form-input fullwidth">
+                @Html.EditorFor(model => model.Contents, "InternationalizationEditor")
+                @Html.ValidationMessageFor(m => m.Contents)
+            </div>
+
+            <div class="form-input column">
+                    @Html.Kendo().CheckBoxFor(m => m.IsLead).Label(Resource.IsLeadPublication)
+            </div>
+            <div class="form-input column">
+                    @Html.Kendo().CheckBoxFor(m => m.IsVisibleInWeb).Label(Resource.VisibilityInPublicPart)
+            </div>
+
+            <div class="form-input quad">
+                @Html.LabelFor(m => m.StartDate, new { @class = "required" })
+                @Html.EditorFor(m => m.StartDate)
+                @Html.ValidationMessageFor(m => m.StartDate)
+            </div>
+
+            if (isEvent)
+            {
+                <div class="form-input quad">
+                    @Html.LabelFor(m => m.EndDate, new { @class = "required" })
+                    @Html.EditorFor(m => m.EndDate)
+                    @Html.ValidationMessageFor(m => m.EndDate)
+                </div>
+            }
+
+            <div class="form-input fullwidth">
+                @(Html.Kendo().ListView(Model.Pictures ?? new List<Attachment>())
+                                      .ClientTemplateId("picturesTemplateId")
+                                      .Name("Pictures")
+                                      .TagName("div")
+                                      .DataSource(dataSource => dataSource.PageSize(30).Model(m => { m.Id("UniqueId"); }).ServerOperation(false)))
+
+                @(Html.Kendo().Sortable()
+                                      .For("#Pictures")
+                                      .Filter("div.imageDiv")
+                                      .Cursor("move")
+                                      .PlaceholderHandler("publication.placeholderAttachmentPositionChange")
+                                      .HintHandler("publication.hintAttachmentPositionChange")
+                                      .Events(events => events.Change("publication.onAttachmentPositionChange")))
+
+                @(Html.Kendo().Upload()
+                                      .Name("imageUploader")
+                                      .HtmlAttributes(new { accept = ".jpg, .png, .jpeg", data_width = "780", data_height = "585" })
+                                      .Async(a => a
+                                                 .Save("Upload", "Attachment")
+                                                 .Remove("Remove", "Attachment")
+                                                 .AutoUpload(false))
+                                      .Events(e => e.Select("publication.onImageSelect").Success("publication.onPublicationAttachmentSuccessUpload"))
+                                      .ShowFileList(false)
+                                      .DropZone("#Pictures")
+                                      .Multiple(false)
+                                      .Validation(validation =>
+                                      {
+                                          validation.AllowedExtensions(new[] { ".jpg", ".png", ".jpeg" });
+                                          validation.MaxFileSize(10000000);
+                                      }))
+            </div>
+
+            <div class="clear"></div>
+            <div class="button-wrap fullwidth">
+                <button type="submit" class="bttn main caps right">@Resource.Save</button>
+                <button type="submit" class="bttn secondary caps right" name="preview" value="true">@Resource.Preview</button>
+            </div>
+            <div class="clear"></div>
+        }
+    </div>
+</div>

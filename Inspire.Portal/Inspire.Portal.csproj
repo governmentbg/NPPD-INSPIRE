@@ -1,0 +1,1185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{28D56A69-48A9-4786-A4CC-C3E3A0D1A077}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inspire.Portal</RootNamespace>
+    <AssemblyName>Inspire.Portal</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\tools\StyleCopConfiguration\stylecop.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.11.3.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.11.3\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.28.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.28\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageProcessor, Version=2.9.1.225, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.2.9.1\lib\net452\ImageProcessor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageProcessor.Web, Version=4.12.1.216, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.Web.4.12.1\lib\net452\ImageProcessor.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="jQuery.Validation.Unobtrusive.Native, Version=1.1.5809.17463, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jQuery.Validation.Unobtrusive.Native.MVC5.1.3.0\lib\net45\jQuery.Validation.Unobtrusive.Native.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kendo.Mvc, Version=2021.1.119.545, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\KENDOUIMVC\2021.1.119.545\Kendo.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.3.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.3.5\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.1.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.2\lib\net45\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.Owin, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.Owin.3.3.2\lib\net45\Ninject.Web.Common.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.2\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.3.0\lib\net45\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.5\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Web.4.9.3\lib\net35\NLog.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleImpersonation, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleImpersonation.3.0.0\lib\net46\SimpleImpersonation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.5.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BindersConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Areas\Admin\Controllers\BackgroundImagesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NonPriorityMetadataController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PriorityMetadataController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserLoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TransactionHistoryController.cs" />
+    <Compile Include="Areas\Admin\Models\NonPriorityMetadata\NonPriorityMetadataTableViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\PriorityMetadata\PriorityMetadataTableViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\NonPriorityMetadata\NonPriorityMetadataQueryModel.cs" />
+    <Compile Include="Areas\Admin\Models\PriorityMetadata\PriorityMetadataQueryModel.cs" />
+    <Compile Include="Areas\Admin\Models\TransactionHistory\TransactionHistoryTableViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\TransactionHistory\TransactionHistoryQueryModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserLogin\UserLoginQueryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserLogin\UserLoginTableViewModel.cs" />
+    <Compile Include="Controllers\GroupsViewController.cs" />
+    <Compile Include="Controllers\PollController.cs" />
+    <Compile Include="Controllers\ProviderController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GroupController.cs" />
+    <Compile Include="Areas\Admin\Models\Group\GroupForUser.cs" />
+    <Compile Include="Areas\Admin\Models\Group\GroupTableViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Group\GroupUpsertModel.cs" />
+    <Compile Include="Areas\Admin\Models\Queries\GroupQueryViewModel.cs" />
+    <Compile Include="Infrastructure\RouteConstraint\CmsUrlConstraint.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HistoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Models\Queries\RoleQueryModel.cs" />
+    <Compile Include="Areas\Admin\Models\Queries\UserQueryModel.cs" />
+    <Compile Include="Areas\Admin\Models\Role\Activity.cs" />
+    <Compile Include="Areas\Admin\Models\Role\RoleTableViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Role\RoleUpsertViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\User\ChangeStatus.cs" />
+    <Compile Include="Areas\Admin\Models\User\SetRoleUpsertModel.cs" />
+    <Compile Include="Areas\Admin\Models\User\UserTableViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\User\UserUpsertViewModel.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AttachmentController.cs" />
+    <Compile Include="Controllers\CmsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FaqController.cs" />
+    <Compile Include="Controllers\FileBrowserController.cs" />
+    <Compile Include="Controllers\ImageBrowserController.cs" />
+    <Compile Include="Controllers\PublicationController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Filters\CustomErrorHandler.cs" />
+    <Compile Include="Infrastructure\Attribute\DictionaryStringLengthAttribute.cs" />
+    <Compile Include="Infrastructure\Attribute\LocalizationFilterAttribute.cs" />
+    <Compile Include="Infrastructure\Attribute\LocalizationRequiredAttributeAdapter.cs" />
+    <Compile Include="Infrastructure\Cache\MemoryCacheService.cs" />
+    <Compile Include="Infrastructure\ObjectAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\RequestData\RequestData.cs" />
+    <Compile Include="Infrastructure\ResourceManager\ResourceManager.cs" />
+    <Compile Include="Infrastructure\UploadFileFactoryExt.cs" />
+    <Compile Include="Models\Account\ForgottenPasswordViewModel.cs" />
+    <Compile Include="Models\Account\LoginViewModel.cs" />
+    <Compile Include="Models\Account\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\Breadcrumb.cs" />
+    <Compile Include="Models\Cms\DropPositionType.cs" />
+    <Compile Include="Models\Cms\PageViewModel.cs" />
+    <Compile Include="Models\Cms\PageUpsertViewModel.cs" />
+    <Compile Include="Models\Error\ErrorViewModel.cs" />
+    <Compile Include="Models\Faq\FaqCategoryViewModel.cs" />
+    <Compile Include="Models\Faq\FaqQueryViewModel.cs" />
+    <Compile Include="Models\Faq\FaqTableViewModel.cs" />
+    <Compile Include="Models\Faq\FaqUpsertViewModel.cs" />
+    <Compile Include="Models\UISettingsViewModel.cs" />
+    <Compile Include="Models\GeoNetwork\Group\Category.cs" />
+    <Compile Include="Models\GeoNetwork\User\GeoNetworkAddress.cs" />
+    <Compile Include="Models\GeoNetwork\Group\GroupDTO.cs" />
+    <Compile Include="Models\GeoNetwork\User\GeoNetworkUser.cs" />
+    <Compile Include="Models\GeoNetwork\User\UserDTO.cs" />
+    <Compile Include="Models\GeoNetwork\Group\UserGroup.cs" />
+    <Compile Include="Models\GeoNetwork\Group\UserGroupId.cs" />
+    <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\Metadata\LeadThemeType.cs" />
+    <Compile Include="Models\Poll\OptionViewModel.cs" />
+    <Compile Include="Models\Poll\PollQueryViewModel.cs" />
+    <Compile Include="Models\Poll\PollResultViewModel.cs" />
+    <Compile Include="Models\Poll\PollTableViewModel.cs" />
+    <Compile Include="Models\Poll\PollViewModel.cs" />
+    <Compile Include="Models\Poll\QuestionViewModel.cs" />
+    <Compile Include="Models\Provider\ProviderPublicViewModel.cs" />
+    <Compile Include="Models\Provider\ProviderTableViewModel.cs" />
+    <Compile Include="Models\Provider\ProviderViewModel.cs" />
+    <Compile Include="Models\Publication\PublicationPublicViewModel.cs" />
+    <Compile Include="Models\Publication\PublicationQueryModel.cs" />
+    <Compile Include="Models\Publication\PublicationTableViewModel.cs" />
+    <Compile Include="Models\Publication\PublicationUpsertViewModel.cs" />
+    <Compile Include="Models\Search\SearchItemViewModel.cs" />
+    <Compile Include="Models\ApplicationRights.cs" />
+    <Compile Include="Models\UploadFile.cs" />
+    <Compile Include="Services\CaptchaService\ICaptchaService.cs" />
+    <Compile Include="Services\CaptchaService\ReCaptchaService.cs" />
+    <Compile Include="Services\RestApiService\IRestApiService.cs" />
+    <Compile Include="Services\RestApiService\RestApiService.cs" />
+    <Compile Include="Services\SessionStorageService\ISessionStorageService.cs" />
+    <Compile Include="Services\SessionStorageService\SessionStorageService.cs" />
+    <Compile Include="Services\StorageService\StorageService.cs" />
+    <Compile Include="Services\UserMailService\IUserMailService.cs" />
+    <Compile Include="Services\UserMailService\MailSender.cs" />
+    <Compile Include="Services\UserMailService\UserMailService.cs" />
+    <Compile Include="Utilities\ApplicationData.cs" />
+    <Compile Include="Utilities\BaseControllerExtension.cs" />
+    <Compile Include="Utilities\CamelCaseContractResolver.cs" />
+    <Compile Include="Utilities\LocalizationHelper.cs" />
+    <Compile Include="Utilities\ConfigurationReader.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\LocalizationControllerActivator.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\AuthenticationProvider\AuthenticationProvider.cs" />
+    <Compile Include="Infrastructure\AuthenticationProvider\IAuthenticationProvider.cs" />
+    <Compile Include="Infrastructure\AutoMapperProfile\AutoMapperProfile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\PublicContentHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Templates\RegistrationMessageTemplate.html" />
+    <Content Include="App_Data\Templates\RequestNewPasswordTemplate.html" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\User\Upsert.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_Scripts.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Upsert.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\_Scripts.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_TableTemplate.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ChangeStatus.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\_TableTemplate.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_SetRole.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Info.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_TableControls.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\_TableControls.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\History\Index.cshtml" />
+    <Content Include="Content\cropper.css" />
+    <Content Include="Content\fancyrox.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\iti-i18n-code.css" />
+    <Content Include="Content\iti.css" />
+    <Content Include="Content\kendo\2021.1.119\Black\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Black\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Black\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Black\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Black\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Black\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Black\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Black\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Black\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Black\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Black\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Black\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Black\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Black\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\BlueOpal\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Bootstrap\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Default\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Default\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Default\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Default\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Default\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Default\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Default\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Default\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Default\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Default\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Default\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Default\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Default\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Default\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Fiori\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Flat\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Flat\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Flat\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Flat\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Flat\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Flat\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Flat\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Flat\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Flat\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Flat\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Flat\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Flat\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Flat\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Flat\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="Content\kendo\2021.1.119\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="Content\kendo\2021.1.119\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\HighContrast\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\images\back.png" />
+    <Content Include="Content\kendo\2021.1.119\images\kendoui.svg" />
+    <Content Include="Content\kendo\2021.1.119\images\wp8_icons.png" />
+    <Content Include="Content\kendo\2021.1.119\images\wp8_inverseicons.png" />
+    <Content Include="Content\kendo\2021.1.119\kendo.black.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.black.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.blueopal.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.blueopal.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.bootstrap-v4.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.bootstrap-v4.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.bootstrap.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.bootstrap.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-bootstrap.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-fiori.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-material.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-nova.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-office365.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.black.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.blueopal.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.bootstrap.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.default.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.fiori.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.flat.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.highcontrast.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.material.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.materialblack.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.metro.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.metroblack.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.moonlight.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.nova.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.office365.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.silver.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.uniform.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.default-v2.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.default-v2.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.default.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.default.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.fiori.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.fiori.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.flat.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.flat.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.highcontrast.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.highcontrast.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.material-v2.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.material-v2.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.material.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.material.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.materialblack.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.materialblack.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.metro.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.metro.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.metroblack.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.metroblack.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.all.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.android.dark.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.android.light.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.blackberry.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.common.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.fiori.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.flat.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.ios.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.material.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.meego.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.nova.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.office365.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.wp8.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.moonlight.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.moonlight.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.nova.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.nova.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.office365.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.office365.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.rtl.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.silver.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.silver.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.uniform.min.css" />
+    <Content Include="Content\kendo\2021.1.119\kendo.uniform.mobile.min.css" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\MaterialBlack\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Material\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Material\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Material\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Material\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Material\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Material\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Material\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Material\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Material\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Material\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Material\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Material\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Material\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Material\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\MetroBlack\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Metro\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Metro\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Metro\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Metro\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Metro\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Metro\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Metro\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Metro\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Metro\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Metro\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Metro\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Metro\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Metro\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Metro\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Moonlight\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Nova\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Nova\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Nova\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Nova\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Nova\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Nova\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Nova\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Nova\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Nova\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Nova\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Nova\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Nova\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Nova\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Nova\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Office365\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Office365\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Office365\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Office365\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Office365\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Office365\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Office365\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Office365\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Office365\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Office365\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Office365\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Office365\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Office365\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Office365\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Silver\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Silver\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Silver\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Silver\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Silver\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Silver\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Silver\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Silver\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Silver\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Silver\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Silver\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Silver\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Silver\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Silver\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\brushed-metal.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots1.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots10.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots11.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots12.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots13.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots2.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots3.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots4.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots5.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots6.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots7.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots8.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\dots9.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\glass-lighter.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\glass.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\highlight.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\hsv-gradient.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\hue.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\image-default.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\leather1.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\leather2.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\noise.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\stripe1.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\stripe2.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\stripe3.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\stripe4.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\stripe5.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\stripe6.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\transparency-reversed.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\transparency.png" />
+    <Content Include="Content\kendo\2021.1.119\textures\transtexture.png" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\editor.png" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\imagebrowser.png" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\indeterminate.gif" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\loading-image.gif" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\loading.gif" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\loading_2x.gif" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\markers.png" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\markers_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\slider-h.gif" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\slider-v.gif" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\sprite.png" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\sprite_2x.png" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\sprite_kpi.png" />
+    <Content Include="Content\kendo\2021.1.119\Uniform\sprite_kpi_2x.png" />
+    <Content Include="Fonts\fontawesome-webfont.svg" />
+    <Content Include="Fonts\INSPIRE-themes.svg" />
+    <Content Include="Images\grayscale.svg" />
+    <Content Include="Content\ie7.css" />
+    <Content Include="Content\ie8.css" />
+    <Content Include="Content\ie9.css" />
+    <Content Include="Content\kendo.custom.css" />
+    <Content Include="Content\magnific-popup.css" />
+    <Content Include="Content\normalize.css" />
+    <Content Include="Content\owl.carousel.min.css" />
+    <Content Include="Content\perfect-scrollbar.css" />
+    <Content Include="Content\style.custom.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Fonts\arialbgb_0-webfont.svg" />
+    <Content Include="Fonts\arialbgi_0-webfont.svg" />
+    <Content Include="Fonts\arialbgz_0-webfont.svg" />
+    <Content Include="Fonts\arialbg_0-webfont.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\arrowblack.png" />
+    <Content Include="Images\arrowblack2.png" />
+    <Content Include="Images\bulgarian_lion.png" />
+    <Content Include="Images\check.svg" />
+    <Content Include="Images\favicon.png" />
+    <Content Include="Images\favicon_invert.png" />
+    <Content Include="Images\inspire.png" />
+    <Content Include="Images\lang_bg.png" />
+    <Content Include="Images\lang_bg.svg" />
+    <Content Include="Images\lang_en.png" />
+    <Content Include="Images\lang_en.svg" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\logoshare.jpg" />
+    <Content Include="Images\logo_END.png" />
+    <Content Include="Images\noimage.png" />
+    <Content Include="Images\top.jpg" />
+    <Content Include="Images\top2.jpg" />
+    <Content Include="Images\_social.png" />
+    <Content Include="Images\_sprite.svg">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Readme.txt" />
+    <Content Include="Scripts\cachesvg.js" />
+    <Content Include="Scripts\core.js" />
+    <Content Include="Scripts\cropper.min.js" />
+    <Content Include="Scripts\fancyrox.min.js" />
+    <Content Include="Scripts\html5shiv.js" />
+    <Content Include="Areas\Admin\Views\Group\Upsert.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\_TableControls.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\_TableTemplate.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\_Scripts.cshtml" />
+    <Content Include="App_Data\Geonetwork\SearchInfo.json" />
+    <Content Include="App_Data\Geonetwork\SearchScoreConfig.json" />
+    <Content Include="App_Data\Geonetwork\SearchAutocompleteConfig.json" />
+    <Content Include="App_Data\Geonetwork\SearchLeadThemesConfig.json" />
+    <Content Include="Scripts\jquery-3.5.1.js" />
+    <Content Include="Scripts\jquery-3.5.1.min.js" />
+    <Content Include="Scripts\jquery-cropper.min.js" />
+    <Content Include="Scripts\jquery.dirtyforms.js" />
+    <Content Include="Scripts\jquery.dirtyforms.min.js" />
+    <Content Include="Scripts\jquery.highlight.js" />
+    <Content Include="Scripts\jquery.magnific-popup.min.js" />
+    <Content Include="Fonts\INSPIRE-themes.ttf" />
+    <Content Include="Content\kendo\2021.1.119\kendo.black.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.black.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.blueopal.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.blueopal.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.bootstrap-v4.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.bootstrap.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.bootstrap.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-bootstrap.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-fiori.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-material.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-nova.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common-office365.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.common.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.black.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.blueopal.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.bootstrap.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.default.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.fiori.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.flat.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.highcontrast.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.material.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.materialblack.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.metro.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.metroblack.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.moonlight.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.nova.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.office365.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.silver.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.dataviz.uniform.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.default-v2.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.default.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.default.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.fiori.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.fiori.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.flat.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.flat.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.highcontrast.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.highcontrast.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.material-v2.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.material.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.material.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.materialblack.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.materialblack.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.metro.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.metro.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.metroblack.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.metroblack.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.all.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.android.dark.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.android.light.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.blackberry.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.common.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.fiori.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.flat.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.ios.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.material.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.meego.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.nova.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.office365.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.mobile.wp8.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.moonlight.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.moonlight.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.nova.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.nova.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.office365.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.office365.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.rtl.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.silver.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.silver.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.uniform.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\kendo.uniform.mobile.min.css.map" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\DejaVu\DejaVuSerif.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\glyphs\KendoUIGlyphs.eot" />
+    <Content Include="Content\kendo\2021.1.119\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\glyphs\KendoUIGlyphs.woff" />
+    <Content Include="Content\kendo\2021.1.119\fonts\glyphs\WebComponentsIcons.eot" />
+    <Content Include="Content\kendo\2021.1.119\fonts\glyphs\WebComponentsIcons.ttf" />
+    <Content Include="Content\kendo\2021.1.119\fonts\glyphs\WebComponentsIcons.woff" />
+    <Content Include="Content\kendo\2021.1.119\images\kendoui.ttf" />
+    <Content Include="Content\kendo\2021.1.119\images\kendoui.woff" />
+    <Content Include="App_Data\Geonetwork\InspireThemes.json" />
+    <Content Include="Fonts\arialbgb_0-webfont.woff" />
+    <Content Include="Fonts\arialbgb_0-webfont.woff2" />
+    <Content Include="Fonts\arialbgi_0-webfont.woff" />
+    <Content Include="Fonts\arialbgi_0-webfont.woff2" />
+    <Content Include="Fonts\arialbgz_0-webfont.woff" />
+    <Content Include="Fonts\arialbgz_0-webfont.woff2" />
+    <Content Include="Fonts\arialbg_0-webfont.woff" />
+    <Content Include="Fonts\arialbg_0-webfont.woff2" />
+    <Content Include="Fonts\INSPIRE-themes.eot" />
+    <Content Include="Fonts\INSPIRE-themes.woff" />
+    <Content Include="Areas\Admin\Views\TransactionHistory\_TableTemplate.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_MetadataTableTemplate.cshtml" />
+    <Content Include="Fonts\fontawesome-webfont.eot" />
+    <Content Include="Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Fonts\fontawesome-webfont.woff" />
+    <Content Include="Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Fonts\FontAwesome.otf" />
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Production.pubxml" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
+    <Content Include="Scripts\jquery.touchSwipe.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\cultures\kendo.culture.bg-BG.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\cultures\kendo.culture.en-US.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\jszip.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\cultures\kendo.culture.bg-BG.min.js.map" />
+    <Content Include="Scripts\kendo\2021.1.119\cultures\kendo.culture.en-US.min.js.map" />
+    <Content Include="Scripts\kendo\2021.1.119\kendo.all.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\kendo.mobile.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\kendo.timezones.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\messages\kendo.messages.bg-BG.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\messages\kendo.messages.en-US.min.js" />
+    <Content Include="Scripts\kendo\2021.1.119\pako_deflate.min.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\perfect-scrollbar.min.js" />
+    <Content Include="Scripts\validate.globalize.js" />
+    <Content Include="Scripts\validate.messages.bg-BG.js" />
+    <Content Include="Scripts\validate.messages.en-US.js" />
+    <Content Include="Views\Shared\_Notifications.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PositiveCurrency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PositiveInteger.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PositiveLong.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PositiveNumber.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DecimalFormatAndStep.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\NullableBool.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Double.cshtml" />
+    <Content Include="tsconfig.json" />
+    <Content Include="Views\Shared\EditorTemplates\QueryDropDownList.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\QueryMultiSelect.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Shared\_Breadcrums.cshtml" />
+    <Content Include="Views\Publication\Upsert.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Publication\_TableTemplate.cshtml" />
+    <Content Include="Views\Home\_LatestNews.cshtml" />
+    <Content Include="Views\Home\_LatestEvents.cshtml" />
+    <Content Include="Scripts\globalize.0.1.3\cultures\globalize.culture.bg-BG.js" />
+    <Content Include="Scripts\globalize.0.1.3\cultures\globalize.culture.en-US.js" />
+    <Content Include="Scripts\globalize.0.1.3\globalize.js" />
+    <Content Include="Scripts\kendo.modernizr.custom.js" />
+    <None Include="..\tools\StyleCopConfiguration\stylecop.json">
+      <Link>stylecop.json</Link>
+    </None>
+    <Content Include="..\tools\StyleCopConfiguration\stylecop.ruleset">
+      <Link>stylecop.ruleset</Link>
+    </Content>
+    <Content Include="Scripts\modernizr-custom.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\InternationalizationTextBox.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\InternationalizationEditor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Editor.cshtml" />
+    <Content Include="Views\Publication\Publications.cshtml" />
+    <Content Include="Views\Publication\Info.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\QueryCascadeDropDownList.cshtml" />
+    <Content Include="Views\Publication\_TableControls.cshtml" />
+    <Content Include="Views\Account\_ForgottenPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Setting\UpsertUISettings.cshtml" />
+    <Content Include="Views\Search\_SearchForm.cshtml" />
+    <Content Include="Views\Search\SearchResult.cshtml" />
+    <Content Include="Views\Shared\_UsersControl.cshtml" />
+    <Content Include="Views\Shared\_Captcha.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\QueryFilterDropDown.cshtml" />
+    <Content Include="Views\Cms\Render.cshtml" />
+    <Content Include="Views\Cms\Upsert.cshtml" />
+    <Content Include="Views\Cms\Index.cshtml" />
+    <Content Include="Views\Faq\_TableControls.cshtml" />
+    <Content Include="Views\Faq\_TableTemplate.cshtml" />
+    <Content Include="Views\Faq\Upsert.cshtml" />
+    <Content Include="Views\Faq\ManageCategory.cshtml" />
+    <Content Include="Views\Home\Faq.cshtml" />
+    <Content Include="Views\Provider\Upsert.cshtml" />
+    <Content Include="Views\Provider\_TableControls.cshtml" />
+    <Content Include="Views\Provider\_TableTemplate.cshtml" />
+    <Content Include="Views\Home\_Search.cshtml" />
+    <Content Include="Views\Home\_InspireThemes.cshtml" />
+    <Content Include="Views\Home\_LeadThemes.cshtml" />
+    <Content Include="Views\Home\_MatadataCollection.cshtml" />
+    <Content Include="Areas\Admin\Views\BackgroundImages\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BackgroundImages\_Upsert.cshtml" />
+    <Content Include="Views\Shared\_HeaderMenu.cshtml" />
+    <Content Include="Views\Home\_Providers.cshtml" />
+    <Content Include="Views\GroupsView\Index.cshtml" />
+    <Content Include="Views\GroupsView\Info.cshtml" />
+    <Content Include="Views\Poll\_TableTemplate.cshtml" />
+    <Content Include="Views\Poll\_TableControls.cshtml" />
+    <Content Include="Views\Poll\Upsert.cshtml" />
+    <Content Include="Views\Poll\UpsertQuestion.cshtml" />
+    <Content Include="Views\Poll\_EditOption.cshtml" />
+    <Content Include="Views\Poll\ChangeDates.cshtml" />
+    <Content Include="Views\Faq\UpsertCategory.cshtml" />
+    <Content Include="Scripts\kendo\2021.1.119\kendo.all.min.js.map" />
+    <Content Include="Scripts\kendo\2021.1.119\kendo.aspnetmvc.min.js.map" />
+    <Content Include="Scripts\kendo\2021.1.119\kendo.mobile.min.js.map" />
+    <Content Include="Scripts\kendo\2021.1.119\kendo.timezones.min.js.map" />
+    <Content Include="Scripts\kendo\2021.1.119\messages\kendo.messages.bg-BG.min.js.map" />
+    <Content Include="Scripts\kendo\2021.1.119\messages\kendo.messages.en-US.min.js.map" />
+    <Content Include="Views\Shared\EditorTemplates\InternationalizationTextArea.cshtml" />
+    <Content Include="Views\Poll\Poll.cshtml" />
+    <Content Include="Views\Poll\Polls.cshtml" />
+    <Content Include="Views\Poll\PollResult.cshtml" />
+    <Content Include="Views\Home\_FaqResult.cshtml" />
+    <None Include="Web.Production.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Test.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_GlobalResources\Resource.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_GlobalResources\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Areas\Admin\Scripts\Controllers\Group\Group.ts" />
+    <TypeScriptCompile Include="Areas\Admin\Scripts\Controllers\History\History.ts" />
+    <TypeScriptCompile Include="Areas\Admin\Scripts\Controllers\User\User.ts" />
+    <TypeScriptCompile Include="Areas\Admin\Scripts\Controllers\Role\Role.ts" />
+    <TypeScriptCompile Include="Areas\Admin\Scripts\Controllers\BackgroundImages\BackgroundImages.ts" />
+    <TypeScriptCompile Include="Scripts\Controllers\Cms\Cms.ts" />
+    <TypeScriptCompile Include="Scripts\Controllers\Faq\Faq.ts" />
+    <TypeScriptCompile Include="Scripts\Controllers\Home\Home.ts" />
+    <TypeScriptCompile Include="Scripts\Controllers\Poll\Poll.ts" />
+    <TypeScriptCompile Include="Scripts\Controllers\Provider\Provider.ts" />
+    <TypeScriptCompile Include="Scripts\Controllers\Publication\Publication.ts" />
+    <TypeScriptCompile Include="Scripts\gdpr.ts" />
+    <TypeScriptCompile Include="Scripts\typings\bootstrap-slider\index.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\cldr.js\cldr.js-event.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\cldr.js\cldr.js-supplemental.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\cldr.js\cldr.js.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\globalize\globalize-0.1.3.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\globalize\globalize.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery-validation-unobtrusive\jquery-validation-unobtrusive.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery.validation\jquery.validation.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\kendo-ui\kendo.all.d.ts" />
+    <TypeScriptCompile Include="Scripts\Utilities\Core.ts" />
+    <TypeScriptCompile Include="Scripts\Utilities\Notification.ts" />
+    <TypeScriptCompile Include="Scripts\Utilities\Resources.ts" />
+    <TypeScriptCompile Include="Scripts\Utilities\SearchTable.ts" />
+    <TypeScriptCompile Include="Scripts\Utilities\UsersControl.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Inspire.Common.Mvc\Inspire.Common.Mvc.csproj">
+      <Project>{39DC8A3D-5E21-4798-B859-37FC79A42482}</Project>
+      <Name>Inspire.Common.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Core\Inspire.Core.csproj">
+      <Project>{721330DE-8F7A-4A72-89A5-57595F1853B1}</Project>
+      <Name>Inspire.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Domain\Inspire.Domain.csproj">
+      <Project>{FD85D64F-083B-4B3D-B4FE-03DC15FDDE5E}</Project>
+      <Name>Inspire.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Infrastructure\Inspire.Infrastructure.csproj">
+      <Project>{63C87CEF-CE4E-4A4A-968E-F97715549FB4}</Project>
+      <Name>Inspire.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Model\Inspire.Model.csproj">
+      <Project>{83AE88F0-D973-41D2-B5E8-8DBBEAFD1F44}</Project>
+      <Name>Inspire.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Portal.IoC\Inspire.Portal.IoC.csproj">
+      <Project>{EC16DCD2-2B14-4571-8B96-943C8368BB62}</Project>
+      <Name>Inspire.Portal.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Service\Inspire.Service.csproj">
+      <Project>{19C5C355-0662-4451-8D10-A154359D8F9C}</Project>
+      <Name>Inspire.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Table.Mvc\Inspire.Table.Mvc.csproj">
+      <Project>{6207440c-0d71-45fc-bbc8-af12adf25c99}</Project>
+      <Name>Inspire.Table.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Utilities\Inspire.Utilities.csproj">
+      <Project>{23D3FBF4-49D3-44E6-9F6B-9FDC1EFA293E}</Project>
+      <Name>Inspire.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Scripts\Controllers\Setting\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>59241</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/Inspire.Portal</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties UseCdnSupport="False" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.BinFix.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.BinFix.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.BinFix.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.BinFix.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.BinFix.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.BinFix.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.BinFix.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.BinFix.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

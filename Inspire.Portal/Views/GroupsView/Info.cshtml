@@ -1,0 +1,73 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Utilities
+@using Inspire.Utilities.Extensions
+@model Inspire.Model.Group.Group
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="info-table">
+            <div class="info-row">
+                <div class="info-title">
+                    @Resource.Name
+                </div>
+                <div class="info-text">
+                    @Model.Names.GetValueForCurrentCulture()
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-title">
+                    @Resource.Email
+                </div>
+                <div class="info-text">
+                    @if (Model.Email.IsNotNullOrEmptyOrWhiteSpace())
+                    {
+                    <a href="mailto:@Model.Email">@Model.Email</a>
+                    }
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-title">
+                    @Resource.Bulstat
+                </div>
+                <div class="info-text">
+                    @Model.Bulstat
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-title">
+                    @Resource.ContactPerson
+                </div>
+                <div class="info-text">
+                    @Model.ContactPersons.GetValueForCurrentCulture()
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-title">
+                    @Resource.Website
+                </div>
+                <div class="info-text">
+                    @if (Model.Website.IsNotNullOrEmpty())
+                    {
+                    <a href="@Model.Website.GetValueForCurrentCulture()" target="_blank">@Model.Website.GetValueForCurrentCulture()</a>
+                    }
+
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-title">
+                    @Resource.Description
+                </div>
+                <div class="info-text">
+                    @Html.Raw(HttpUtility.HtmlDecode(Model.Description.GetValueForCurrentCulture()))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

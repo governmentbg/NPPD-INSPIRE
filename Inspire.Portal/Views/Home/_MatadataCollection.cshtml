@@ -1,0 +1,41 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Utilities
+@using Inspire.Utilities.Extensions
+@using Newtonsoft.Json.Linq
+@model Newtonsoft.Json.Linq.JObject
+@{
+    var total = Model?.SelectToken("hits.total")?.Value<int>("value");
+    if (total > 0)
+    {
+        <ul>
+            @foreach (var md in Model["hits"]["hits"].Select(item => item["_source"]))
+            {
+                var genetworkUrl = ConfigurationReader.GeoNetworkAddress.TrimEnd('/');
+                <li>
+                    <a href="@($"{genetworkUrl}/srv/eng/catalog.search#/metadata/{md["uuid"] ?? string.Empty}")">
+                        @{
+                            var inspireThemeUri = (md["inspireThemeUri"] as JArray)?.FirstOrDefault()?.ToString();
+                            if (inspireThemeUri.IsNotNullOrEmpty())
+                            {
+                                <i class="icon @($"iti-{inspireThemeUri.Substring(inspireThemeUri.LastIndexOf('/') + 1)}")"></i>
+                            }
+                            else
+                            {
+                                <span class="img-wrap"></span>
+                            }
+                        }
+                        <span class="right-side">
+                            <strong>
+                                @(md["resourceTitleObject"]?.Translate())
+                            </strong>
+                            <span class="flink">
+                                @Resource.LearnMore
+                            </span>
+                        </span>
+                    </a>
+                </li>
+
+            }
+        </ul>
+    }
+}

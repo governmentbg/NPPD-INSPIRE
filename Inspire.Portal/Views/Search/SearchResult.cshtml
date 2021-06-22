@@ -1,0 +1,78 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@using Microsoft.Ajax.Utilities
+@model IEnumerable<Inspire.Portal.Models.Search.SearchItemViewModel>
+@{
+    var query = ViewBag.Query as string;
+    var words = query?.Split(' ').Where(word => word.Length > 3).ToArray();
+
+    Model.ForEach(x =>
+    {
+        // Decoding the description, because it's may be returned as an html
+        x.Description = HttpUtility.HtmlDecode(x.Description);
+    });
+}
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+@section Scripts
+{
+    @Html.DynamicBundle("~/Scripts/jquery.highlight.js")
+    <script>
+        function highlightSearch(e) {
+            var words = @Html.Raw(Json.Encode(words));
+            if (words && words.length > 0) {
+                $('#searchResults').highlight(words);
+            } else {
+                $('#searchResults').unhighlight();
+            }
+        }
+    </script>
+}
+
+@section Styles
+{
+    <style>
+        .highlight { background: #FFCD69; }
+    </style>
+}
+
+
+<div class="center">
+    @if (Model.IsNotNullOrEmpty())
+    {
+        @(Html.Kendo().ListView(Model)
+              .Name("searchResults")
+              .TagName("ul")
+              .ClientTemplateId("searchResultTemplate")
+              .Pageable()
+              .Events(e => e.DataBound("highlightSearch"))
+              .DataSource(dataSource => dataSource
+                              .PageSize(20)
+                              .ServerOperation(false)))
+    }
+    else
+    {
+        @Resource.NoDataFound
+    }
+</div>
+
+<script id="searchResultTemplate" type="text/x-kendo-tmpl">
+    <li>
+        <div class="searchTitle">
+            <a href="#: Url ? Url : '\\#' #" style="display:block;">
+                #: Group ? Group : '' #: #: Name ? Name : '' #
+            </a>
+        </div>
+        <div class="searchContent">
+            #= Description ? Description : '' #
+        </div>
+    </li>
+</script>

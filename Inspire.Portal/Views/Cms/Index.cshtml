@@ -1,0 +1,79 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models.Cms
+@using Kendo.Mvc.UI
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+@section Scripts
+{
+    @Html.DynamicBundle("~/Scripts/Controllers/Cms/Cms.js")
+    <script type="text/x-kendo-template" id="pageTitleTemplate">
+        <span class="k-icon #: cms.getPageVisibilityTypeIcon(Visibility) #"></span>
+        <span class="k-icon #: cms.getPageTypeIcon(PageType) #"></span>
+        #: Title #
+    </script>
+    <script type="text/x-kendo-template" id="pageToolbarTemplate">
+        <a href="@Url.Action("Upsert")" title="@Resource.Create" class="bttn bttn-option">
+            <svg class="icon">
+                <use xlink:href="\\#icon-plus"></use>
+            </svg>
+            @Resource.Create
+        </a>
+        <span class="k-textbox k-grid-search k-display-flex right">
+            <input autocomplete="off" placeholder="@($"{Resource.Search}...")" title="@($"{Resource.Search}...")" class="k-input">
+            <span class="k-input-icon">
+                <span class="k-icon k-i-search"></span>
+            </span>
+        </span>
+    </script>
+    <script type="text/x-kendo-template" id="pageMenuColumnTemplate">
+        <div class="btn-with-content inline">
+            <a href="\\#" class="dropdown-trigger">
+                <svg class="icon currentColor">
+                    <use xlink: href="\\#dots"></use>
+                </svg>
+            </a>
+            <ul>
+                <li>
+                    <a href="@Url.Action("Upsert")?id=#: Id #">@Resource.Edit</a>
+                </li>
+                <li>
+                    <a href="\\#" class="page-remove-js">@Resource.Remove</a>
+                </li>
+                <li>
+                    <a href="\\#" class="copy-link-js">@Resource.CopyLink</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Upsert")?parentId=#: Id #">@($"{Resource.Add} {Resource.Subpage.ToLower()}")</a>
+                </li>
+            </ul>
+        </div>
+    </script>
+}
+
+<div class="center">
+    @(Html.Kendo().TreeList<PageViewModel>()
+                .Name("pages")
+                .HtmlAttributes(new { @class = "overwrite-table pages" })
+                .Columns(columns =>
+                {
+                    columns.Add().Field(f => f.Title).Title(Resource.Page).TemplateId("pageTitleTemplate");
+                    columns.Add().TemplateId("pageMenuColumnTemplate").Width(50);
+                })
+                .Editable(editable => editable.Move(move => move.Reorderable(true)))
+                .Events(e => e.Drop("cms.onDrop"))
+                .DataSource(d => d.Read("ReadAllPages", "Cms")
+                                .ServerOperation(false)
+                                .Model(m =>
+                                {
+                                    m.Id(f => f.DbId);
+                                    m.ParentId(f => f.ParentDbId).Nullable(true);
+                                    m.Expanded(true);
+                                }))
+    )
+</div>

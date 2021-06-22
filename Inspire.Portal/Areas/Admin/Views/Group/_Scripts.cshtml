@@ -1,0 +1,10 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@{
+    var controller = ViewContext.Controller;
+    var controllerName = controller.GetControllerName();
+    var area = CustomHelpers.GetControllerArea(ViewContext.Controller.GetType());
+
+    var jsFile = new List<string> { $"~/Areas/{area}/Scripts/Controllers/{controllerName}/{controllerName}.js" };
+}
+
+@Html.DynamicBundle(jsFile.ToArray())

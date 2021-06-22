@@ -1,0 +1,47 @@
+﻿@using Inspire.Model.Publication
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models.Publication
+@using Kendo.Mvc.UI
+@model IEnumerable<Inspire.Portal.Models.Publication.PublicationPublicViewModel>
+@{
+    var type = (PublicationType)ViewBag.PublicationType;
+    var typeName = Enum.GetName(typeof(PublicationType), type);
+}
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+<div class="itemlist columns @(typeName.ToLower())">
+    @(Html.Kendo().ListView<PublicationPublicViewModel>()
+          .Name("publicationsListView")
+          .TagName("ul")
+          .Bordered(false)
+          .Borders("none")
+          .BindTo(Model)
+          .Pageable(p => p.PreviousNext(true))
+          .DataSource(d => d.ServerOperation(false).PageSize(20))
+          .ClientTemplateId("publicationsListViewId"))
+</div>
+
+<script id="publicationsListViewId" type="text/x-kendo-tmpl">
+    <li class="">
+        <a href="@Url.Action("Info", "Publication")/?id=#=Id#">
+            <span class="n-date">
+                #: data.Date #
+            </span>
+            <span class="right-side">
+                <strong>#: data.Title #</strong>
+                <span class="text">
+                    #: data.Content #
+                </span>
+                <span class="flink">
+                    @Resource.LearnMore
+                </span>
+            </span>
+        </a>
+    </li>
+</script>

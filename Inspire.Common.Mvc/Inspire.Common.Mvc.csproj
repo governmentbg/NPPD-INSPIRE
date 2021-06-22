@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{39DC8A3D-5E21-4798-B859-37FC79A42482}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inspire.Common.Mvc</RootNamespace>
+    <AssemblyName>Inspire.Common.Mvc</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\tools\StyleCopConfiguration\stylecop.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.8.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.8\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.0.8, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.3.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleImpersonation, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleImpersonation.3.0.0\lib\net46\SimpleImpersonation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.5.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bundle\CustomCssRewriteUrlTransform.cs" />
+    <Compile Include="Bundle\CustomStyleBundleBuilder.cs" />
+    <Compile Include="Bundle\CustomJsBundleBuilder.cs" />
+    <Compile Include="Bundle\SkipFileTransform.cs" />
+    <Compile Include="Bundle\CustomStyleBundle.cs" />
+    <Compile Include="Bundle\CustomScriptBundle.cs" />
+    <Compile Include="Bundle\SyncBundleOrder.cs" />
+    <Compile Include="Email\Email.cs" />
+    <Compile Include="Enums\MessageType.cs" />
+    <Compile Include="Enums\SelectOperationType.cs" />
+    <Compile Include="Extensions\ControllerBaseExt.cs" />
+    <Compile Include="Extensions\DeepCopyExtension.cs" />
+    <Compile Include="Extensions\HtmlHelperExt.cs" />
+    <Compile Include="Extensions\ListExt.cs" />
+    <Compile Include="Extensions\ModelStateDictionaryExt.cs" />
+    <Compile Include="Extensions\RouteValueDictionaryExt.cs" />
+    <Compile Include="Extensions\TypeExt.cs" />
+    <Compile Include="Extensions\UrlHelperExt.cs" />
+    <Compile Include="Extensions\WebViewPageExt.cs" />
+    <Compile Include="Filters\AntiForgeryTokenFilter.cs" />
+    <Compile Include="Filters\ControllerAreaAttribute.cs" />
+    <Compile Include="Filters\CustomAuthorize\AndNode.cs" />
+    <Compile Include="Filters\CustomAuthorize\BinaryNode.cs" />
+    <Compile Include="Filters\CustomAuthorize\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Filters\CustomAuthorize\Node.cs" />
+    <Compile Include="Filters\CustomAuthorize\NotNode.cs" />
+    <Compile Include="Filters\CustomAuthorize\OrNode.cs" />
+    <Compile Include="Filters\CustomAuthorize\RoleNode.cs" />
+    <Compile Include="Filters\CustomAuthorize\UnaryNode.cs" />
+    <Compile Include="Filters\CustomAuthorize\XorNode.cs" />
+    <Compile Include="Filters\CustomErrorHandler.cs" />
+    <Compile Include="Filters\DisableCacheAttribute.cs" />
+    <Compile Include="Filters\MessagesFilter.cs" />
+    <Compile Include="Filters\RegularExpressionWithOptionsAttribute.cs" />
+    <Compile Include="Filters\SkipCSRFCheckAttribute.cs" />
+    <Compile Include="Helpers\CustomHelpers.cs" />
+    <Compile Include="Infrastructure\BaseTypes\BaseController.cs" />
+    <Compile Include="Infrastructure\BaseTypes\BaseDbController.cs" />
+    <Compile Include="Infrastructure\BaseViews\BaseViewPage.cs" />
+    <Compile Include="Infrastructure\BaseViews\BaseViewPageGeneric.cs" />
+    <Compile Include="Infrastructure\CustomResult\JsonResultMaxLength.cs" />
+    <Compile Include="Infrastructure\ModelBinders\DateTimeBinder.cs" />
+    <Compile Include="Infrastructure\ModelBinders\DecriptModelBinderAttribute.cs" />
+    <Compile Include="Infrastructure\ModelBinders\DecryptPropertyBindAttribute.cs" />
+    <Compile Include="Infrastructure\ModelBinders\ExtendedModelBinder.cs" />
+    <Compile Include="Infrastructure\ModelBinders\PropertyBindAttribute.cs" />
+    <Compile Include="Infrastructure\ModelBinders\TimeSpanBinder.cs" />
+    <Compile Include="Infrastructure\ModelBinders\DecimalModelBinder.cs" />
+    <Compile Include="Infrastructure\ModelBinders\DoubleModelBinder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProviderFactories\JsonDotNetValueProviderFactory.cs" />
+    <Compile Include="Utilities\Cryptography.cs" />
+    <Compile Include="Utilities\FileOperator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\tools\StyleCopConfiguration\stylecop.json">
+      <Link>stylecop.json</Link>
+    </None>
+    <None Include="..\tools\StyleCopConfiguration\stylecop.ruleset">
+      <Link>stylecop.ruleset</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Inspire.Core\Inspire.Core.csproj">
+      <Project>{721330de-8f7a-4a72-89a5-57595f1853b1}</Project>
+      <Name>Inspire.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Model\Inspire.Model.csproj">
+      <Project>{83AE88F0-D973-41D2-B5E8-8DBBEAFD1F44}</Project>
+      <Name>Inspire.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Utilities\Inspire.Utilities.csproj">
+      <Project>{23d3fbf4-49d3-44e6-9f6b-9fdc1efa293e}</Project>
+      <Name>Inspire.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

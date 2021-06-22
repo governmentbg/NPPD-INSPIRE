@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FD85D64F-083B-4B3D-B4FE-03DC15FDDE5E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inspire.Domain</RootNamespace>
+    <AssemblyName>Inspire.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\tools\StyleCopConfiguration\stylecop.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IGeonetworkRepository.cs" />
+    <Compile Include="Repositories\ITransactionHistoryRepository.cs" />
+    <Compile Include="Repositories\IAccountRepository.cs" />
+    <Compile Include="Repositories\IAdminRepository.cs" />
+    <Compile Include="Repositories\IAttachmentRepository.cs" />
+    <Compile Include="Repositories\ICmsRepository.cs" />
+    <Compile Include="Repositories\IDbManager.cs" />
+    <Compile Include="Repositories\IEmailRepository.cs" />
+    <Compile Include="Repositories\IFaqRepository.cs" />
+    <Compile Include="Repositories\IGroupRepository.cs" />
+    <Compile Include="Repositories\IHistoryRepository.cs" />
+    <Compile Include="Repositories\ILogRepository.cs" />
+    <Compile Include="Repositories\INomenclatureRepository.cs" />
+    <Compile Include="Repositories\IPollRepository.cs" />
+    <Compile Include="Repositories\IProviderRepository.cs" />
+    <Compile Include="Repositories\IPublicationRepository.cs" />
+    <Compile Include="Repositories\IRoleRepository.cs" />
+    <Compile Include="Repositories\ISearchRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Services\IGeonetworkService.cs" />
+    <Compile Include="Services\ITransactionHistoryService.cs" />
+    <Compile Include="Services\IAccountService.cs" />
+    <Compile Include="Services\IAdminService.cs" />
+    <Compile Include="Services\ICmsService.cs" />
+    <Compile Include="Services\IEmailService.cs" />
+    <Compile Include="Services\IFaqService.cs" />
+    <Compile Include="Services\IGroupService.cs" />
+    <Compile Include="Services\IHistoryService.cs" />
+    <Compile Include="Services\ILogService.cs" />
+    <Compile Include="Services\IMailSender.cs" />
+    <Compile Include="Services\INomenclatureService.cs" />
+    <Compile Include="Services\IPollService.cs" />
+    <Compile Include="Services\IProviderService.cs" />
+    <Compile Include="Services\IPublicationService.cs" />
+    <Compile Include="Services\IRoleService.cs" />
+    <Compile Include="Services\ISearchService.cs" />
+    <Compile Include="Services\IStorageService.cs" />
+    <Compile Include="Services\IUserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\tools\StyleCopConfiguration\stylecop.json">
+      <Link>stylecop.json</Link>
+    </None>
+    <None Include="..\tools\StyleCopConfiguration\stylecop.ruleset">
+      <Link>stylecop.ruleset</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Inspire.Core\Inspire.Core.csproj">
+      <Project>{721330de-8f7a-4a72-89a5-57595f1853b1}</Project>
+      <Name>Inspire.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Model\Inspire.Model.csproj">
+      <Project>{83AE88F0-D973-41D2-B5E8-8DBBEAFD1F44}</Project>
+      <Name>Inspire.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Utilities\Inspire.Utilities.csproj">
+      <Project>{23d3fbf4-49d3-44e6-9f6b-9fdc1efa293e}</Project>
+      <Name>Inspire.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

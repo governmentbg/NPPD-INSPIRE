@@ -1,0 +1,111 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@using Inspire.Portal.Models
+@{
+    var uiSettings = ViewBag.UISettings as UISettingsViewModel;
+}
+<input type="checkbox" id="respmenu" class="hidden" />
+<div class="overlay"></div>
+<header>
+    <div class="header-top">
+        <div class="center">
+            <div class="left">
+                <a href="//e-gov.bg" target="_blank">
+                    <img src="@Url.Content("~/Images/bulgarian_lion.png")" alt="lion" />
+                    <span class="ctrl">www.e-gov.bg -  @Resource.DAEU</span>
+                </a>
+            </div>
+            <div class="right">
+                @{
+                    Html.RenderDynamicAction("HeaderMenu", typeof(HomeController));
+                }
+                <div class="ib ht-section hts2">
+                    <a href="#settings-pop" class="settings ctrl">
+                        @Resource.Settings
+                    </a>
+                </div>
+                <div class="ib ht-section hts3 ctrl">
+                    <span class="ctrl">@Resource.Font:</span> &nbsp;
+                    <a href="#size-up" id="up" class="ctrl text-up">A+</a>&nbsp;&nbsp;
+                    <a href="#clear" class="ctrl reset_text">A</a>&nbsp;&nbsp;
+                    <a href="#size-down" id="dn" class="ctrl text-down">A-</a>
+                </div>
+                <div class="ib ht-section hts4 lang">
+                    @{
+                        for (var i = 0; i < Global.AllowCultures.Length; i++)
+                        {
+                            var culture = Global.AllowCultures[i];
+                            var name = Resource.ResourceManager.GetString(culture.TwoLetterISOLanguageName.ToUpper());
+                            var title = culture.TwoLetterISOLanguageName.ToLower();
+                            if (CurrentCulture.TwoLetterISOLanguageName == culture.TwoLetterISOLanguageName)
+                            {
+                                <span>@title</span>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("ChangeCulture", "Home", new { Area = string.Empty, lang = culture.TwoLetterISOLanguageName })" title="@name">
+                                    @title
+                                </a>
+                            }
+
+                            if (i + 1 < Global.AllowCultures.Length)
+                            {
+                                @: /
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="header-bottom">
+        <div class="center">
+            <a href="@Url.RouteUrl("Default", new { controller = string.Empty, action = string.Empty, culture = CurrentCulture.TwoLetterISOLanguageName })" class="logo left">
+                <div class="logo-img">
+                    <img src="@Url.Content("~/Images/logo_END.png")" alt="no image">
+                </div>
+                <div class="logo-text">
+                    <span class="logo-heading">@(uiSettings?.PortalNameByCulture?.ToUpper())</span>
+                    <span class="logo-heading-sub">@(uiSettings?.PortalSubNameByCulture)</span>
+                </div>
+            </a>
+            <label id="respbtn" for="respmenu">
+                <span></span><span></span><span></span>
+            </label>
+            @{
+                Html.RenderDynamicAction("Menu", typeof(HomeController));
+            }
+            <div class="clear"></div>
+        </div>
+    </div>
+</header>
+<div class="clear"></div>
+<div id="settings-pop" class="hidden settings-popup">
+    <article>
+        <h2>
+            @Resource.Font:
+        </h2>
+        <p style="font-size: 18px;">
+            <a href="#size-up" id="up" class="bttn text-up">A+</a>&nbsp;
+            &nbsp;<a href="#clear" class="bttn reset_text">A</a>&nbsp;
+            &nbsp;<a href="#size-down" id="dn" class="bttn text-down">A-</a>
+        </p>
+        <br>
+        <h2>@Resource.ColorScheme:</h2>
+        <button class="bttn autosize style-change" title="@Resource.ChangeColorScheme" data-style="">@Resource.Classic</button>
+        <button class="bttn bw autosize style-change" title="@Resource.ChangeColorScheme" data-style="bw">@Resource.BlackWhiteColorScheme</button>
+        <button class="bttn wb autosize style-change" title="@Resource.ChangeColorScheme" data-style="wb">@Resource.WhiteBlackColorScheme</button>
+        <button class="bttn gs autosize style-change" title="@Resource.ChangeColorScheme" data-style="gs">@Resource.GrayColorScheme</button>
+        <button class="bttn gb autosize style-change" title="@Resource.ChangeColorScheme" data-style="gb">@Resource.BlackGreenColorScheme</button>
+        <button class="bttn md autosize style-change" title="@Resource.ChangeColorScheme" data-style="md">@Resource.YellowPurpleColorScheme</button>
+        <p>
+            <br>
+        </p>
+        <h2>@Resource.ForBlind:</h2>
+        <a id="blind" href="#" title="@($"{Resource.ForBlind} ({Resource.RemovePageStyles.ToLower()})")" class="bttn">
+            @Resource.RemovePageStyles
+        </a>
+    </article>
+</div>

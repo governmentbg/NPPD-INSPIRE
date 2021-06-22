@@ -1,0 +1,35 @@
+﻿@using Inspire.Portal.App_GlobalResources
+<div class="search-top right">
+    @using (Ajax.BeginForm(
+        "Search",
+        "Search",
+        new { Area = string.Empty },
+        new AjaxOptions
+        {
+            HttpMethod = "POST"
+        }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="elements-wrap">
+
+            @Html.TextBox(
+                "query",
+                null,
+                new
+                {
+                    type = "search",
+                    placeholder = $" {Resource.Search}...",
+                    data_val = "true",
+                    data_val_required = string.Format(Resource.Required, Resource.Search),
+                    data_rule_minlength = 3,
+                    data_msg_minlength = string.Format(Resource.StringMinLengthAttribute_ValidationError, Resource.Search, 3)
+                })
+            @Html.ValidationMessage("query")
+            <button type="submit" title="@Resource.Search">
+                <svg class="icon currentColor">
+                    <use xlink:href="#search-icon"></use>
+                </svg>
+            </button>
+        </div>
+    }
+</div>

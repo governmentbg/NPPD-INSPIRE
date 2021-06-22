@@ -1,0 +1,42 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc.UI
+@model IEnumerable<Inspire.Model.Attachment.Attachment>
+
+@section Scripts
+{
+    @Html.DynamicBundle("~/Areas/Admin/Scripts/Controllers/BackgroundImages/BackgroundImages.js")
+}
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+<div class="content-wrap">
+    <div class="button-wrap">
+        <a class="bttn blue openUploader-js" title="@Resource.Add">
+            @Resource.Add
+        </a>
+    </div>
+    @(Html.Kendo().ListView(Model)
+                  .Name("imageListView")
+                  .TagName("div")
+                  .ClientTemplateId("imageTemplate")
+                  .DataSource(s => s.WebApi().ServerOperation(false)))
+</div>
+
+
+<script type="text/x-kendo-tmpl" id="imageTemplate">
+    <div class="n-item">
+        <div class="bttn-wrap text-right">
+            <button class="bttn bttn-table openUploader-js" data-url="#: Url #">@Resource.Edit</button>
+            <button class="bttn bttn-table delete-background-image-js">@Resource.DeleteTitle</button>
+        </div>
+        <span class="img-wrap">
+            <img src="#: Url #" class="background-img-edit" alt="#: Name #" />
+        </span>
+    </div>
+</script>

@@ -1,0 +1,311 @@
+﻿@using System.Reflection
+@using Inspire.Common.Mvc.Helpers
+@using Inspire.Core.Infrastructure.Attribute
+@using Inspire.Table.Mvc.Helpers
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@{
+    List<Tuple<TableOptionsAttribute, Type, PropertyInfo>> tableColumns = SearchTableHelpers.GetPropertiesTableData(Model);
+    var serverOperation = ViewBag.ServerOperation is bool && (bool)ViewBag.ServerOperation;
+    var selectable = ViewBag.Selectable is bool && (bool)ViewBag.Selectable;
+    var searchQueryId = ViewBag.SearchQueryId as string;
+    var groupableColumns = ViewBag.GroupableColumns as List<string>;
+    var groupable = ViewBag.Groupable is bool && (bool)ViewBag.Groupable || groupableColumns.IsNotNullOrEmpty();
+    var controller = ViewContext.Controller;
+    var controllerType = controller.GetType();
+    var controllerName = controller.GetControllerName();
+    var area = CustomHelpers.GetControllerArea(controllerType);
+    var gridId = Guid.NewGuid().ToString();
+    var data = Model as IEnumerable<dynamic>;
+    var isSortable = ViewBag.IsSortable as bool?;
+    var jsController = controllerName.IsNotNullOrEmpty() ? char.ToLower(controllerName[0]) + controllerName.Substring(1) : "";
+}
+
+<script>
+
+    if (typeof siteBase === 'undefined' || !siteBase) {
+        window.siteBase = '@VirtualPathUtility.ToAbsolute("~/")';
+    }
+
+    if (typeof onGridDataBound !== 'function') {
+        window.onGridDataBound =
+            function(e) {
+                var grid = e.sender;
+                if (grid.options.selectable === true && grid.dataSource.total() > 0) {
+                    grid.select(e.sender.tbody.find('tr:first')); //селектиране на 1вия ред в таблицата след рендване
+                }
+            };
+    }
+
+    var templates = [];
+    if (typeof getClientTemplateById != 'function') {
+        window.getClientTemplateById = function(templateId, item) {
+            var isCached = templateId in templates;
+            var template = isCached ? templates[templateId] : null;
+            if (isCached === false) {
+                var templateElement = templateId ? $("#" + templateId) : null;
+                if (templateElement) {
+                    var templateHtml = templateElement.html();
+                    if (templateHtml) {
+                        template = kendo.template(templateHtml); // Render template
+                        templates[templateId] = template;
+                    }
+                }
+            }
+
+            return template ? template(item) : "";
+        };
+    }
+
+    if (typeof bindGridExportEvents != 'function') {
+        window.bindGridExportEvents = function(gridSelector) {
+
+            var exportSelector = kendo.format("{0} .export-js", gridSelector);
+
+            $(document).off("click", exportSelector);
+            $(document).on("click",
+                exportSelector,
+                function(e) {
+                    e.preventDefault();
+                    var sender = $(e.currentTarget);
+
+                    var grid = $(gridSelector).data("kendoGrid");
+                    if (grid.dataSource.view().length < 1) {
+                        if (notification && resources) {
+                            notification.displayMessage(resources.NoDataFound, "warning");
+                        }
+
+                        return;
+                    }
+
+                    var controller = sender.data("controller");
+                    var action = sender.data("action");
+                    var area = sender.data("area");
+                    var type = sender.data("type");
+                    var searchQueryId = grid.element.data("searchqueryid");
+
+                    // ask the parameterMap to create the request object for you
+                    var requestObject = (new kendo.data.transports["aspnetmvc-server"]({ prefix: "" }))
+                        .options.parameterMap({
+                            page: grid.dataSource.page(),
+                            sort: grid.dataSource.sort(),
+                            filter: grid.dataSource.filter(),
+                            group: grid.dataSource.group()
+                        });
+
+                    var params = $.param({
+                        searchqueryid: searchQueryId,
+                        type: type,
+                        pageSize: grid.dataSource._pageSize,
+                        page: requestObject.page || '1',
+                        sort: requestObject.sort || '~',
+                        filter: requestObject.filter || '~',
+                        group: requestObject.group || '~'
+                    });
+
+                    var areaData = "";
+                    if (area) {
+                        areaData = area + "/";
+                    }
+
+                    var url = siteBase + areaData + controller + "/" + action;
+                    if (core !== "undefined" && core.getPathToActionMethod !== "undefined") {
+                        url = core.getPathToActionMethod(action, controller, { area: area });
+                    }
+
+                    window.location.href = url + "?" + params;
+                });
+        };
+    }
+
+    if (typeof dateTimePickerFilter != 'function') {
+        window.dateTimePickerFilter = function(args) {
+            var element = null;
+            if (args["length"]) {
+                element = args.length > 0 ? args[0] : null;
+            } else if (args["element"]) {
+                element = args["element"];
+            }
+
+            if (element) {
+                $(element).kendoDateTimePicker();
+            }
+        };
+    }
+
+    if (typeof datePickerFilter != 'function') {
+        window.datePickerFilter = function(args) {
+            var element = null;
+            if (args["length"]) {
+                element = args.length > 0 ? args[0] : null;
+            } else if (args["element"]) {
+                element = args["element"];
+            }
+
+            if (element) {
+                $(element).kendoDatePicker();
+            }
+        };
+    }
+
+    if (typeof getSearchResultGrid != 'function') {
+        window.getSearchResultGrid = function(gridId) {
+            return $("#" + gridId).data("kendoGrid");
+        };
+    }
+
+    function placeholderHandler(element) {
+        return element.clone().addClass("k-state-hover").css("opacity", 0.65);
+    }
+</script>
+
+<div class="tableWrapper">
+    @{
+        var template = string.Empty;
+        if (data != null)
+        {
+            var genericArgument = data.GetType().GetGenericArguments()[0];
+            var dnAttribute = genericArgument.GetCustomAttributes(typeof(ClientTemplateAttribute), true).FirstOrDefault();
+            if (dnAttribute != null)
+            {
+                template = genericArgument.GetAttributeValue((ClientTemplateAttribute ct) => ct.Name) ?? "template";
+            }
+        }
+
+        @Html.DynamicAction("ClientTemplate", controller.GetType())
+
+        var grid = Html.Kendo().Grid(data)
+                       .Name(gridId)
+                       .Groupable(g => g.Enabled(groupable))
+                       .ToolBar(toolbar => toolbar.Template(
+                           @<text>
+                               <div class="options left text-left">
+                                   @Html.DynamicAction("TableControls", controller.GetType())
+                               </div>
+                               <div class="options right text-right">
+                                   <span class="export">
+                                       @Html.ExportLinks()
+                                       @Html.DynamicAction("TableEndControls", controller.GetType())
+                                   </span>
+                               </div>
+                            </text>))
+                       .HtmlAttributes(new { data_searchQueryId = searchQueryId, data_controller = controllerName, data_area = area, @class = "overwrite-table" })
+                       .Columns(columns =>
+                       {
+                           foreach (var column in tableColumns.Where(c => !c.Item1.Ignore))
+                           {
+                               // Get client template and init dateTime formater if it is empty
+                               var clientTemplate = SearchTableHelpers.GetPropertyClientTemplate(column);
+                               var isDateTime = column.Item2 == typeof(DateTime) || column.Item2 == typeof(DateTime?);
+                               var columnName = column.Item1.Name;
+                               columns
+                                   .Bound(columnName)
+                                   .Title(column.Item1.Title)
+                                   .Hidden(column.Item1.IsHidden)
+                                   .HtmlAttributes(new { @class = column.Item1.CssClass ?? string.Empty })
+                                   .Format(column.Item1.Format.IsNotNullOrEmpty() ? column.Item1.Format.StartsWith("{0") ? column.Item1.Format : "{0:" + column.Item1.Format + "}" : null)
+                                   .ClientTemplate(clientTemplate)
+                                   .Sortable(!column.Item1.IsCheckbox && !column.Item1.DisableFilterable)
+                                   .HeaderHtmlAttributes(new { @class = column.Item1.HeaderClass })
+                                   .HeaderTemplate(column.Item1.IsCheckbox ? "<input type='checkbox' class='checkAll-js' />" : null)
+                                   .ClientFooterTemplate(column.Item1.IsSummable ? "#= sum #" : null)
+                                   .Width(column.Item1.Width > 0 ? column.Item1.Width : column.Item1.IsCheckbox ? 28 : 0)
+                                   //// .Groupable(column.Item1.IsGroupable)
+                                   .ClientGroupHeaderTemplate($"<span class='{column.Item1.CssClass}'>#: value != null ? value : '' #</span>")
+                                   .Filterable(f => f
+
+                                                   // Expression with index is not supported for filtering as it may not be translated by the QueryableProviders - https://www.telerik.com/forums/filtering-is-broken-for-some-values-again
+                                                   .Enabled(!column.Item1.IsCheckbox && !column.Item1.DisableFilterable && column.Item1.Key.IsNullOrEmpty())
+                                                   .UI(isDateTime
+                                                       ? column.Item1.Format?.Equals("g", StringComparison.InvariantCultureIgnoreCase) == true ? "dateTimePickerFilter" : "datePickerFilter"
+                                                       : string.Empty)
+                                                   .Cell(cell => cell
+                                                             .ShowOperators(!column.Item1.IsCheckbox && column.Item1.DisableFilterable)
+                                                             .Operator(column.Item2 == typeof(string) ? "contains" : string.Empty)
+                                                             .Template(isDateTime
+                                                                 ? column.Item1.Format?.Equals("g", StringComparison.InvariantCultureIgnoreCase) == true ? "dateTimePickerFilter" : "datePickerFilter"
+                                                                 : string.Empty)));
+                           }
+                       })
+                       .Sortable()
+                       .Resizable(r => r.Columns(true))
+                       .Reorderable(r => r.Columns(true))
+                       .Filterable(f => f.Mode(GridFilterMode.Menu))
+                       .Selectable(s => s.Enabled(selectable).Mode(GridSelectionMode.Single).Type(GridSelectionType.Row))
+                       .Events(e => e.DataBound("onGridDataBound"))
+                       .DataSource(d => d.Ajax()
+                                         .ServerOperation(serverOperation)
+                                         .PageSize(20)
+                                         .Read("Grid_ReadData", controllerName, new
+                                                                                {
+                                                                                    Area = area,
+                                                                                    searchQueryId
+                                                                                })
+                                         .Model(m =>
+                                         {
+                                             foreach (var column in tableColumns.Where(item => item.Item1.Key.IsNullOrEmpty()))
+                                             {
+                                                 m.Field(column.Item1.Name, column.Item2);
+                                             }
+                                         })
+                                         .Aggregates(aggregates =>
+                                         {
+                                             foreach (var column in tableColumns.Where(item => item.Item1.IsSummable))
+                                             {
+                                                 aggregates.Add(column.Item1.Name, column.Item2).Sum();
+                                             }
+                                         })
+                                         .Group(g =>
+                                         {
+                                             if (groupable)
+                                             {
+                                                 if (groupableColumns.IsNotNullOrEmpty())
+                                                 {
+                                                     foreach (var group in groupableColumns)
+                                                     {
+                                                         g.Add<string>(group);
+                                                     }
+                                                 }
+                                                 else
+                                                 {
+                                                     foreach (var column in tableColumns.Where(c => c.Item1.IsGroupable))
+                                                     {
+                                                         g.Add<string>(column.Item3.Name);
+                                                     }
+                                                 }
+                                             }
+                                         }))
+                       .Pageable(p => p.Enabled(true).PageSizes(new List<object> { 10, 20, 50, 100, "all" }).PreviousNext(true).ButtonCount(5));
+
+        if (!string.IsNullOrWhiteSpace(template))
+        {
+            grid.ClientDetailTemplateId(template);
+        }
+
+        @grid
+
+        if (isSortable.HasValue && isSortable.Value)
+        {
+            @(Html.Kendo().Sortable()
+                  .For($"#{gridId}")
+                  .Filter("table > tbody > tr")
+                  .Events(s => s.Change($"{jsController}.onChangeOrder"))
+                  .Cursor("move")
+                  .HintHandler("$.noop")
+                  .PlaceholderHandler("placeholderHandler")
+                  .ContainerSelector($"#{gridId} tbody"))
+        }
+    }
+</div>
+
+<script>
+    $(document).ready(function() {
+        if (core !== "undefined" && core.persistGridPageSize !== "undefined") {
+            core.persistGridPageSize("#@(gridId)");
+        }
+
+        bindGridExportEvents("#@(gridId)");
+    });
+</script>
+
+@Html.DynamicAction("RenderCustomGridScripts", controller.GetType(), new { gridId })

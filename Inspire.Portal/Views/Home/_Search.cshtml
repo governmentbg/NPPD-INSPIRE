@@ -1,0 +1,82 @@
+﻿@using Inspire.Model.Attachment
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Utilities;
+@using Inspire.Utilities.Extensions
+@using Newtonsoft.Json.Linq
+@using Kendo.Mvc.UI
+@{
+    var total = ViewBag.SearchInfo is JObject searchInfo ? (int)searchInfo.SelectToken("hits.total.value") : 0;
+    var backgroundImages = ViewBag.BackgroundImages as IEnumerable<Attachment>;
+    IEnumerable<string> backgroundImagesUrl;
+    if (backgroundImages?.Any(item => item.Url.IsNotNullOrEmpty()) == true)
+    {
+        backgroundImagesUrl = backgroundImages.Where(item => item.Url.IsNotNullOrEmpty()).Select(item => item.Url);
+    }
+    else
+    {
+        backgroundImagesUrl = new[]
+                              {
+                                  Url.Content("~/Images/top.jpg"),
+                                  Url.Content("~/Images/top2.jpg")
+                              };
+    }
+}
+
+<section id="indextop">
+        <div class="background-images owl-carousel">
+            @foreach (var url in backgroundImagesUrl)
+            {
+                <img src="@(url)?height=570" class="background-img" alt="TopImage"/>
+            }
+        </div>
+
+    <div class="center">
+        <form class="form" id="searchRecordsForm" data-url="@(string.Format(ConfigurationReader.GeoNetworkSearchUrl, System.Threading.Thread.CurrentThread.CurrentUICulture.ThreeLetterISOLanguageName))">
+            <div class="relative">
+                <div class="form-input double">
+                    <svg class="icon">
+                        <use xlink:href="#icon-search"></use>
+                    </svg>
+                    @(Html.Kendo().AutoComplete()
+                          .Name("any")
+                          .Placeholder(Resource.SearchMetadata)
+                          .HtmlAttributes(
+                              new
+                              {
+                                  type = "search",
+                                  data_val = "true",
+                                  data_val_required = string.Format(Resource.Required, Resource.Search),
+                                  data_rule_minlength = 3,
+                                  data_msg_minlength = string.Format(Resource.StringMinLengthAttribute_ValidationError, Resource.Search, 3)
+                              })
+                          .Filter("contains")
+                          .MinLength(3)
+                          .DataSource(source =>
+                          {
+                              source.Read(read =>
+                              {
+                                  read.Action("Suggest", "Home").Data("onAdditionalData");
+                              })
+                                    .ServerFiltering(true);
+                          }))
+                    @Html.ValidationMessage("any")
+                    <small>
+                        @(string.Format(Resource.TotalGeonetworkRecordsMessage, total))
+                    </small>
+                </div>
+                <div class="form-input nest">
+                    <button type="submit" class="bttn secondary ctrl" title="@Resource.Search">
+                        @Resource.Search
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+    function onAdditionalData() {
+        return {
+            text: $("#any").val()
+        };
+    }
+</script>

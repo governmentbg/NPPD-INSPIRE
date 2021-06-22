@@ -1,0 +1,27 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin.Controllers
+@{
+    var controllerType = typeof(GroupController);
+}
+<script id="groupActionTemplate" type="text/x-kendo-template">
+    @if (controllerType.HasRightsToAction("Upsert"))
+    {
+        <div class="btn-with-content inline">
+            <ul>
+                @if (controllerType.HasRightsToAction("Upsert"))
+                {
+                    <li>
+                        <a href="@Url.Action("Upsert", "Group")?id=#: Id #">@Resource.Edit</a>
+                    </li>
+                }
+            </ul>
+        </div>}
+
+</script>
+
+<script id="groupInfoTemplate" type="text/x-kendo-template">
+        <a href="\\#" class="group-info-js">
+            #: Name #
+        </a>
+    </script>

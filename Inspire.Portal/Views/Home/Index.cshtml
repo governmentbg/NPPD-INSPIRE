@@ -1,0 +1,38 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Common.Mvc.Helpers
+@{
+
+
+    Html.RenderPartial("~/Views/Home/_Search.cshtml");
+    Html.RenderPartial("~/Views/Home/_InspireThemes.cshtml");
+    Html.RenderPartial("~/Views/Home/_LeadThemes.cshtml");
+    Html.RenderAction("GetProviders", "Home");
+    <section id="news-events">
+        <div class="center">
+            <div class="column-wrap">
+                <div id="news" class="white-wrap border-secondary column">
+                    @{
+                        Html.RenderAction("LatestNews", "Home");
+                    }
+                </div>
+                <div id="events" class="white-wrap border-main column">
+                    @{
+                        Html.RenderAction("LatestEvents", "Home");
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section Styles
+{
+    @Html.DynamicBundle(
+        "~/Content/iti.css",
+        "~/Content/iti-i18n-code.css")
+}
+
+@section Scripts
+{
+    @Html.DynamicBundle("~/Scripts/Controllers/Home/Home.js")
+}

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{83AE88F0-D973-41D2-B5E8-8DBBEAFD1F44}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Inspire.Model</RootNamespace>
+    <AssemblyName>Inspire.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\tools\StyleCopConfiguration\stylecop.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\UISettingsModel.cs" />
+    <Compile Include="TableModels\NonPriorityMetadataTableModel.cs" />
+    <Compile Include="TableModels\PriorityMetadataTableModel.cs" />
+    <Compile Include="TableModels\UserLoginTableModel.cs" />
+    <Compile Include="Attachment\Attachment.cs" />
+    <Compile Include="Attachment\ChunkMetaData.cs" />
+    <Compile Include="Base\BaseDbModel.cs" />
+    <Compile Include="Base\IModel.cs" />
+    <Compile Include="Base\IBaseDbModel..cs" />
+    <Compile Include="Base\Period.cs" />
+    <Compile Include="Base\TransactionDbData.cs" />
+    <Compile Include="Cms\Page.cs" />
+    <Compile Include="Cms\LocationType.cs" />
+    <Compile Include="Cms\VisibilityType.cs" />
+    <Compile Include="Cms\PageType.cs" />
+    <Compile Include="Email\Email.cs" />
+    <Compile Include="Email\SendMessages\SentMailMessageType.cs" />
+    <Compile Include="Faq\Faq.cs" />
+    <Compile Include="Faq\FaqCategory.cs" />
+    <Compile Include="Faq\FaqStatus.cs" />
+    <Compile Include="GeoNetwork\User\Profile.cs" />
+    <Compile Include="Group\Group.cs" />
+    <Compile Include="Group\GroupTableModel.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="History\Action.cs" />
+    <Compile Include="Language\Language.cs" />
+    <Compile Include="MimeTypes.cs" />
+    <Compile Include="Nomenclature\Nomenclature.cs" />
+    <Compile Include="Poll\Option.cs" />
+    <Compile Include="Poll\PollResult.cs" />
+    <Compile Include="Poll\PollStatus.cs" />
+    <Compile Include="Poll\QuestionType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\Provider.cs" />
+    <Compile Include="Provider\ProviderStatus.cs" />
+    <Compile Include="Publication\Publication.cs" />
+    <Compile Include="Publication\PublicationQuery.cs" />
+    <Compile Include="Publication\PublicationType.cs" />
+    <Compile Include="QueryModels\FaqQueryModel.cs" />
+    <Compile Include="QueryModels\GroupQueryModel.cs" />
+    <Compile Include="QueryModels\PageQueryModel.cs" />
+    <Compile Include="QueryModels\PollQueryModel.cs" />
+    <Compile Include="QueryModels\ProviderQueryModel.cs" />
+    <Compile Include="Poll\Question.cs" />
+    <Compile Include="Poll\Poll.cs" />
+    <Compile Include="QueryModels\UserLoginQueryModel.cs" />
+    <Compile Include="Role\Role.cs" />
+    <Compile Include="Role\RoleQuery.cs" />
+    <Compile Include="Search\SearchItem.cs" />
+    <Compile Include="Sitemap\SitemapFrequency.cs" />
+    <Compile Include="Sitemap\SitemapNode.cs" />
+    <Compile Include="TableModels\FaqTableModel.cs" />
+    <Compile Include="TableModels\PollTableModel.cs" />
+    <Compile Include="QueryModels\TransactionHistoryQueryModel.cs" />
+    <Compile Include="TableModels\TransactionHistoryTableModel.cs" />
+    <Compile Include="User\SetRole.cs" />
+    <Compile Include="User\IUser.cs" />
+    <Compile Include="User\ChangePasswordModel.cs" />
+    <Compile Include="User\User.cs" />
+    <Compile Include="User\UserControlItem.cs" />
+    <Compile Include="User\UserQuery.cs" />
+    <Compile Include="User\UsersControl.cs" />
+    <Compile Include="User\UserStatus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\tools\StyleCopConfiguration\stylecop.json">
+      <Link>stylecop.json</Link>
+    </None>
+    <None Include="..\tools\StyleCopConfiguration\stylecop.ruleset">
+      <Link>stylecop.ruleset</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Inspire.Core\Inspire.Core.csproj">
+      <Project>{721330de-8f7a-4a72-89a5-57595f1853b1}</Project>
+      <Name>Inspire.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Inspire.Utilities\Inspire.Utilities.csproj">
+      <Project>{23d3fbf4-49d3-44e6-9f6b-9fdc1efa293e}</Project>
+      <Name>Inspire.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

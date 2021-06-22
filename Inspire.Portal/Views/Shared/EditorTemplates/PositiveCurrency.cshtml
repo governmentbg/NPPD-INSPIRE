@@ -1,0 +1,6 @@
+@using Kendo.Mvc.UI
+@model decimal?
+
+@(Html.Kendo().CurrencyTextBoxFor(m => m)
+      .HtmlAttributes(ViewData["htmlAttributes"])
+      .Min(0))

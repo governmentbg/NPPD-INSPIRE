@@ -1,0 +1,52 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models.Faq
+@using Kendo.Mvc.UI
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "Faq",
+        "~/Scripts/Controllers/Faq/Faq.js")
+}
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab ">
+
+            @(Html.Kendo().Grid<FaqCategoryViewModel>()
+                  .Name("CategoriesGrid")
+                  .Pageable(p => p.Enabled(true).PageSizes(new List<object> {10, 20, 50, 100, "all" }).PreviousNext(true).ButtonCount(5))
+                  .DataSource(d =>
+                  {
+                      d.Ajax()
+                       .Read(r => r.Action("SearchFaqCategories", "Faq"))
+                       .Model(m =>
+                       {
+                           m.Id(p => p.Id);
+                       })
+                       .PageSize(20);
+                  })
+                  .Editable(e => e.Mode(GridEditMode.PopUp).TemplateName("FaqCategory"))
+                  .Columns(c =>
+                  {
+                      c.Bound(b => b.Names)
+                       .Title(Resource.Name)
+                       .ClientTemplate("#: data.Name #");
+                      c.Bound(b => b.UniqueId)
+                       .Title(Resource.Actions)
+                       .ClientTemplate(
+                          $"<a href='\\#' class='bttn secondary edit-category-js'>{Resource.Edit}</a>" +
+                          $"<a href='\\#' data-id='#: data.Id #' class='bttn secondary remove-category-js'>{Resource.Remove}</a> ");
+                  }))
+        </div>
+		<div class="clear"><br></div>
+		<div class="text-right ">
+	        <a href="#" class="bttn secondary add-category-js">@Resource.Add</a>
+		</div>
+    </div>
+</div>

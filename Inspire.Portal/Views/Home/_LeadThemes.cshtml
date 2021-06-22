@@ -1,0 +1,35 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models.Metadata
+<section id="metadata">
+    <div class="center">
+        <div class="white-wrap">
+            <div class="sectitle">
+                <h2>
+                    @Resource.Metadata
+                </h2>
+                <div class="ib">
+                    <a href="#tab-1" class="tab-nav bttn active">
+                        @Resource.LastPublished
+                    </a>
+                    <a href="#tab-2" class="tab-nav bttn">
+                        @Resource.MostPopular
+                    </a>
+                </div>
+            </div>
+            <div id="tab-1" class="tab-content active">
+                <div class="itemlist horizontal">
+                    @{
+                        Html.RenderAction("LeadThemes", "Home", new { type = LeadThemeType.Latest });
+                    }
+                </div>
+            </div>
+            <div id="tab-2" class="tab-content">
+                <div class="itemlist horizontal">
+                    @{
+                        Html.RenderAction("LeadThemes", "Home", new { type = LeadThemeType.MostPopular });
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

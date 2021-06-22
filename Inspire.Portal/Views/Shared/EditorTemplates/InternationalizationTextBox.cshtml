@@ -1,0 +1,94 @@
+@using System.ComponentModel.DataAnnotations
+@using Inspire.Common.Mvc.Extensions
+@using Inspire.Core.Infrastructure.Configuration
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Infrastructure.Attribute
+@using Inspire.Utilities.Extensions
+@model IDictionary<string, string>
+@{
+    var isRequired = ViewData.ModelMetadata.PropertyName.IsNotNullOrEmpty()
+                     && ViewData.ModelMetadata.ContainerType
+                                .GetProperty(ViewData.ModelMetadata.PropertyName)
+                                ?.GetCustomAttributes(typeof(RequiredAttribute), true)
+                                 .OfType<RequiredAttribute>()
+                                 .Any() == true;
+
+    var stringLengthAttribute = ViewData.ModelMetadata.PropertyName.IsNotNullOrEmpty()
+        ? ViewData.ModelMetadata.ContainerType
+                  .GetProperty(ViewData.ModelMetadata.PropertyName)
+                  ?.GetCustomAttributes(typeof(DictionaryStringLengthAttribute), true)
+                   .OfType<DictionaryStringLengthAttribute>().FirstOrDefault()
+        : null;
+
+    var htmlAttributes = ViewData?.ContainsKey("htmlAttributes") == true
+        ? ViewData["htmlAttributes"]
+        : null;
+
+    var wrapperClass = ViewData?.ContainsKey("wrapperClass") == true
+        ? ViewData["wrapperClass"] as string
+        : null;
+
+    var propertyName = ViewData?.ContainsKey("propertyName") == true
+        ? ViewData["propertyName"] as string
+        : null;
+
+    var languages = GetLanguages();
+}
+
+@foreach (var cultureData in languages)
+{
+    var key = cultureData.Id.ToString();
+    var language = Resource.ResourceManager.GetString(cultureData.Culture.TwoLetterISOLanguageName.ToUpper());
+    if (Model != null && !Model.ContainsKey(key))
+    {
+        Model.Add(key, string.Empty);
+    }
+
+    var name = $"{Html.DisplayNameForModel().ToString().Trim()}({language})";
+    var required = isRequired && cultureData.Required || languages.Count == 1 && propertyName != null && propertyName.Equals("Names");
+    var attributes = Html.MergeHtmlAttributes(
+        htmlAttributes,
+        required
+            ? new Dictionary<string, object>
+              {
+                  { "data-val", "true" },
+                  { "required", "required" },
+                  { "data-val-required", string.Format(Resource.Required, name) }
+              }
+            : null,
+        stringLengthAttribute != null
+            ? new Dictionary<string, object>
+              {
+                  { "data-val", "true" },
+                  { "data-rule-minlength", stringLengthAttribute.MinimumLength },
+                  { "data-rule-maxlength", stringLengthAttribute.MaximumLength },
+                  { "data-msg-minlength", string.Format(Resource.StringLengthAttribute_ValidationErrorIncludingMinimum, name, stringLengthAttribute.MaximumLength, stringLengthAttribute.MinimumLength) },
+                  { "data-msg-maxlength", string.Format(Resource.StringLengthAttribute_ValidationErrorIncludingMinimum, name, stringLengthAttribute.MaximumLength, stringLengthAttribute.MinimumLength) }
+              }
+            : null);
+
+    if (wrapperClass.IsNotNullOrEmpty())
+    {
+        <div class="@wrapperClass">
+            @Html.Label(name, new { @class = required ? "required" : string.Empty })
+            @Html.TextBoxFor(m => m[key], attributes)
+            @Html.ValidationMessageFor(m => m[key])
+        </div>
+    }
+    else
+    {
+        @Html.Label(name, new { @class = required ? "required" : string.Empty })
+        @Html.TextBoxFor(m => m[key], attributes)
+        @Html.ValidationMessageFor(m => m[key])
+    }
+}
+
+@functions
+{
+    List<LanguageElement> GetLanguages()
+    {
+        var languagesList = ViewData?.ContainsKey("groupLanguages") == true ? ViewData["groupLanguages"] as List<string> : null;
+
+        return languagesList.IsNotNullOrEmpty() ? Global.Languages.Where(x => languagesList.Contains(x.Id.ToString())).ToList() : Global.Languages;
+    }
+}

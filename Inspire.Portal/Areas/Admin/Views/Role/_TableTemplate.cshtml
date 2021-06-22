@@ -1,0 +1,38 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin.Controllers
+@using Inspire.Portal.Models
+@using Inspire.Utilities.Enums
+@{
+    var userControllerType = typeof(RoleController);
+}
+<script id="roleActionTemplate" type="text/x-kendo-template">
+    @if (userControllerType.HasRightsToAction("Upsert")
+         || userControllerType.HasRightsToAction("Delete")
+         || User?.IsInRole(ApplicationRights.HistoryRole) == true)
+    {
+        <div class="btn-with-content inline">
+            <ul>
+                @if (userControllerType.HasRightsToAction("Upsert"))
+                {
+                    <li>
+                        <a href="@Url.Action("Upsert", "Role")?id=#: Id #">@Resource.Edit</a>
+                    </li>
+                }
+                @if (userControllerType.HasRightsToAction("Delete"))
+                {
+                    <li>
+                        <a href="\\#" class="deleteRole-js">@Resource.Remove</a>
+                    </li>
+                }
+                @if (User?.IsInRole(ApplicationRights.HistoryRole) == true)
+                {
+                    <li>
+                        <a href="\\#" class="view-history-js" data-objectType="@ObjectType.Role" data-objectId="#: Id #">@Resource.History</a>
+                    </li>
+                }
+                    
+            </ul>
+        </div>    }
+
+</script>

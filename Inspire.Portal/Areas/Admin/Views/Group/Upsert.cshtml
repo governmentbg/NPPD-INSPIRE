@@ -1,0 +1,105 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@model Inspire.Portal.Areas.Admin.Models.Group.GroupUpsertModel
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Html.BeginForm("Upsert", "Group", FormMethod.Post, new { id = "groupForm", Area = AdminAreaRegistration.Location }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.GeoNetworkId)
+                @Html.HiddenFor(m => m.Logo)
+                if (Model.Label.IsNotNullOrEmpty())
+                {
+                    foreach (var item in Model.Label)
+                    {
+                        var guid = Guid.NewGuid();
+
+                        <input type="hidden" name="Label.Index" value="@guid"/>
+                        <input type="hidden" name="Label[@guid].Key" value="@item.Key"/>
+                        <input type="hidden" name="Label[@guid].Value" value="@item.Value"/>
+                    }
+                }
+                <div class="form-input column">
+                    @Html.EditorFor(model => model.Names, "InternationalizationTextBox")
+                    @Html.ValidationMessageFor(m => m.Names)
+                </div>
+                <div class="form-input column">
+                    @Html.EditorFor(model => model.ContactPersons, "InternationalizationTextBox")
+                    @Html.ValidationMessageFor(m => m.ContactPersons)
+                </div>
+                <div class="form-input column">
+                    @Html.LabelFor(m => m.Email, new { @class = "required" })
+                    @Html.EditorFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+                <div class="form-input column">
+                    @Html.LabelFor(m => m.Bulstat, new { @class = "required" })
+                    @Html.EditorFor(m => m.Bulstat)
+                    @Html.ValidationMessageFor(m => m.Bulstat)
+                </div>
+                <div class="form-input fullwidth">
+                    @Html.EditorFor(model => model.Website, "InternationalizationTextBox")
+                    @Html.ValidationMessageFor(m => m.Website)
+                </div>
+                <div class="form-control fullwidth">
+                    <div class="form-input third">
+                        @Html.Label(Resource.DefaultCategory)
+                        @(Html.Kendo().DropDownListFor(d => d.DefaultCategory.Id)
+                              .Filter(FilterType.Contains)
+                              .MinLength(3)
+                              .DataValueField("Id")
+                              .DataTextField("Label['eng']")
+                              .DataSource(d => d.Read(r => r.Action("GetCategories", "Group"))))
+                    </div>
+                    <div class="form-input third">
+                        <label> &nbsp;</label>
+                        @Html.Label(Resource.EnableAllowedCategories, new { @class = "k-checkbox-label " })
+                        @Html.EditorFor(m => m.EnableAllowedCategories)
+                    </div>
+
+                    <div class="form-input third">
+                        @Html.Label(Resource.AllowedCategories)
+                        @(Html.Kendo().MultiSelectFor(m => m.SelectedAllowedCategories)
+                              .Enable(Model.EnableAllowedCategories)
+                              .DataValueField("Id")
+                              .DataTextField("Label['eng']")
+                              .DataSource(d => d.Read(r => r.Action("GetCategories", "Group"))))
+                    </div>
+                </div>
+                <div class="form-control fullwidth">
+                    <div class="form-input fullwidth">
+                        @Html.EditorFor(m => m.Description, "InternationalizationTextArea")
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="form-control button-wrap fullwidth">
+                    <input type="submit" class="bttn main caps right" value="@Resource.Save"/>
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Html.DynamicBundle("~/Areas/Admin/Scripts/Controllers/Group/Group.js")
+
+    <script>
+        $("#groupForm").dirtyForms();
+    </script>
+}

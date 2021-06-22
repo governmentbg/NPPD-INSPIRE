@@ -1,0 +1,89 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models
+@using Inspire.Utilities.Extensions
+@model IEnumerable<Inspire.Portal.Models.MenuItem>
+@{
+    if (Model.IsNotNullOrEmpty())
+    {
+        <nav>
+            <ul>
+                <li class="mainMenuButton home active">
+                    <a href="@Url.RouteUrl("Default", new { controller = string.Empty, action = string.Empty, culture = CurrentCulture.TwoLetterISOLanguageName })">
+                        <span class="svg-wrap">
+                            <svg class="icon">
+                                <use xlink:href="#icon-home"></use>
+                            </svg>
+                        </span>
+                        @Resource.Home
+                    </a>
+                </li>
+
+                @foreach (var item in Model)
+                {
+                    @RenderMenuItem(item, true)
+                }
+            </ul>
+        </nav>
+    }
+}
+
+@helper RenderMenuItem(MenuItem item, bool isFirstItem = false)
+{
+    if (item.Items.IsNotNullOrEmpty())
+    {
+        <li class="mainMenuButton hasdropdown">
+            <a href="@(item.Url.IsNotNullOrEmpty() ? item.Url : "#")" title="@item.Title">
+                @if (!isFirstItem)
+                {
+                    @item.Title
+                    <svg class="icon"><use xlink:href="#icon-arrowdown"></use></svg>
+                }
+                else
+                {
+                    <span>
+                        @item.Title
+                    </span>
+                }
+            </a>
+            <ul>
+                @foreach (var subItem in item.Items)
+                {
+                    @RenderMenuItem(subItem)
+                }
+            </ul>
+        </li>
+    }
+    else
+    {
+        <li class="mainMenuButton">
+            @if (item.IsAjax)
+            {
+                @Ajax.ActionLink(item.Title, string.Empty, null, new AjaxOptions { HttpMethod = item.HttpMethod.IsNotNullOrEmpty() ? item.HttpMethod : "GET", Url = item.Url }, new { title = item.Title, @class = $"ctrl {item.Class}" })
+            }
+            else
+            {
+                <a href="@item.Url" title="@item.Title" class="ctrl @item.Class" @if (item.InNewWindow) { <text>target = "_blank" </text> }>
+                    <span>
+                        @item.Title
+                    </span>
+                </a>
+            }
+        </li>
+    }
+}
+
+<script>
+    $(document).ready(function () {
+        $(".mainMenuButton.active").removeClass("active");
+
+        $(".mainMenuButton").find("a").each(function(i, e) {
+            if(e.href === location.href) {
+                $(e).parent().addClass("active");
+            }
+        });
+
+        if (!$(".mainMenuButton").hasClass("active")) {
+            $(".home").addClass("active");
+        }
+    });
+</script>

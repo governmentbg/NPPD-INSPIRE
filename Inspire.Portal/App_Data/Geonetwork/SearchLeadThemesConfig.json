@@ -1,0 +1,61 @@
+﻿{
+  "from": 0,
+  "size": 4,
+  "sort": [
+    "_score"
+  ],
+  "query": {
+    "function_score": {
+      "boost": "5",
+      "functions": [
+        {
+          "filter": {
+            "exists": {
+              "field": "parentUuid"
+            }
+          },
+          "weight": 0.3
+        },
+        {
+          "filter": {
+            "match": {
+              "codelist_status": "obsolete"
+            }
+          },
+          "weight": 0.3
+        },
+        {
+          "gauss": {
+            "dateStamp": {
+              "scale": "365d",
+              "offset": "90d",
+              "decay": 0.5
+            }
+          }
+        }
+      ],
+      "score_mode": "multiply",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "terms": {
+                "isTemplate": [
+                  "n"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "_source": {
+    "includes": [
+      "uuid",
+      "inspireThemeUri",
+      "resourceTitleObject"
+    ]
+  },
+  "track_total_hits": true
+}

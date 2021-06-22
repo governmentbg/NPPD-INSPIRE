@@ -1,0 +1,94 @@
+﻿@using Inspire.Common.Mvc.Infrastructure.BaseTypes
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Utilities
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@model Inspire.Portal.Models.Account.LoginViewModel
+@{
+    if (ViewContext.Controller is BaseController baseController)
+    {
+        baseController.InitViewTitleAndBreadcrumbs(Resource.Login);
+    }
+}
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+<script src="~/Scripts/Controllers/Home/Home.js"></script>
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="content-wrap">
+            <div class="column-wrap">
+                <div class="third  login-register-first">
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        if (ViewContext.ViewData.ModelState.Any(x => x.Key.IsNullOrEmpty()))
+                        {
+                            @Html.ValidationSummary(true)
+                        }
+
+                        @Html.Hidden("ReturnUrl", ViewBag.ReturnUrl as string)
+                        <div class="form-input fullwidth">
+                            @Html.LabelFor(m => m.Username, new { @class = "required" })
+                            @Html.TextBoxFor(m => m.Username, new { autofocus = "" })
+                            @Html.ValidationMessageFor(m => m.Username)
+                        </div>
+
+                        <div class="form-input fullwidth">
+                            @Html.LabelFor(m => m.Password, new { @class = "required" })
+                            @Html.EditorFor(m => m.Password)
+                            <div class="show-password">
+                                <p>
+                                    <a class="showPassword">
+                                        @Resource.ShowPassword
+                                </a>
+                            </p>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                        <div class="form-input fullwidth">
+                            @Html.Partial("_Captcha")
+                        </div>
+
+                        <div class="form-input fullwidth bttn-div">
+                            <button class="bttn main caps">@Resource.Login</button>
+                            <div class="text-center">
+                                <a href="#" class="bttn-link fullwidth forgotten-password-js">
+                                    <small>@Resource.ForgottenPassword</small>
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+                <div class="column right">
+                    @*<article>
+                        <h2>Защо да се регистрирам?</h2>
+                        <p>С регистрация ще получите пълен достъп до услугите предоставяни в портала.</p>
+                    </article>*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        core.rebindEvent("click",
+            ".forgotten-password-js",
+            function() {
+                core.openKendoWindow(
+                    "ForgottenPassword",
+                    "Account",
+                    {},
+                    {
+                        title: resources.ForgottenPassword
+                    });
+            });
+    });
+</script>

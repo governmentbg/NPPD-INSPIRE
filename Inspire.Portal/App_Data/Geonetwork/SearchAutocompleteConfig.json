@@ -1,0 +1,19 @@
+﻿{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "multi_match": {
+            "query": "",
+            "type": "bool_prefix",
+            "fields": [
+              "resourceTitleObject.*",
+              "resourceAbstractObject.*"
+            ]
+          }
+        },
+        { "terms": { "isTemplate": [ "n" ] } }
+      ]
+    }
+  }
+}

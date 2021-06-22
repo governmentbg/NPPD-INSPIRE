@@ -1,0 +1,37 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc.UI
+@model Inspire.Portal.Models.Poll.PollViewModel
+@{
+    var searchQueryId = ViewBag.SearchQueryId as string;
+}
+@using (Ajax.BeginForm(
+    "ChangeDates",
+    "Poll",
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "core.onKendoWindowSuccessCallback"
+    }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.Id)
+    @Html.Hidden("searchQueryId", searchQueryId)
+
+    <div class="form-input fullwidth">
+        @Html.LabelFor(x => x.ValidFrom, new { @class = "required" })
+        @(Html.Kendo().DateTimePickerFor(x => x.ValidFrom).Format("dd.MM.yyyy г. HH:mm"))
+        @Html.ValidationMessageFor(x => x.ValidFrom)
+    </div>
+    <div class="form-input fullwidth">
+        @Html.LabelFor(x => x.ValidTo, new { @class = "required" })
+        @(Html.Kendo().DateTimePickerFor(x => x.ValidTo).Format("dd.MM.yyyy г. HH:mm"))
+        @Html.ValidationMessageFor(x => x.ValidTo)
+    </div>
+    <div class="clear"></div>
+    <div class="form-input fullwidth noright">
+        <button type="submit" class="bttn main caps">
+            @Resource.Save
+        </button>
+    </div>
+}

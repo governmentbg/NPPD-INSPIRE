@@ -1,0 +1,21 @@
+﻿@using Inspire.Portal.Models
+@using Inspire.Utilities.Extensions
+@model IEnumerable<Inspire.Portal.Models.MenuItem>
+@{
+    if (Model.IsNotNullOrEmpty())
+    {
+        <div class="ib ht-section hts1">
+            @foreach (var item in Model.Where(item => item.Url.IsNotNullOrEmpty() && item.Url != "#" && item.Items.IsNullOrEmpty()))
+            {
+                @RenderMenuItem(item)
+            }
+        </div>
+    }
+}
+
+@helper RenderMenuItem(MenuItem item)
+{
+    <a href="@(item.Url.IsNotNullOrEmpty() ? item.Url : "#")" title="@item.Title" class="ctrl" @if (item.InNewWindow) { <text>target = "_blank" </text> }>
+        @item.Title
+    </a>
+}

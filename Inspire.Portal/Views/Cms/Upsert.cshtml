@@ -1,0 +1,137 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Model.Cms
+@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc.UI
+@using EnumHelper = Inspire.Model.Helpers.EnumHelper
+@model Inspire.Portal.Models.Cms.PageUpsertViewModel
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+@section Scripts
+{
+    @Html.DynamicBundle("~/Scripts/Controllers/Cms/Cms.js")
+    <script>
+        $(document).ready(function() {
+            $("#pageForm:last").dirtyForms();
+        });
+    </script>
+}
+
+<div class="center">
+    <div class="t-tab">
+        @using (Html.BeginForm("Upsert", "Cms", FormMethod.Post, new { id = "pageForm" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-input">
+                @Html.LabelFor(m => m.Type, new { @class = "required" })
+                @(Html.Kendo().DropDownListFor(m => m.Type.Id)
+                      .HtmlAttributes(
+                          new
+                          {
+                              id = "pageType",
+                              data_val = "true",
+                              data_val_required = string.Format(Resource.Required, Html.DisplayNameFor(m => m.Type)),
+                              data_content_type_id = EnumHelper.GetPageTypeIdByType(PageType.Content)
+                          })
+                      .DataValueField("Id")
+                      .DataTextField("Name")
+                      .DataSource(d => d.Read(r => r.Action("GetPageTypes", "Cms"))))
+                @Html.ValidationMessageFor(m => m.Type)
+                @Html.ValidationMessageFor(m => m.Type.Id)
+            </div>
+            <div class="form-input">
+                @Html.LabelFor(m => m.ParentId)
+                @(Html.Kendo().DropDownTreeFor(m => m.ParentId)
+                      .Placeholder(Resource.ParentPage)
+                      .Filter("contains")
+                      .DataTextField("Title")
+                      .DataValueField("Id")
+                      .DataSource(dataSource => dataSource.Read(read => read.Action("ReadParentPages", "Cms")).Model(m =>
+                      {
+                          m.Id("Id");
+                          m.HasChildren("hasChildren");
+                      })))
+                @Html.ValidationMessageFor(m => m.ParentId)
+            </div>
+            <div class="clear"></div>
+            <div class="form-input fullwidth">
+                @Html.LabelFor(m => m.PermanentLink, new { @class = "required" })
+                @Html.EditorFor(
+                    model => model.PermanentLink,
+                    new
+                    {
+                        htmlAttributes = new
+                                         {
+                                             data_val = "true",
+                                             data_val_required = string.Format(Resource.Required, Html.DisplayNameFor(m => m.PermanentLink))
+                                         }
+                    })
+                @Html.ValidationMessageFor(m => m.PermanentLink)
+            </div>
+            <div class="form-input">
+                @Html.LabelFor(m => m.VisibilityType, new { @class = "required" })
+                @(Html.Kendo().DropDownListFor(m => m.VisibilityType.Id)
+                      .HtmlAttributes(
+                          new
+                          {
+                              data_val = "true",
+                              data_val_required = string.Format(Resource.Required, Html.DisplayNameFor(m => m.VisibilityType))
+                          })
+                      .DataValueField("Id")
+                      .DataTextField("Name")
+                      .DataSource(d => d.Read(r => r.Action("GetPageVisibilityTypes", "Cms"))))
+                @Html.ValidationMessageFor(m => m.VisibilityType)
+                @Html.ValidationMessageFor(m => m.VisibilityType.Id)
+            </div>
+            <div class="form-input">
+                @Html.LabelFor(m => m.LocationType, new { @class = "required" })
+                @(Html.Kendo().DropDownListFor(m => m.LocationType.Id)
+                      .HtmlAttributes(
+                          new
+                          {
+                              id = "locationType",
+                              data_location_type_id = EnumHelper.GetPageLocationByType(LocationType.None),
+                              data_val = "true",
+                              data_val_required = string.Format(Resource.Required, Html.DisplayNameFor(m => m.LocationType))
+                          })
+                      .DataValueField("Id")
+                      .DataTextField("Name")
+                      .DataSource(d => d.Read(r => r.Action("GetPageLocationTypes", "Cms"))))
+                @Html.ValidationMessageFor(m => m.LocationType)
+                @Html.ValidationMessageFor(m => m.LocationType.Id)
+            </div>
+            <div class="form-input column menuTitle-js">
+                    @Html.Kendo().CheckBoxFor(x => x.IsInNewWindow)
+            </div>
+            <div class="form-input fullwidth">
+                @Html.EditorFor(model => model.Titles, "InternationalizationTextBox")
+                @Html.ValidationMessageFor(m => m.Titles)
+            </div>
+            <div class="form-input fullwidth menuTitle-js">
+                @Html.EditorFor(model => model.TitlesMenu, "InternationalizationTextBox")
+                @Html.ValidationMessageFor(m => m.TitlesMenu)
+            </div>
+            <div class="form-input fullwidth content-js">
+                @Html.EditorFor(model => model.Contents, "InternationalizationEditor")
+                @Html.ValidationMessageFor(m => m.Contents)
+            </div>
+            <div class="form-input fullwidth content-js">
+                @Html.EditorFor(model => model.Keywords, "InternationalizationTextBox")
+                @Html.ValidationMessageFor(m => m.Keywords)
+            </div>
+            <div class="clear"></div>
+            <div class="button-wrap fullwidth">
+                <button type="submit" class="bttn main caps right">@Resource.Save</button>
+                <button type="submit" class="bttn secondary caps right content-js" name="preview" value="true">@Resource.Preview</button>
+            </div>
+            <div class="clear"></div>
+        }
+    </div>
+</div>

@@ -1,0 +1,235 @@
+﻿/*** MAPEX*********/
+.itemlist .icon {
+    background-size: auto 70%;
+    display: block;
+    height: 0;
+    margin-bottom: 12px;
+    padding-bottom: 56.25%;
+    position: relative;
+    width: 100%;
+}
+
+.itemlist.horizontal li a .icon {
+    float: left;
+    font-size: 66px;
+    padding-bottom: 0
+}
+
+label.qsttitle {
+    color: #474F4C;
+    display: block;
+    font: normal 14px/16px "ArialBG", Arial, sans-serif, Tahoma;
+    padding: 25px 0px 5px 0px;
+}
+
+.qstanswer li {
+    color: #474F4C;
+    display: block;
+    font: normal 13px/16px "ArialBG", Arial, sans-serif, Tahoma;
+    margin: 5px;
+    padding: 0px 30px 0px 20px;
+}
+
+    .qstanswer li label {
+        font: normal 13px/16px "ArialBG", Arial, sans-serif, Tahoma;
+        padding: 0px 20px 0px 20px;
+    }
+
+.qstanswer input, .qstanswer textarea {
+    font: normal 13px/16px "ArialBG", Arial, sans-serif, Tahoma;
+    font-style: italic;
+}
+
+.validation-summary-errors {
+    color: #ff9800;
+    font-size: 14px;
+}
+
+.event .n-date {
+    background: #cde6f7;
+    border-radius: 15px;
+    color: #000;
+    display: inline-block;
+    font: normal 12px/1 "ArialBG", Arial, sans-serif;
+    padding: 4px 13px;
+    vertical-align: top;
+}
+
+.event .k-pager-wrap ul li > span.k-state-selected {
+    background: #cde6f7 !important
+}
+
+.qstdesc {
+    color: #204b92;
+    font-size: 13px;
+    font-style: italic;
+    margin: 10px 25px 10px 25px;
+}
+
+
+.grid .form-input input[type="checkbox"], .grid .form-input input[type="radio"] {
+    height: 15px;
+    margin: 0px;
+    padding: 0px;
+    width: 11px;
+}
+
+.form-input input[type="checkbox"], .form-input input[type="radio"] {
+    height: 20px;
+    margin: 3px;
+    width: 20px;
+}
+
+.pollstitle {
+    font-size: 19px;
+    font-weight: bold;
+    margin: 30px 0px 10px 0px;
+    text-transform: uppercase;
+}
+
+li.poll {
+    border-bottom: 1px solid #ddd;
+    padding: 0px 10px 10px 10px;
+}
+
+.pollsDescr {
+    color: #204b92;
+    /* font-style: italic; */
+    font-size: 14px;
+    padding: 0px 0px 10px 0px;
+}
+
+input[type="checkbox"] {
+    height: 13px;
+    margin: 0px;
+    overflow: visible;
+    padding: 0px;
+    text-overflow: unset;
+    width: 11px;
+}
+
+
+.k-grid-header th.k-header {
+    background: none;
+}
+
+.org-div {
+    display: inline-block;
+    padding: 15px;
+    text-align: center;
+    width: 30%;
+}
+
+    .org-div a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .org-div:hover {
+        background: #FEF9E5 !important;
+    }
+
+fieldset.panel legend {
+    background: #fcc800;
+    float: left;
+    font: normal 14px/16px "ArialBG", Arial, sans-serif, Tahoma;
+    margin: 0px;
+    padding: 3px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+    fieldset.panel legend label {
+        font: normal 14px/16px "ArialBG", Arial, sans-serif, Tahoma;
+        margin: 0px;
+        padding: 10px;
+        text-transform: uppercase;
+    }
+
+fieldset.panel {
+    border: 1px solid #c0c0c0;
+    margin: 20px 45px 20px 0px;
+    padding: 1px;
+}
+
+.pages .k-grid-content.k-auto-scrollable {
+    overflow: visible;
+}
+
+.center > a:hover {
+    text-decoration: none;
+}
+
+/*
+.logo-img {
+    display: inline-block;
+    height:70px;
+    width: 70px;
+}
+*/
+
+.logo-text {
+    display: inline-block;
+    height: 70px;
+    padding-top: 15px;
+    position: absolute;
+}
+
+    .logo-text > .logo-heading {
+        color: black;
+        display: block;
+        font-weight: bold;
+    }
+
+    .logo-text > .logo-heading-sub {
+        color: grey;
+        display: block;
+        font-size: 0.9em;
+    }
+
+.k-widget.k-textarea.fullwidth {
+    width: 100%;
+}
+
+.search-faq {
+    margin-top: 30px;
+}
+
+.show-password {
+    position: absolute;
+    bottom: 30%;
+    left: 95%;
+}
+
+.md-validate-status {
+    display: inline-block;
+    border-radius: 1000px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 14px;
+    position: relative;
+    color: white;
+    margin-top: -0.2em;
+    margin-bottom: -0.4em;
+    background-color: #777777;
+    overflow: hidden;
+}
+
+.md-validate-status0 {
+    background-color: #d9534f;
+}
+
+.md-validate-status1 {
+    background-color: #5cb85c;
+}
+
+.fa-inspire {
+    background-image: url('../Images/inspire.png');
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+}

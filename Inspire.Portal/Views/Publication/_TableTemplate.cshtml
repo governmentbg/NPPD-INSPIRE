@@ -1,0 +1,42 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@using Inspire.Portal.Models
+@using Inspire.Utilities.Enums
+@{
+    var publicationControllerType = typeof(PublicationController);
+}
+<script id="publicationActionTemplate" type="text/x-kendo-template">
+    @if (publicationControllerType.HasRightsToAction("Upsert")
+         || publicationControllerType.HasRightsToAction("Delete")
+         || User?.IsInRole(ApplicationRights.HistoryNews) == true)
+    {
+        <div class="btn-with-content inline">
+            <ul>
+                @if (publicationControllerType.HasRightsToAction("Upsert"))
+                {
+                    <li>
+                        <a href="@Url.Action("Upsert", "Publication")?id=#: Id #">@Resource.Edit</a>
+                    </li>
+                }
+                @if (publicationControllerType.HasRightsToAction("Delete"))
+                {
+                    <li>
+                        <a href="\\#" class="publication-remove-js">@Resource.Remove</a>
+                    </li>
+                }
+                @if (User?.IsInRole(ApplicationRights.HistoryNews) == true)
+                {
+                    <li>
+                        <a href="\\#" class="view-history-js" data-objectType="@ObjectType.Publication" data-objectId="#: Id #">@Resource.History</a>
+                    </li>
+                }
+            </ul>
+        </div>}
+</script>
+
+<script id="publicationInfoTemplate" type="text/x-kendo-template">
+    <a href="@Url.Action("Info")?id=#: Id #" target="_blank" rel="noopener noreferrer">
+        #: Title #
+    </a>
+</script>

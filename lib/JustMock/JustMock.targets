@@ -1,0 +1,7 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<UsingTask  AssemblyFile="Telerik.JustMock.MSBuild.dll" TaskName="Telerik.JustMock.MSBuild.JustMockStart" />
+
+	<UsingTask  AssemblyFile="Telerik.JustMock.MSBuild.dll" TaskName="Telerik.JustMock.MSBuild.JustMockStop" />
+
+</Project>

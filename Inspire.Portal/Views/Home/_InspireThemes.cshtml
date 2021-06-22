@@ -1,0 +1,51 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Newtonsoft.Json.Linq
+@using Inspire.Utilities.Extensions
+@using Inspire.Portal.Utilities
+@{
+    var inspireThemes = ViewBag.SearchInfo is JObject searchInfo
+        ? searchInfo["aggregations"]["inspireThemeUri"]["buckets"].Select(item => item).ToList()
+        : null;
+    if (inspireThemes.IsNotNullOrEmpty())
+    {
+        <section id="ppd-sections">
+            <div class="center">
+                <div class="ppd-sections">
+                    @{
+                        var themes = inspireThemes
+                            .Select(item =>
+                            {
+                                var url = (string)item["key"];
+                                var code = url.Substring(url.LastIndexOf('/') + 1);
+                                var inspireTheme = ApplicationData.GeonetworkInspireThemes[$"inspire-{code}"];
+                                return new
+                                {
+                                    Url = url,
+                                    Count = (int)item["doc_count"],
+                                    Code = code,
+                                    Name = (string)inspireTheme[$"name-{CurrentCulture.TwoLetterISOLanguageName.ToLower()}"],
+                                    Annex = (int)inspireTheme["annex"]
+                                };
+                            })
+                            .OrderBy(item => item.Annex)
+                            .ThenBy(item => item.Name)
+                            .ToList();
+                        foreach (var theme in themes)
+                        {
+                            <a class="ppd"
+                               href='@($"{ConfigurationReader.GeoNetworkAddress.TrimEnd('/')}/#/search?query_string={{\"inspireThemeUri\": {{\"{theme.Url}\": true}} }}")'>
+                                <i class="icon iti-@theme.Code"></i>
+                                <div class="links">
+                                    <strong class="ctrl">
+                                        @theme.Name
+                                    </strong>
+                                    <span>@($"{theme.Count} {Resource.Metadata.ToLower()} - {Resource.Annex} {theme.Annex}".Trim())</span>
+                                </div>
+                            </a>
+                        }
+                    }
+                </div>
+            </div>
+        </section>
+    }
+}

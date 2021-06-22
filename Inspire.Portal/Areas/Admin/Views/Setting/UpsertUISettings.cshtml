@@ -1,0 +1,80 @@
+﻿@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Areas.Admin
+@using Inspire.Portal.Models
+@using Inspire.Utilities.Enums
+@model Inspire.Portal.Models.UISettingsViewModel
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+        if (User?.IsInRole(ApplicationRights.HistoryUISettings) == true)
+        {
+            <div class="right">
+                <a href="#" class="view-history-js" data-objectType="@ObjectType.UISettings" data-objectId="@Model.Id">@Resource.History</a>
+            </div>
+        }
+    }
+}
+
+@section Scripts
+{
+    <script>
+        $("#footerForm").dirtyForms();
+    </script>
+}
+
+<div class="content-pre-wrap">
+    <div class="center t-tab">
+        @using (Html.BeginForm("UpsertUISettings", "Setting", FormMethod.Post, new { id = "footerForm", @class = "form", Area = AdminAreaRegistration.Location }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-control column">
+                @Html.EditorFor(m => m.PortalName, "InternationalizationTextBox")
+            </div>
+            <div class="form-control column">
+                @Html.EditorFor(m => m.PortalSubName, "InternationalizationTextBox")
+            </div>
+            <div class="form-control column">
+                @Html.EditorFor(m => m.Address, "InternationalizationTextBox")
+            </div>
+            <div class="form-control column">
+                @Html.EditorFor(m => m.WorkingTime, "InternationalizationTextBox")
+            </div>
+            <div class="clear"></div>
+            <div class="form-control column">
+                @Html.LabelFor(m => m.Phone)
+                @Html.EditorFor(m => m.Phone)
+                @Html.ValidationMessageFor(m => m.Phone)
+            </div>
+            <div class="form-control column">
+                @Html.LabelFor(m => m.Email)
+                @Html.EditorFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div class="clear"></div>
+            <div class="form-control column">
+                @Html.LabelFor(m => m.FbLink)
+                @Html.EditorFor(m => m.FbLink)
+                @Html.ValidationMessageFor(m => m.FbLink)
+            </div>
+            <div class="form-control column">
+                @Html.LabelFor(m => m.LinkedInLink)
+                @Html.EditorFor(m => m.LinkedInLink)
+                @Html.ValidationMessageFor(m => m.LinkedInLink)
+            </div>
+            <div class="form-control column">
+                @Html.EditorFor(m => m.PortalRights, "InternationalizationTextBox")
+            </div>
+            <div class="clear"></div>
+            <div class="form-control fullwidth">
+                @Html.EditorFor(m => m.Explanation, "InternationalizationTextArea", new { htmlAttributes = new { @class = "fullwidth" } })
+            </div>
+            <div class="clear"></div>
+            <div class="form-control fullwidth">
+                <input type="submit" class="bttn main caps right" value="@Resource.Save" />
+            </div>
+            <div class="clear"></div>
+        }
+    </div>
+</div>

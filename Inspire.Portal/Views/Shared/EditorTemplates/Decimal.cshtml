@@ -1,0 +1,8 @@
+@using Kendo.Mvc.UI
+@model decimal?
+
+@(Html.Kendo().NumericTextBoxFor(m => m)
+      .HtmlAttributes(new { style = "width:100%" })
+      .Format("#.##")
+      .Min(0)
+      )

@@ -1,0 +1,32 @@
+﻿@using Inspire.Portal.Models
+@using Inspire.Utilities.Extensions
+@{
+    var items = TempData["Breadcrumbs"] as IEnumerable<Breadcrumb>;
+}
+@if (items.IsNotNullOrEmpty())
+{
+    <div class="breadcrumbs">
+        @{
+            var isFirst = true;
+            foreach (var item in items.Where(entry => entry.Title.IsNotNullOrEmpty()))
+            {
+                @DisplayMenuItem(item, isFirst)
+                isFirst = false;
+            }
+        }
+    </div>
+
+    @helper DisplayMenuItem(Breadcrumb item, bool isFirst = false)
+    {
+        if (item.Url.IsNotNullOrEmpty())
+        {
+            <a href="@item.Url">@item.Title</a>
+        }
+        else
+        {
+            <span>
+                @item.Title
+            </span>
+        }
+    }
+}

@@ -1,0 +1,102 @@
+﻿@using Inspire.Portal.Models.Provider
+@using Inspire.Portal.App_GlobalResources
+@using Kendo.Mvc.UI
+@using Inspire.Common.Mvc.Helpers
+@using Inspire.Model.Attachment
+@using Inspire.Utilities.Extensions
+@model ProviderViewModel
+@{
+    var image = Model != null && Model.MainPicture.Url != null ? new List<Attachment> { Model.MainPicture } : new List<Attachment>();
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "~/Scripts/Controllers/Provider/Provider.js")
+}
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+<div class="content-pre-wrap">
+    <div class="center">
+        <div class="t-tab">
+            @using (Html.BeginForm("Upsert", "Provider", FormMethod.Post, new { id = "publicationForm" }))
+            {
+                @Html.ValidationSummary(true)
+
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-input fullwidth">
+                    @Html.EditorFor(m => m.Names, "InternationalizationTextBox")
+                    @Html.ValidationMessageFor(m => m.Names)
+                </div>
+
+                <div class="form-input fullwidth">
+                    @Html.EditorFor(model => model.Links, "InternationalizationTextBox")
+                    @Html.ValidationMessageFor(m => m.Links)
+                </div>
+                <div class="form-input fullwidth">
+                    @Html.EditorFor(model => model.Descriptions, "InternationalizationEditor")
+                    @Html.ValidationMessageFor(m => m.Descriptions)
+                </div>
+
+                <div class="form-input quad">
+                    @Html.LabelFor(m => m.Status, new { @class = "required" })
+                    @(Html.Kendo().DropDownListFor(m => m.Status.Id)
+                          .HtmlAttributes(new { id = "statusdropdown", data_val = "true", data_val_required = string.Format(Resource.Required, Resource.Status) })
+                          .OptionLabel(Resource.Choose)
+                          .DataValueField("Id")
+                          .DataTextField("Name")
+                          .DataSource(x => x.Read(s => s.Action("GetStatuses", "Provider"))))
+                    @Html.ValidationMessageFor(m => m.Status.Id)
+                </div>
+                <div class="form-input fullwidth">
+
+                    @Html.LabelFor(m => m.MainPicture, new { @class = "required" })
+                    @Html.Hidden("MainPicture.Name", Model?.MainPicture?.Name)
+                    @Html.Hidden("MainPicture.Url", Model?.MainPicture?.Url)
+                    @Html.Hidden("MainPicture.Size", Model?.MainPicture?.Size)
+                    @Html.Hidden("MainPicture.MimeType", Model?.MainPicture?.MimeType)
+                    @(Html.Kendo().Upload()
+                          .Name("imageUploader")
+                          .HtmlAttributes(new { accept = ".jpg, .png, .jpeg", data_width = "780", data_height = "585" })
+                          .Async(a => a
+                                     .Save("Upload", "Attachment")
+                                     .Remove("Remove", "Attachment")
+                                     .AutoUpload(true))
+                          .Events(e => e.Success("provider.onProviderAttachmentSuccessUpload"))
+                          .ShowFileList(false)
+                          .Multiple(false)
+                          .Validation(validation =>
+                          {
+                              validation.AllowedExtensions(new[] { ".jpg", ".png", ".jpeg" });
+                              validation.MaxFileSize(10000000);
+                          }))
+                    @Html.ValidationMessage("MainPictureUrl")
+                </div>
+                <div class="form-input quad" id="imageDiv" style="display: @(Model?.MainPicture?.Url != null && Model?.MainPicture.Url != string.Empty ? "block" : "none")">
+                    @(Html.Kendo().ListView(image)
+                          .Name("imageListView")
+                          .TagName("div")
+                          .ClientTemplateId("imageTemplate"))
+                </div>
+                <script type="text/x-kendo-tmpl" id="imageTemplate">
+                    <div>
+                        <img src="#: Url #" alt="#: Name # " />
+                    </div>
+                </script>
+                <div class="clear"></div>
+                <div class="button-wrap fullwidth">
+                    <button type="submit" class="bttn main caps right">@Resource.Save</button>
+                </div>
+                <div class="clear"></div>
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,159 @@
+@using System.ComponentModel.DataAnnotations
+@using Inspire.Common.Mvc.Extensions
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Controllers
+@using Inspire.Portal.Infrastructure.Attribute
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@using FileBrowserController = Inspire.Portal.Controllers.FileBrowserController
+@model IDictionary<string, string>
+@{
+    var isRequired = ViewData.ModelMetadata.PropertyName.IsNotNullOrEmpty()
+                     && ViewData.ModelMetadata.ContainerType
+                                .GetProperty(ViewData.ModelMetadata.PropertyName)
+                                ?.GetCustomAttributes(typeof(RequiredAttribute), true)
+                                 .OfType<RequiredAttribute>()
+                                 .Any() == true;
+
+    var stringLengthAttribute = ViewData.ModelMetadata.PropertyName.IsNotNullOrEmpty()
+        ? ViewData.ModelMetadata.ContainerType
+                  .GetProperty(ViewData.ModelMetadata.PropertyName)
+                  ?.GetCustomAttributes(typeof(DictionaryStringLengthAttribute), true)
+                   .OfType<DictionaryStringLengthAttribute>().FirstOrDefault()
+        : null;
+
+    var htmlAttributes = ViewData?.ContainsKey("htmlAttributes") == true
+        ? ViewData["htmlAttributes"]
+        : null;
+
+    var wrapperClass = ViewData?.ContainsKey("wrapperClass") == true
+        ? ViewData["wrapperClass"] as string
+        : null;
+}
+
+@foreach (var cultureData in Global.Languages)
+{
+    var key = cultureData.Id.ToString();
+    var language = Resource.ResourceManager.GetString(cultureData.Culture.TwoLetterISOLanguageName.ToUpper());
+    var value = Model?.ContainsKey(key) == true ? Model[key] : null;
+    if (Model != null && !Model.ContainsKey(key))
+    {
+        Model.Add(key, string.Empty);
+    }
+
+    var name = $"{Html.DisplayNameForModel().ToString().Trim()}({language})";
+    var required = isRequired && cultureData.Required;
+    var attributes = Html.MergeHtmlAttributes(
+        htmlAttributes,
+        required
+            ? new Dictionary<string, object>
+              {
+                  { "data-val", "true" },
+                  { "data-val-required", string.Format(Resource.Required, name) }
+              }
+            : null,
+        stringLengthAttribute != null
+            ? new Dictionary<string, object>
+              {
+                  { "data-val", "true" },
+                  { "data-rule-minlength", stringLengthAttribute.MinimumLength },
+                  { "data-rule-maxlength", stringLengthAttribute.MaximumLength },
+                  { "data-msg-minlength", string.Format(Resource.StringLengthAttribute_ValidationErrorIncludingMinimum, name, stringLengthAttribute.MaximumLength, stringLengthAttribute.MinimumLength) },
+                  { "data-msg-maxlength", string.Format(Resource.StringLengthAttribute_ValidationErrorIncludingMinimum, name, stringLengthAttribute.MaximumLength, stringLengthAttribute.MinimumLength) }
+              }
+            : null);
+
+    value = value.IsNotNullOrEmpty()
+        ? HttpUtility.HtmlDecode(value ?? string.Empty)
+        : null;
+
+    if (wrapperClass.IsNotNullOrEmpty())
+    {
+        <div class="@wrapperClass">
+            @Html.Label(name, new { @class = required ? "required" : string.Empty })
+            @(Html.Kendo()
+                  .EditorFor(m => m[key])
+                  .Value(value ?? string.Empty)
+                  .HtmlAttributes(attributes)
+                  .Events(e => e.Change("core.onValueChangeSetDirtyForm"))
+                  .Tools(tools => tools
+                             .Clear()
+                             .Bold().Italic().Underline().Strikethrough()
+                             .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                             .InsertUnorderedList().InsertOrderedList()
+                             .Outdent().Indent()
+                             .CreateLink().Unlink()
+                             .InsertImage()
+                             .InsertFile()
+                             .SubScript()
+                             .SuperScript()
+                             .TableEditing()
+                             .ViewHtml()
+                             .Formatting()
+                             .CleanFormatting()
+                             .FontName()
+                             .FontSize()
+                             .FontColor().BackColor()
+                             .Print()
+                             .ExportAs()
+                  )
+                  .ImageBrowser(imageBrowser => imageBrowser
+                                    .Image($"{ImageBrowserController.VirtualPath}/{{0}}")
+                                    .Read("Read", "ImageBrowser", new { Area = string.Empty })
+                                    .Create("Create", "ImageBrowser", new { Area = string.Empty })
+                                    .Destroy("Destroy", "ImageBrowser", new { Area = string.Empty })
+                                    .Upload("Upload", "ImageBrowser", new { Area = string.Empty })
+                                    .Thumbnail("Thumbnail", "ImageBrowser", new { Area = string.Empty }))
+                  .FileBrowser(fileBrowser => fileBrowser
+                                   .File($"{FileBrowserController.VirtualPath}/{{0}}")
+                                   .Read("Read", "FileBrowser", new { Area = string.Empty })
+                                   .Create("Create", "FileBrowser", new { Area = string.Empty })
+                                   .Destroy("Destroy", "FileBrowser", new { Area = string.Empty })
+                                   .Upload("Upload", "FileBrowser", new { Area = string.Empty })))
+            @Html.ValidationMessageFor(m => m[key])
+        </div>
+    }
+    else
+    {
+        @Html.Label(name, new { @class = required ? "required" : string.Empty })
+        @(Html.Kendo().EditorFor(m => m[key])
+              .Value(value ?? string.Empty)
+              .HtmlAttributes(attributes)
+              .Events(e => e.Change("core.onValueChangeSetDirtyForm"))
+              .Tools(tools => tools
+                         .Clear()
+                         .Bold().Italic().Underline().Strikethrough()
+                         .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                         .InsertUnorderedList().InsertOrderedList()
+                         .Outdent().Indent()
+                         .CreateLink().Unlink()
+                         .InsertImage()
+                         .InsertFile()
+                         .SubScript()
+                         .SuperScript()
+                         .TableEditing()
+                         .ViewHtml()
+                         .Formatting()
+                         .CleanFormatting()
+                         .FontName()
+                         .FontSize()
+                         .FontColor().BackColor()
+                         .Print()
+                         .ExportAs()
+              )
+              .ImageBrowser(imageBrowser => imageBrowser
+                                .Image($"{ImageBrowserController.VirtualPath}/{{0}}")
+                                .Read("Read", "ImageBrowser", new { Area = string.Empty })
+                                .Create("Create", "ImageBrowser", new { Area = string.Empty })
+                                .Destroy("Destroy", "ImageBrowser", new { Area = string.Empty })
+                                .Upload("Upload", "ImageBrowser", new { Area = string.Empty })
+                                .Thumbnail("Thumbnail", "ImageBrowser", new { Area = string.Empty }))
+              .FileBrowser(fileBrowser => fileBrowser
+                               .File($"{FileBrowserController.VirtualPath}/{{0}}")
+                               .Read("Read", "FileBrowser", new { Area = string.Empty })
+                               .Create("Create", "FileBrowser", new { Area = string.Empty })
+                               .Destroy("Destroy", "FileBrowser", new { Area = string.Empty })
+                               .Upload("Upload", "FileBrowser", new { Area = string.Empty })))
+        @Html.ValidationMessageFor(m => m[key])
+    }
+}

@@ -1,0 +1,97 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Model.Poll
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models.Poll
+@using Inspire.Utilities.Extensions
+@using EnumHelper = Inspire.Model.Helpers.EnumHelper
+@model Inspire.Portal.Models.Poll.PollViewModel
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "~/Scripts/Controllers/Poll/Poll.js")
+}
+@{
+    var languageId = Global.Languages?.FirstOrDefault(x => x.Culture.Name == CurrentCulture.Name)?.Id.ToString();
+    int questionsIndex = 0;
+    int optionsIndex = 0;
+}
+<div class="center">
+    <div class="t-tab">
+        @using (Html.BeginForm(
+            "SubmitPoll",
+            "Poll",
+            FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Titles[languageId])
+            @Html.HiddenFor(m => m.Descriptions[languageId])
+            <h1 class="pagetitle caps">@Model.Title</h1>
+            <div class="qstdesc">
+                @Html.Raw(HttpUtility.HtmlDecode(Model.Description))
+            </div>
+
+            foreach (var question in Model.Questions)
+            {
+                var prefix = $"Questions[{questionsIndex}]";
+                @Html.Hidden($"{prefix}.Id", question.Id)
+                @Html.Hidden($"{prefix}.Type.Id", question.Type.Id)
+                @Html.Hidden($"{prefix}.Titles[{languageId}]", question.Titles[languageId])
+                @Html.Hidden($"{prefix}.QuestionDescriptions[{languageId}]", question.QuestionDescriptions?[languageId])
+                @Html.Hidden($"{prefix}.Mandatory", question.Mandatory)
+                <label class="@(question.Mandatory ? "required" : string.Empty) qsttitle">@(questionsIndex + 1). @question.Title </label>
+                <div class="qstdesc">@Html.Raw(HttpUtility.HtmlDecode(question.Description))</div>
+                    <ul class="qstanswer">
+                        @foreach (var option in question.Options)
+                        {
+                            <li>
+                                @DisplayOption(option, question.Type.Id.Value, questionsIndex, optionsIndex, languageId)
+                            </li>
+                            optionsIndex++;
+                        }
+                    </ul>
+                    optionsIndex = 0;
+                    questionsIndex++;
+                    }
+                    <div class="clear"></div>
+                    <div class="button-wrap fullwidth">
+                        <input type="submit" class="bttn main caps right sendPoll" value="@Resource.Send" />
+                    </div>
+                    }
+                </div>
+</div>
+
+@helper DisplayOption(OptionViewModel option, Guid questionType, int questionIndex, int optionsIndex, string languageId)
+{
+    var name = $"Questions[{questionIndex}].Options[{optionsIndex}].Values[{languageId}]";
+
+    @Html.Hidden($"Questions[{questionIndex}].Options[{optionsIndex}].Id", option.Id)
+
+    if (questionType.Equals(EnumHelper.QuestionStatuses[QuestionType.TextBox]))
+    {
+        @Html.TextBox(name, null, new { placeholder = Resource.EnterYourAnswer })
+    }
+    else if (questionType.Equals(EnumHelper.QuestionStatuses[QuestionType.TextArea]))
+    {
+        @Html.TextArea(name, new { placeholder = Resource.EnterYourAnswer })
+    }
+    else if (questionType.Equals(EnumHelper.QuestionStatuses[QuestionType.RadioButton]))
+    {
+        @Html.Hidden($"Questions[{questionIndex}].Options[{optionsIndex}].Values[{languageId}]", option.Value)
+        @Html.RadioButton($"Questions[{questionIndex}].RadioBtn", option.Id.ToString())
+        @Html.Label($"Questions[{questionIndex}].Options[{0}].Values[{languageId}]", option.Value, new { style = "display: inline" })
+    }
+    else if (questionType.Equals(EnumHelper.QuestionStatuses[QuestionType.Checkbox]))
+    {
+        @Html.Hidden($"Questions[{questionIndex}].Options[{optionsIndex}].Values[{languageId}]", option.Value)
+        @Html.CheckBox($"Questions[{questionIndex}].Options[{optionsIndex}].IsSelected")
+        @Html.Label($"Questions[{questionIndex}].Options[{optionsIndex}].IsSelected", option.Value, new { style = "display: inline" })
+    }
+}

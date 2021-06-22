@@ -1,0 +1,80 @@
+﻿@using Inspire.Common.Mvc.Extensions
+@using Inspire.Model.Publication
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Utilities.Extensions
+@using EnumHelper = Inspire.Model.Helpers.EnumHelper
+@model Inspire.Portal.Models.Publication.PublicationPublicViewModel
+@{
+    var isPreview = ViewBag.IsPreview is bool && (bool)ViewBag.IsPreview;
+    if (isPreview && !Model.StartDate.HasValue)
+    {
+        Model.StartDate = DateTime.Now;
+    }
+
+    var shareUrl = Model.Id.HasValue == true
+        ? Url.AbsoluteAction("Info", "Publication", new { id = Model.Id })
+        : null;
+
+    var typeName = Enum.GetName(typeof(PublicationType), EnumHelper.GetPublicationTypeById(Model.Type.Id.Value));
+}
+
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".images-wrap img").magnificPopup({ type: "image", gallery: { enabled: true } });
+        })
+    </script>
+}
+
+<div class="inner-center @(typeName.ToLower())">
+    <span class="n-date ctrl">
+        @Model.Date
+    </span>
+    <h1 class="pagetitle">
+        @Model.Title
+    </h1>
+    @if (Model.Pictures.IsNotNullOrEmpty())
+    {
+        <div class="images-wrap cover">
+            @foreach (var image in Model.Pictures)
+            {
+                <a href="@image.Url" class="magnet">
+                    <img src="@image.Url?width=400" alt="@Resource.NotFound" />
+                </a>
+            }
+        </div>
+    }
+    <article class="ctrl">
+        @if (Model.Content.IsNotNullOrEmpty())
+        {
+            @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+        }
+    </article>
+    @if (shareUrl.IsNotNullOrEmpty())
+    {
+        <div class="share-btns social">
+            <strong>@Resource.ShareIn</strong>
+            <a class="sharebtn fb" target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=@shareUrl"><svg class="icon"><use xlink:href="#icon-fb"></use></svg></a>
+            <a class="sharebtn in" target="_blank" href="http://www.linkedin.com/shareArticle?url=@shareUrl"><svg class="icon"><use xlink:href="#icon-in"></use></svg></a>
+            <a class="sharebtn tw" target="_blank" href="http://twitter.com/share?url=@shareUrl"><svg class="icon"><use xlink:href="#icon-tw"></use></svg></a>
+        </div>
+    }
+    
+    <div class="clear"></div>
+    @if (isPreview)
+    {
+        <div class="button-wrap">
+            @(Ajax.ActionLink(Resource.Save, "Save", new { sessionId = Model.UniqueId }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "bttn main caps right" }))
+            <a href="@Url.Action("Upsert", new { sessionId = Model.UniqueId })" class="bttn caps right">@Resource.Edit</a>
+        </div>
+        <div class="clear"></div>
+    }
+</div>

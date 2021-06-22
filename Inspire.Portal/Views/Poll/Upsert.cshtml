@@ -1,0 +1,154 @@
+﻿@using Inspire.Common.Mvc.Helpers
+@using Inspire.Core.Infrastructure.Configuration
+@using Inspire.Model.Poll
+@using Inspire.Portal.App_GlobalResources
+@using Inspire.Portal.Models.Poll
+@using Inspire.Utilities.Extensions
+@using Kendo.Mvc.UI
+@using EnumHelper = Inspire.Model.Helpers.EnumHelper
+@model Inspire.Portal.Models.Poll.PollViewModel
+@section Breadcrumbs
+{
+    @{
+        Html.RenderPartial("_Breadcrums");
+    }
+}
+@section Scripts
+{
+    @Html.DynamicBundle(
+        "~/Scripts/Controllers/Poll/Poll.js")
+}
+
+@{
+    var languages = GetLanguages().Select(item => item.Id.ToString()).ToArray();
+}
+
+<div class="center">
+    <div class="t-tab">
+        @using (Html.BeginForm(
+            "Upsert",
+            "Poll",
+            FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="form-input fullwidth">
+                @Html.EditorFor(model => model.Titles, "InternationalizationTextBox")
+                @Html.ValidationMessageFor(m => m.Titles)
+            </div>
+
+            <div class="form-input fullwidth">
+                @Html.EditorFor(model => model.Descriptions, "InternationalizationEditor")
+                @Html.ValidationMessageFor(m => m.Descriptions)
+            </div>
+            <div class="form-input quad">
+                @Html.LabelFor(x => x.ValidFrom, new { @class = "required" })
+                @Html.Kendo().DateTimePickerFor(x => x.ValidFrom).Format("dd.MM.yyyy г. HH:mm")
+                @Html.ValidationMessageFor(x => x.ValidFrom)
+            </div>
+            <div class="form-input quad">
+                @Html.LabelFor(x => x.ValidTo, new { @class = "required" })
+                @(Html.Kendo().DateTimePickerFor(x => x.ValidTo).Format("dd.MM.yyyy г. HH:mm"))
+                @Html.ValidationMessageFor(x => x.ValidTo)
+            </div>
+            <div class="clearfix" />
+        
+            <div class="form-input">
+                @Html.LabelFor(x => x.Questions, new { @class="required" })
+                @(Html.Kendo().ListView(Model.Questions)
+                                                      .Name("Questions")
+                                                      .TagName("ul")
+                                                      .ClientTemplateId("questionTemplate")
+                                                      .DataSource(
+                                                          dataSource =>
+                                                              dataSource.ServerOperation(false)
+                                                                        .Model(m => m.Id(f => f.UniqueId))))
+                @Html.ValidationMessageFor(x => x.Questions)
+                @(Html.Kendo().Sortable()
+                              .For("#Questions")
+                              .Cursor("move")
+                              .PlaceholderHandler("poll.questionPlaceholder")
+                              .HintHandler("poll.questionHint")
+                              .Events(x => x.Change("poll.onQuestionPositionChange"))
+                              .Filter(".k-listview-content > li"))
+            </div>
+            <div class="clear"></div>
+            <div class="button-wrap fullwidth">
+                <button class="bttn caps  addQuestion-js">@Resource.AddQuestion</button>
+
+                <input type="submit" class="bttn main caps right" value="@Resource.Save" />
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="questionTemplate">
+    <li>
+        # var index = kendo.guid(); #
+
+        # var languages = JSON.parse('@Html.Raw(Json.Encode(languages))');#
+
+        <input type='hidden' name='Questions.Index' value='#= index #' />
+        <input type='hidden' id="questionUniqueId" name='Questions[#= index #].UniqueId' value='#= UniqueId #' />
+        <input type='hidden' id="questionId" name='Questions[#= index #].Id' value='#= Id != null ? Id : '' #' />
+
+        # if (languages.length > 0) { #
+        # for(var i=0;i < languages.length; i++) { #
+        <input type='hidden' name='Questions[#= index #].Titles[#= languages[i]#]' value='#: data.Titles[languages[i]] #' />
+        <input type='hidden' name='Questions[#= index #].QuestionDescriptions[#= languages[i]#]' value='#: data.QuestionDescriptions[languages[i]] #' />
+
+
+        #}#
+        # } #
+
+        #if(data.Options) {#
+        # for(var j=0;j < data.Options.length; j++) { #
+        # var optionIndex = kendo.guid(); #
+        <input type='hidden' name='Questions[#= index #].Options.Index' value='#= optionIndex #' />
+        # if (languages.length > 0) { #
+        # for(var i=0;i < languages.length; i++) { #
+        <input type='hidden' name='Questions[#= index #].Options[#= optionIndex #].Values[#= languages[i]#]' value='#: data.Options[j].Values[languages[i]] #' />
+        #}#
+        # } #
+        #}#
+        #}#
+
+        <input type='hidden' name='Questions[#= index #].Order' value='#: data.Order #' />
+        <input type='hidden' name='Questions[#= index #].Mandatory' value='#: data.Mandatory #' />
+        <input type='hidden' name='Questions[#= index #].Type.Id' value='#: data.Type.Id #' />
+        #: data.Title #
+        #if(data.Options) {#
+        <ul>
+            # for(var j=0;j < data.Options.length; j++) { #
+            <li>
+                # if (data.Type.Id === '@EnumHelper.QuestionStatuses[QuestionType.TextBox]') { #
+                @Html.TextBox("test", null, new { placeholder = Resource.ShortAnswer, disabled = "disabled" })
+                # } else if(data.Type.Id === '@EnumHelper.QuestionStatuses[QuestionType.TextArea]') { #
+                @Html.TextArea("test", null, new { placeholder = Resource.LongAnswer, disabled = "disabled" })
+                # }  else if(data.Type.Id === '@EnumHelper.QuestionStatuses[QuestionType.RadioButton]') { #
+                @Html.RadioButton("test", "Test", new { placeholder = Resource.ShortAnswer, style = "width: 15px;", disabled = "disabled" }) #: data.Options[j].Values[languages[0]] #
+                #}  else if(data.Type.Id === '@EnumHelper.QuestionStatuses[QuestionType.Checkbox]') { #
+                @Html.CheckBox("Test", false, new { placeholder = Resource.ShortAnswer, style = "width: 15px;", disabled = "disabled" }) #: data.Options[j].Values[languages[0]] #
+                #}#
+            </li>
+            #}#
+        </ul>
+        #}#
+        <div class="edit-buttons">
+            <a class="k-button editQuestion-js" href="\\#"><span class="k-icon k-i-edit"></span></a>
+            <a class="k-button deleteQuestion-js" href="\\#"><span class="k-icon k-i-delete"></span></a>
+        </div>
+    </li>
+</script>
+
+@functions
+{
+    List<LanguageElement> GetLanguages()
+    {
+        var languagesList = ViewData?.ContainsKey("groupLanguages") == true ? ViewData["groupLanguages"] as List<string> : null;
+
+        return languagesList.IsNotNullOrEmpty() ? Global.Languages.Where(x => languagesList.Contains(x.Id.ToString())).ToList() : Global.Languages;
+    }
+}
